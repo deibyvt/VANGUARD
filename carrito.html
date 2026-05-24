@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrito de Compras — VANGUARD</title>
+  <meta name="description" content="Tu carrito de compras en VANGUARD." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/sistema-diseno.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'vng-negro': '#1a1a1a',
+            'vng-negro-2': '#2d2d2d',
+            'vng-rojo': '#e31e1e',
+            'vng-rojo-hover': '#c41818',
+            'vng-gris': '#e8e8e8',
+            'vng-gris-fondo': '#ececec',
+          },
+          fontFamily: {
+            'display': ['Bebas Neue', 'Arial Black', 'sans-serif'],
+            'condensada': ['Barlow Condensed', 'Arial Narrow', 'sans-serif'],
+            'cuerpo': ['Barlow', 'Arial', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Tarjeta de item en carrito — fiel al PDF:
+       borde rojo, fondo blanco, radio grande */
+    .tarjeta-item-carrito {
+      background: white;
+      border: 2px solid #e31e1e;
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      transition: box-shadow 200ms ease;
+      position: relative;
+    }
+
+    .tarjeta-item-carrito:hover {
+      box-shadow: 0 6px 24px rgba(227,30,30,0.12);
+    }
+
+    /* Imagen del producto en el carrito */
+    .imagen-producto-carrito {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    /* Botón eliminar del carrito */
+    .boton-eliminar-carrito {
+      position: absolute;
+      right: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      background: #2a2a2a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 200ms ease;
+      border: none;
+      color: white;
+    }
+
+    .boton-eliminar-carrito:hover {
+      background: #e31e1e;
+    }
+
+    @media (max-width: 640px) {
+      .boton-eliminar-carrito {
+        right: 12px;
+        top: 12px;
+        transform: none;
+      }
+
+      .tarjeta-item-carrito {
+        flex-wrap: wrap;
+        padding-right: 3.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body class="font-cuerpo bg-vng-gris-fondo" id="pagina-carrito" style="background:#ececec;">
+
+  <!-- ─── NAVBAR (mismo que categorías: oscuro con buscador) ─── -->
+  <header id="navbar-carrito" class="bg-vng-negro sticky top-0 z-50 w-full" role="banner">
+    <nav class="flex items-center justify-between px-6 py-3 gap-4">
+      <a href="index.html" class="font-display text-white text-2xl tracking-widest hover:text-vng-rojo transition-colors flex-shrink-0">VNGRD</a>
+      <a href="index.html" class="font-condensada text-white text-sm tracking-widest uppercase hover:text-vng-rojo transition-colors hidden md:block flex-shrink-0">INICIO</a>
+
+      <div class="flex-1 max-w-md relative" role="search">
+        <label for="buscador-carrito" class="sr-only">Buscar producto</label>
+        <input
+          type="search"
+          id="buscador-carrito"
+          placeholder="BUSCAR PRODUCTO"
+          class="w-full bg-transparent border border-white/30 rounded-full px-4 py-2 text-white text-sm font-condensada tracking-widest placeholder-white/50 outline-none focus:border-white transition-colors"
+          autocomplete="off"
+        />
+        <button class="absolute right-3 top-1/2 -translate-y-1/2 text-white/60 hover:text-white" aria-label="Buscar">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+      </div>
+
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <span class="font-condensada text-white text-sm tracking-widest uppercase hidden md:block">CATEGORÍAS</span>
+        <button class="text-white p-1" aria-label="Menú categorías">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- ─── CONTENIDO PRINCIPAL ─── -->
+  <main id="contenido-carrito" class="max-w-4xl mx-auto px-6 py-12" role="main" aria-label="Carrito de compras">
+
+    <!-- Lista de productos del carrito -->
+    <section
+      id="lista-carrito"
+      class="flex flex-col gap-6"
+      aria-label="Productos en el carrito"
+      data-carrito="lista-productos"
+    >
+
+      <!-- Item 1 del carrito -->
+      <article
+        class="tarjeta-item-carrito"
+        role="listitem"
+        data-item-carrito="prod-001"
+        aria-label="Gigabyte Aorus Men Tshirt — $24.99"
+      >
+        <!-- Imagen -->
+        <img
+          src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200&h=200&fit=crop"
+          alt="Gigabyte Aorus Men Tshirt"
+          class="imagen-producto-carrito"
+          loading="lazy"
+        />
+
+        <!-- Información del producto -->
+        <div class="flex-1 min-w-0">
+          <h2
+            class="font-display text-vng-negro leading-tight"
+            style="font-size: clamp(1rem, 3vw, 1.6rem);"
+          >
+            GIGABYTE AORUS MEN TSHIRT
+          </h2>
+          <p class="font-cuerpo text-gray-500 text-xs mt-1">Marca: Gigabyte</p>
+          <p class="font-cuerpo text-gray-500 text-xs">Sku: MEN-GIG-GIG-084</p>
+        </div>
+
+        <!-- Stock y precio -->
+        <div class="text-right flex-shrink-0">
+          <p class="font-condensada text-gray-400 text-xs tracking-widest uppercase">STOCK 90</p>
+          <p class="font-display text-vng-negro" style="font-size: clamp(1.2rem, 3vw, 2rem);">$ 24.99</p>
+        </div>
+
+        <!-- Botón eliminar -->
+        <button
+          class="boton-eliminar-carrito"
+          aria-label="Eliminar Gigabyte Aorus Men Tshirt del carrito"
+          data-accion="eliminar-item"
+          data-item-id="prod-001"
+        >
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+          </svg>
+        </button>
+      </article>
+
+      <!-- Item 2 del carrito -->
+      <article class="tarjeta-item-carrito" role="listitem" data-item-carrito="prod-002" aria-label="Gigabyte Aorus Men Tshirt — $24.99">
+        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200&h=200&fit=crop" alt="Gigabyte Aorus Men Tshirt" class="imagen-producto-carrito" loading="lazy" />
+        <div class="flex-1 min-w-0">
+          <h2 class="font-display text-vng-negro leading-tight" style="font-size: clamp(1rem, 3vw, 1.6rem);">GIGABYTE AORUS MEN TSHIRT</h2>
+          <p class="font-cuerpo text-gray-500 text-xs mt-1">Marca: Gigabyte</p>
+          <p class="font-cuerpo text-gray-500 text-xs">Sku: MEN-GIG-GIG-084</p>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <p class="font-condensada text-gray-400 text-xs tracking-widest uppercase">STOCK 90</p>
+          <p class="font-display text-vng-negro" style="font-size: clamp(1.2rem, 3vw, 2rem);">$ 24.99</p>
+        </div>
+        <button class="boton-eliminar-carrito" aria-label="Eliminar del carrito" data-accion="eliminar-item" data-item-id="prod-002">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        </button>
+      </article>
+
+      <!-- Item 3 del carrito -->
+      <article class="tarjeta-item-carrito" role="listitem" data-item-carrito="prod-003" aria-label="Gigabyte Aorus Men Tshirt — $24.99">
+        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200&h=200&fit=crop" alt="Gigabyte Aorus Men Tshirt" class="imagen-producto-carrito" loading="lazy" />
+        <div class="flex-1 min-w-0">
+          <h2 class="font-display text-vng-negro leading-tight" style="font-size: clamp(1rem, 3vw, 1.6rem);">GIGABYTE AORUS MEN TSHIRT</h2>
+          <p class="font-cuerpo text-gray-500 text-xs mt-1">Marca: Gigabyte</p>
+          <p class="font-cuerpo text-gray-500 text-xs">Sku: MEN-GIG-GIG-084</p>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <p class="font-condensada text-gray-400 text-xs tracking-widest uppercase">STOCK 90</p>
+          <p class="font-display text-vng-negro" style="font-size: clamp(1.2rem, 3vw, 2rem);">$ 24.99</p>
+        </div>
+        <button class="boton-eliminar-carrito" aria-label="Eliminar del carrito" data-accion="eliminar-item" data-item-id="prod-003">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        </button>
+      </article>
+
+      <!-- Item 4 del carrito -->
+      <article class="tarjeta-item-carrito" role="listitem" data-item-carrito="prod-004" aria-label="Gigabyte Aorus Men Tshirt — $24.99">
+        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200&h=200&fit=crop" alt="Gigabyte Aorus Men Tshirt" class="imagen-producto-carrito" loading="lazy" />
+        <div class="flex-1 min-w-0">
+          <h2 class="font-display text-vng-negro leading-tight" style="font-size: clamp(1rem, 3vw, 1.6rem);">GIGABYTE AORUS MEN TSHIRT</h2>
+          <p class="font-cuerpo text-gray-500 text-xs mt-1">Marca: Gigabyte</p>
+          <p class="font-cuerpo text-gray-500 text-xs">Sku: MEN-GIG-GIG-084</p>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <p class="font-condensada text-gray-400 text-xs tracking-widest uppercase">STOCK 90</p>
+          <p class="font-display text-vng-negro" style="font-size: clamp(1.2rem, 3vw, 2rem);">$ 24.99</p>
+        </div>
+        <button class="boton-eliminar-carrito" aria-label="Eliminar del carrito" data-accion="eliminar-item" data-item-id="prod-004">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        </button>
+      </article>
+
+    </section>
+
+    <!-- Resumen total y botón ir a pagar -->
+    <div class="flex justify-end mt-10">
+      <a
+        href="checkout.html"
+        id="boton-ir-a-pagar"
+        class="boton-primario text-base px-10 py-4"
+        aria-label="Proceder al pago"
+        data-accion="ir-a-checkout"
+      >
+        IR A PAGAR
+      </a>
+    </div>
+
+    <!-- Carrito vacío — Hook JS: mostrar cuando carrito esté vacío -->
+    <div
+      id="estado-carrito-vacio"
+      class="hidden text-center py-20"
+      role="status"
+      aria-live="polite"
+    >
+      <p class="font-display text-gray-400 text-4xl mb-4">TU CARRITO ESTÁ VACÍO</p>
+      <a href="categorias.html" class="boton-primario">EXPLORAR PRODUCTOS</a>
+    </div>
+
+  </main>
+
+
+  <!-- ─── FOOTER ─── -->
+  <footer id="pie-pagina" class="bg-vng-rojo py-12 mt-8" role="contentinfo">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-start">
+        <div class="col-span-2 md:col-span-1">
+          <a href="index.html" class="font-display text-white text-3xl tracking-widest">VNGRD</a>
+        </div>
+        <nav aria-label="Footer 1">
+          <ul class="flex flex-col gap-2 list-none">
+            <li><a href="index.html" class="font-condensada text-white/90 text-sm hover:text-white">inicio</a></li>
+            <li><a href="categorias.html" class="font-condensada text-white/90 text-sm hover:text-white">categorías</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Footer 2">
+          <ul class="flex flex-col gap-2 list-none">
+            <li><a href="login.html" class="font-condensada text-white/90 text-sm hover:text-white">iniciar sesión</a></li>
+            <li><a href="registro.html" class="font-condensada text-white/90 text-sm hover:text-white">registrarme</a></li>
+          </ul>
+        </nav>
+        <address class="not-italic">
+          <p class="font-condensada text-white font-bold text-sm tracking-wider mb-3">contáctanos</p>
+          <div class="flex items-center gap-2 mb-3">
+            <a href="#" class="w-9 h-9 bg-vng-negro rounded-full flex items-center justify-center" aria-label="X"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.741l7.732-8.853L2.059 2.25H8.28l4.261 5.633 5.703-5.633zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            <a href="#" class="w-9 h-9 bg-vng-negro rounded-full flex items-center justify-center" aria-label="Instagram"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            <a href="#" class="w-9 h-9 bg-vng-negro rounded-full flex items-center justify-center" aria-label="TikTok"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.77a4.85 4.85 0 01-1.01-.08z"/></svg></a>
+            <a href="#" class="w-9 h-9 bg-vng-negro rounded-full flex items-center justify-center" aria-label="WhatsApp"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+          </div>
+          <a href="mailto:info@vanguard.com" class="font-cuerpo text-white/80 text-xs">info@vanguard.com</a>
+        </address>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    /**
+     * VANGUARD — Carrito de compras
+     *
+     * Arquitectura preparada para:
+     * - localStorage: persisencia del carrito entre sesiones
+     * - API REST: sincronización con backend
+     * - Cálculo de totales dinámico
+     */
+
+    // ── Namespace del carrito ──
+    const carritoVanguard = {
+      productos: [],
+
+      // HOOK: Cargar desde localStorage en producción
+      cargar() {
+        // const datos = localStorage.getItem('vng_carrito');
+        // if (datos) this.productos = JSON.parse(datos);
+        // this.renderizar();
+      },
+
+      // HOOK: Persistir en localStorage
+      guardar() {
+        // localStorage.setItem('vng_carrito', JSON.stringify(this.productos));
+      },
+
+      // HOOK: Eliminar item
+      eliminar(itemId) {
+        const articulo = document.querySelector(`[data-item-carrito="${itemId}"]`);
+        if (articulo) {
+          articulo.style.opacity = '0';
+          articulo.style.transform = 'translateX(-20px)';
+          articulo.style.transition = 'all 300ms ease';
+          setTimeout(() => articulo.remove(), 300);
+        }
+        // this.productos = this.productos.filter(p => p.id !== itemId);
+        // this.guardar();
+        // this.actualizarTotal();
+      },
+
+      // HOOK: Calcular total
+      calcularTotal() {
+        return this.productos.reduce((acc, prod) => acc + (prod.precio * prod.cantidad), 0);
+      }
+    };
+
+    // ── Listeners de botones eliminar ──
+    document.querySelectorAll('[data-accion="eliminar-item"]').forEach(boton => {
+      boton.addEventListener('click', () => {
+        const itemId = boton.dataset.itemId;
+        carritoVanguard.eliminar(itemId);
+      });
+    });
+
+    // Inicializar
+    carritoVanguard.cargar();
+    window.Vanguard = window.Vanguard || { carrito: carritoVanguard, config: { apiUrl: '/api/v1' } };
+  </script>
+
+</body>
+</html>
