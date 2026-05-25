@@ -1,15 +1,3 @@
-<!-- Página de producto individual. Estructura base, contenido a definir según PDF. -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Producto — VANGUARDIA</title>
-</head>
-<body>
-  <!-- Detalle de producto -->
-</body>
-</html>
 <!DOCTYPE html>
 <html lang="es" data-pagina="producto">
 <head>
@@ -202,10 +190,22 @@
         </button>
       </div>
 
-      <div class="flex items-center gap-3 flex-shrink-0">
+      <div id="grupo-acciones-barra" class="flex items-center gap-3 flex-shrink-0">
         <span class="barra-navegacion__enlace hidden md:block" aria-hidden="true">
           CATEGORÍAS
         </span>
+        <!-- Carrito con contador -->
+        <a href="carrito.html" id="enlace-carrito-navbar"
+           class="icono-carrito-navbar" aria-label="Ver carrito"
+           data-enlace-nav="carrito">
+          <svg width="20" height="20" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+          <span id="contador-carrito-navbar" class="contador-carrito-navbar js-oculto"
+                aria-live="polite">0</span>
+        </a>
         <button id="boton-menu-movil"
                 class="barra-navegacion__boton-menu"
                 aria-expanded="false"
@@ -687,40 +687,35 @@
       }
     });
 
-    // ── 5. Agregar al carrito ──
+    // ── 5. Agregar al carrito con localStorage real ──
     document.getElementById('boton-agregar-carrito-producto')?.addEventListener('click', () => {
-      const idProducto = 'prod-001';
+      const tallaElegida    = tallaSeleccionada;
+      const cantidadElegida = cantidadSeleccionada;
+
       const datosArticulo = {
-        id:        idProducto,
-        nombre:    'GIGABYTE AORUS MEN TSHIRT',
-        precio:    24.99,
-        imagen:    imagenPrincipal.src,
-        talla:     tallaSeleccionada,
-        cantidad:  cantidadSeleccionada,
-        marca:     'Gigabyte',
-        sku:       'MEN-GIG-GIG-084'
+        id:       document.getElementById('boton-agregar-carrito-producto').dataset.idProducto,
+        nombre:   document.getElementById('nombre-producto-principal')?.textContent?.trim()
+                    || 'GIGABYTE AORUS MEN TSHIRT',
+        precio:   parseFloat(
+                    document.getElementById('precio-producto-principal')
+                              ?.textContent?.replace(/[^0-9.]/g, '') || '24.99'
+                  ),
+        imagen:   document.getElementById('imagen-principal-producto')?.src || '',
+        talla:    tallaElegida,
+        cantidad: cantidadElegida,
+        marca:    'Gigabyte',
+        sku:      'MEN-GIG-GIG-084'
       };
 
-      /*
-       * HOOK localStorage — Agregar al carrito persistente:
-       *
-       * const carritoActual = JSON.parse(
-       *   localStorage.getItem('vng_carrito') || '[]'
-       * );
-       * const articuloExistente = carritoActual.find(
-       *   a => a.id === idProducto && a.talla === tallaSeleccionada
-       * );
-       * if (articuloExistente) {
-       *   articuloExistente.cantidad += cantidadSeleccionada;
-       * } else {
-       *   carritoActual.push(datosArticulo);
-       * }
-       * localStorage.setItem('vng_carrito', JSON.stringify(carritoActual));
-       */
+      /* Usar módulo real de carrito con localStorage */
+      window.Vanguard.carrito.agregar(datosArticulo);
 
-      console.log('[VANGUARD] Agregar al carrito:', datosArticulo);
+      /* Notificación toast */
+      window.Vanguard.notificaciones.exito(
+        `¡${cantidadElegida > 1 ? cantidadElegida + 'x ' : ''}${datosArticulo.nombre} agregado!`
+      );
 
-      /* Feedback visual */
+      /* Feedback visual en la página */
       const mensajeAgregado = document.getElementById('mensaje-agregado-carrito');
       mensajeAgregado.classList.remove('hidden');
       setTimeout(() => mensajeAgregado.classList.add('hidden'), 2500);

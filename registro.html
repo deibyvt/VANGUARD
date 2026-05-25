@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-pagina="registro">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Registrarme — VANGUARD</title>
+  <title>Regístrate — VANGUARD</title>
   <meta name="description" content="Crea tu cuenta en VANGUARD y accede a los mejores productos." />
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,17 +17,16 @@
       theme: {
         extend: {
           colors: {
-            'vng-negro': '#1a1a1a',
-            'vng-negro-2': '#2d2d2d',
-            'vng-rojo': '#e31e1e',
-            'vng-rojo-hover': '#c41818',
-            'vng-gris': '#e8e8e8',
-            'vng-gris-fondo': '#ececec',
+            'vng-negro':       '#1a1a1a',
+            'vng-negro-2':     '#2d2d2d',
+            'vng-rojo':        '#e31e1e',
+            'vng-rojo-oscuro': '#c41818',
+            'vng-gris-fondo':  '#ececec',
           },
           fontFamily: {
-            'display': ['Bebas Neue', 'Arial Black', 'sans-serif'],
+            'display':    ['Bebas Neue',       'Arial Black',  'sans-serif'],
             'condensada': ['Barlow Condensed', 'Arial Narrow', 'sans-serif'],
-            'cuerpo': ['Barlow', 'Arial', 'sans-serif'],
+            'cuerpo':     ['Barlow',           'Arial',        'sans-serif'],
           },
         }
       }
@@ -35,227 +34,272 @@
   </script>
 
   <style>
-    /* Fondo con forma blob orgánica — idéntica al PDF */
-    .fondo-registro {
-      background: #c8c8c8;
-      position: relative;
-      min-height: 100vh;
-    }
-
-    .blob-formulario {
+    /*
+     * IMAGEN MODELO DECORATIVA (registro)
+     * ────────────────────────────────────
+     * Fiel al PDF página 2: modelo femenina con cabello rosa
+     * posicionada en la esquina derecha, emergiendo del blob oscuro.
+     * La imagen está sobre el gris claro para dar profundidad.
+     */
+    .imagen-modelo-decorativa {
       position: absolute;
-      top: 0;
-      left: 0;
+      bottom: 25%;
       right: 0;
-      bottom: 30%;
-      background: #2a2a2a;
-      clip-path: polygon(
-        0% 0%,
-        100% 0%,
-        100% 60%,
-        72% 72%,
-        55% 82%,
-        40% 88%,
-        20% 84%,
-        5% 73%,
-        0% 60%
-      );
-      z-index: 0;
-    }
-
-    /* Imagen modelo flotante en la derecha */
-    .imagen-modelo-registro {
-      position: absolute;
-      bottom: 28%;
-      right: 0;
-      width: 42%;
-      max-width: 420px;
+      width: 44%;
+      max-width: 440px;
       z-index: 5;
       pointer-events: none;
     }
-
+    @media (max-width: 1024px) {
+      .imagen-modelo-decorativa { width: 40%; }
+    }
     @media (max-width: 768px) {
-      .imagen-modelo-registro {
-        display: none;
-      }
-      .blob-formulario {
-        bottom: 20%;
-      }
+      .imagen-modelo-decorativa { display: none; }
     }
   </style>
 </head>
 
-<body class="font-cuerpo fondo-registro" id="pagina-registro">
+<body class="font-cuerpo fondo-formulario" id="pagina-registro">
 
-  <!-- ─── NAVBAR ─── -->
-  <header id="navbar-principal" class="bg-vng-negro sticky top-0 z-50 w-full" role="banner">
-    <nav class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-      <a href="index.html" class="font-display text-white text-2xl tracking-widest hover:text-vng-rojo transition-colors" aria-label="VANGUARD — Inicio">VNGRD</a>
-      <ul class="hidden md:flex items-center gap-8 list-none">
-        <li><a href="index.html" class="font-condensada font-semibold text-white text-sm tracking-widest uppercase hover:text-vng-rojo transition-colors">inicio</a></li>
-        <li><a href="categorias.html" class="font-condensada font-semibold text-white text-sm tracking-widest uppercase hover:text-vng-rojo transition-colors">categorías</a></li>
+  <!-- ═══════════════════════════════════════════════════
+       BARRA DE NAVEGACIÓN PRINCIPAL
+  ═══════════════════════════════════════════════════ -->
+  <header id="cabecera-principal" class="barra-navegacion" role="banner"
+          aria-label="Navegación principal VANGUARD">
+    <nav id="navegacion-principal" class="barra-navegacion__contenedor"
+         aria-label="Menú principal">
+
+      <a href="index.html"
+         id="logotipo-vanguard"
+         class="barra-navegacion__logotipo"
+         aria-label="VANGUARD — Ir al inicio">
+        VNGRD
+      </a>
+
+      <ul id="lista-navegacion-desktop"
+          class="barra-navegacion__lista-enlaces"
+          role="list">
+        <li>
+          <a href="index.html"
+             class="barra-navegacion__enlace"
+             data-enlace-nav="inicio">inicio</a>
+        </li>
+        <li>
+          <a href="categorias.html"
+             class="barra-navegacion__enlace"
+             data-enlace-nav="categorias">categorías</a>
+        </li>
       </ul>
-      <div class="hidden md:flex items-center gap-6">
-        <a href="login.html" class="font-condensada font-semibold text-white text-sm tracking-widest uppercase hover:text-vng-rojo transition-colors">iniciar sesión</a>
-        <a href="registro.html" class="font-condensada font-semibold text-vng-rojo text-sm tracking-widest uppercase" aria-current="page">registrarme</a>
+
+      <!-- Acciones de autenticación + carrito -->
+      <div id="acciones-autenticacion"
+           class="barra-navegacion__acciones"
+           role="group">
+        <a href="login.html"
+           class="barra-navegacion__enlace"
+           data-enlace-nav="iniciar-sesion">iniciar sesión</a>
+        <a href="registro.html"
+           class="barra-navegacion__enlace barra-navegacion__enlace--activo"
+           data-enlace-nav="registrarme"
+           aria-current="page">registrarme</a>
+        <!-- Carrito -->
+        <a href="carrito.html" id="enlace-carrito-navbar"
+           class="icono-carrito-navbar" aria-label="Ver carrito"
+           data-enlace-nav="carrito">
+          <svg width="20" height="20" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+          <span id="contador-carrito-navbar" class="contador-carrito-navbar js-oculto"
+                aria-live="polite">0</span>
+        </a>
       </div>
-      <button id="boton-menu-movil" class="md:hidden text-white p-2" aria-label="Menú móvil">
-        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+
+      <button id="boton-menu-movil"
+              class="barra-navegacion__boton-menu"
+              aria-expanded="false"
+              aria-controls="menu-movil"
+              aria-label="Abrir menú de navegación">
+        <svg width="24" height="24" fill="none" stroke="currentColor"
+             stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
       </button>
     </nav>
-    <div id="menu-movil" class="md:hidden hidden bg-vng-negro-2 border-t border-gray-700">
-      <ul class="flex flex-col py-4 px-6 gap-4 list-none">
-        <li><a href="index.html" class="font-condensada text-white tracking-widest uppercase text-sm">Inicio</a></li>
-        <li><a href="categorias.html" class="font-condensada text-white tracking-widest uppercase text-sm">Categorías</a></li>
-        <li><a href="login.html" class="font-condensada text-white tracking-widest uppercase text-sm">Iniciar Sesión</a></li>
-        <li><a href="registro.html" class="font-condensada text-vng-rojo tracking-widest uppercase text-sm">Registrarme</a></li>
+
+    <div id="menu-movil" class="menu-movil" role="navigation">
+      <ul class="menu-movil__lista" role="list">
+        <li><a href="index.html"      class="menu-movil__enlace">Inicio</a></li>
+        <li><a href="categorias.html" class="menu-movil__enlace">Categorías</a></li>
+        <li><a href="login.html"      class="menu-movil__enlace">Iniciar Sesión</a></li>
+        <li>
+          <a href="registro.html"
+             class="menu-movil__enlace"
+             style="color: var(--color-rojo-principal);"
+             aria-current="page">Registrarme</a>
+        </li>
       </ul>
     </div>
   </header>
 
 
-  <!-- ─── CONTENIDO PRINCIPAL ─── -->
-  <main id="contenido-principal" class="relative z-10" role="main">
+  <!-- ═══════════════════════════════════════════════════
+       CONTENIDO PRINCIPAL — REGISTRO
+       Fiel al PDF pág.2: REGISTRATE gigante + 3 campos
+       blob oscuro de fondo + modelo decorativa derecha
+  ═══════════════════════════════════════════════════ -->
+  <main id="contenido-principal"
+        style="position: relative; z-index: 10; overflow: hidden;"
+        role="main"
+        aria-label="Formulario de creación de cuenta">
 
     <!-- Blob oscuro de fondo -->
-    <div class="blob-formulario" aria-hidden="true"></div>
+    <div class="fondo-formulario__blob" aria-hidden="true"></div>
 
-    <!-- Imagen modelo decorativa -->
-    <div class="imagen-modelo-registro" aria-hidden="true">
+    <!-- Imagen modelo decorativa — fiel al PDF pág.2 -->
+    <div class="imagen-modelo-decorativa" aria-hidden="true">
       <img
-        src="https://images.unsplash.com/photo-1617551307578-fd0f4f3734b8?w=500&h=700&fit=crop&crop=top"
+        src="https://images.unsplash.com/photo-1617551307578-fd0f4f3734b8?w=600&h=800&fit=crop&crop=top"
         alt=""
-        class="w-full object-contain"
-        style="filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));"
+        style="
+          width: 100%;
+          object-fit: contain;
+          object-position: top;
+          filter: drop-shadow(0 20px 50px rgba(0,0,0,0.55));
+        "
       />
     </div>
 
-    <!-- Sección formulario de registro -->
-    <section
-      id="seccion-registro"
-      class="relative z-20 max-w-7xl mx-auto px-6 py-16 lg:py-20"
-      aria-labelledby="titulo-registro"
-    >
+    <!-- Sección con el formulario -->
+    <section id="seccion-formulario-registro"
+             style="position: relative; z-index: 20;"
+             class="max-w-7xl mx-auto px-6 py-16 lg:py-20"
+             aria-labelledby="titulo-pagina-registro">
 
-      <!-- Título gigante REGISTRATE -->
-      <h1
-        id="titulo-registro"
-        class="font-display text-white leading-none mb-12"
-        style="font-size: clamp(4rem, 14vw, 10rem);"
-      >
+      <!-- Título gigante — idéntico al PDF pág.2 -->
+      <h1 id="titulo-pagina-registro"
+          class="font-display text-white leading-none mb-12"
+          style="font-size: clamp(4rem, 14vw, 10rem);">
         REGISTRATE
       </h1>
 
-      <!-- Formulario de registro -->
-      <form
-        id="formulario-registro"
-        class="flex flex-col gap-6 max-w-xl"
-        novalidate
-        data-formulario="registro"
-        aria-label="Formulario de registro de usuario"
+      <!-- ─── FORMULARIO DE REGISTRO ─── -->
+      <!--
+        3 campos: nombre, correo, contraseña
+        Todos con borde rojo, fondo transparente
+        Botón ENVÍAR redondeado rojo — fiel al PDF
+      -->
+      <form id="formulario-registro-usuario"
+            class="flex flex-col gap-6 max-w-lg"
+            novalidate
+            data-tipo-formulario="registro"
+            aria-label="Formulario de creación de cuenta VANGUARD">
 
-        <!-- Hook JS: data-formulario="registro" para futura integración con API -->
-      >
-
-        <!-- Campo Nombre -->
-        <div class="grupo-campo" role="group" aria-labelledby="label-nombre">
-          <label
-            id="label-nombre"
-            for="campo-nombre"
-            class="font-condensada text-white/80 text-sm tracking-wider uppercase block mb-2"
-          >
+        <!-- Campo: Nombre completo -->
+        <div id="grupo-campo-nombre-registro" class="flex flex-col gap-2">
+          <label for="campo-nombre-usuario"
+                 class="etiqueta-campo etiqueta-campo--oscura">
             Nombre
           </label>
           <input
             type="text"
-            id="campo-nombre"
-            name="nombre"
-            class="input-vanguard"
+            id="campo-nombre-usuario"
+            name="nombre-usuario"
+            class="campo-formulario"
             placeholder=""
             autocomplete="given-name"
             required
             aria-required="true"
-            aria-describedby="error-nombre"
-            data-validar="nombre"
+            aria-describedby="error-nombre-usuario"
+            data-campo-validar="nombre"
           />
-          <!-- Hook JS: contenedor de error para validación futura -->
-          <p id="error-nombre" class="text-vng-rojo text-xs mt-1 hidden" role="alert" aria-live="polite"></p>
+          <p id="error-nombre-usuario"
+             class="mensaje-error-campo"
+             role="alert"
+             aria-live="polite"></p>
         </div>
 
-        <!-- Campo Correo -->
-        <div class="grupo-campo" role="group" aria-labelledby="label-correo">
-          <label
-            id="label-correo"
-            for="campo-correo"
-            class="font-condensada text-white/80 text-sm tracking-wider uppercase block mb-2"
-          >
+        <!-- Campo: Correo electrónico -->
+        <div id="grupo-campo-correo-registro" class="flex flex-col gap-2">
+          <label for="campo-correo-registro"
+                 class="etiqueta-campo etiqueta-campo--oscura">
             Correo
           </label>
           <input
             type="email"
-            id="campo-correo"
-            name="correo"
-            class="input-vanguard"
+            id="campo-correo-registro"
+            name="correo-electronico"
+            class="campo-formulario"
             placeholder=""
             autocomplete="email"
             required
             aria-required="true"
-            aria-describedby="error-correo"
-            data-validar="email"
+            aria-describedby="error-correo-registro"
+            data-campo-validar="correo"
           />
-          <p id="error-correo" class="text-vng-rojo text-xs mt-1 hidden" role="alert" aria-live="polite"></p>
+          <p id="error-correo-registro"
+             class="mensaje-error-campo"
+             role="alert"
+             aria-live="polite"></p>
         </div>
 
-        <!-- Campo Contraseña -->
-        <div class="grupo-campo" role="group" aria-labelledby="label-contrasena">
-          <label
-            id="label-contrasena"
-            for="campo-contrasena"
-            class="font-condensada text-white/80 text-sm tracking-wider uppercase block mb-2"
-          >
+        <!-- Campo: Contraseña nueva -->
+        <div id="grupo-campo-contrasena-registro" class="flex flex-col gap-2">
+          <label for="campo-contrasena-registro"
+                 class="etiqueta-campo etiqueta-campo--oscura">
             contraseña
           </label>
           <input
             type="password"
-            id="campo-contrasena"
-            name="contrasena"
-            class="input-vanguard"
+            id="campo-contrasena-registro"
+            name="contrasena-nueva"
+            class="campo-formulario"
             placeholder=""
             autocomplete="new-password"
             required
             aria-required="true"
-            aria-describedby="error-contrasena"
-            data-validar="password"
             minlength="8"
+            aria-describedby="error-contrasena-registro indicacion-contrasena"
+            data-campo-validar="contrasena"
           />
-          <p id="error-contrasena" class="text-vng-rojo text-xs mt-1 hidden" role="alert" aria-live="polite"></p>
+          <!-- Indicación de requisito -->
+          <p id="indicacion-contrasena"
+             class="font-cuerpo"
+             style="font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: -0.25rem;">
+            Mínimo 8 caracteres
+          </p>
+          <p id="error-contrasena-registro"
+             class="mensaje-error-campo"
+             role="alert"
+             aria-live="polite"></p>
         </div>
 
-        <!-- Botón Enviar -->
-        <div class="mt-2">
-          <button
-            type="submit"
-            id="boton-registro"
-            class="boton-primario text-sm px-8 py-3"
-            aria-label="Enviar formulario de registro"
-            data-accion="registrar-usuario"
-          >
+        <!-- Botón de envío -->
+        <div id="contenedor-boton-registro" class="mt-2">
+          <button type="submit"
+                  id="boton-enviar-registro"
+                  class="boton-primario px-10 py-3 text-sm"
+                  aria-label="Crear mi cuenta en VANGUARD"
+                  data-accion-boton="registrar-usuario">
             ENVÍAR
           </button>
         </div>
 
-        <!-- Mensaje de estado general — Hook JS -->
-        <p
-          id="mensaje-estado-registro"
-          class="text-sm hidden"
-          role="status"
-          aria-live="polite"
-        ></p>
+        <!-- Mensaje de estado general -->
+        <p id="mensaje-estado-registro"
+           class="mensaje-error-campo"
+           role="status"
+           aria-live="polite"
+           style="font-size: 0.85rem;"></p>
 
-        <!-- Link a login -->
-        <p class="font-cuerpo text-white/60 text-sm mt-4">
+        <!-- Enlace a inicio de sesión -->
+        <p class="font-cuerpo text-sm" style="color: rgba(255,255,255,0.5); margin-top: 0.5rem;">
           ¿Ya tienes cuenta?
-          <a href="login.html" class="text-vng-rojo hover:text-white transition-colors font-semibold">
+          <a href="login.html"
+             style="color: var(--color-rojo-principal); font-weight: 600;"
+             class="hover:underline transition-all">
             Inicia sesión aquí
           </a>
         </p>
@@ -263,132 +307,185 @@
       </form>
     </section>
 
-    <!-- Espaciador para imagen flotante en móvil -->
-    <div class="h-24 md:h-48" aria-hidden="true"></div>
+    <!-- Espacio visual inferior -->
+    <div style="height: 8rem;" aria-hidden="true"></div>
 
   </main>
 
 
-  <!-- ─── FOOTER ─── -->
-  <footer id="pie-pagina" class="bg-vng-rojo py-12 relative z-20" role="contentinfo">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-start">
-        <div class="col-span-2 md:col-span-1">
-          <a href="index.html" class="font-display text-white text-3xl tracking-widest hover:opacity-80 transition-opacity" aria-label="VANGUARD">VNGRD</a>
-        </div>
-        <nav aria-label="Footer navegación 1">
-          <ul class="flex flex-col gap-2 list-none">
-            <li><a href="index.html" class="font-condensada text-white/90 text-sm hover:text-white transition-colors">inicio</a></li>
-            <li><a href="categorias.html" class="font-condensada text-white/90 text-sm hover:text-white transition-colors">categorías</a></li>
-          </ul>
-        </nav>
-        <nav aria-label="Footer navegación 2">
-          <ul class="flex flex-col gap-2 list-none">
-            <li><a href="login.html" class="font-condensada text-white/90 text-sm hover:text-white transition-colors">iniciar sesión</a></li>
-            <li><a href="registro.html" class="font-condensada text-white/90 text-sm hover:text-white transition-colors">registrarme</a></li>
-          </ul>
-        </nav>
-        <address class="not-italic">
-          <p class="font-condensada text-white font-bold text-sm tracking-wider mb-3">contáctanos</p>
-          <div class="flex items-center gap-2 mb-3">
-            <a href="#" class="w-9 h-9 bg-vng-negro rounded-full flex items-center justify-center hover:bg-vng-negro-2 transition-colors" aria-label="X Twitter">
-              <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.741l7.732-8.853L2.059 2.25H8.28l4.261 5.633 5.703-5.633zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-            <a href="#" class="w-9 h-9 bg-vng-negro rounded-full flex items-center justify-center hover:bg-vng-negro-2 transition-colors" aria-label="Instagram">
-              <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-            </a>
-            <a href="#" class="w-9 h-9 bg-vng-negro rounded-full flex items-center justify-center hover:bg-vng-negro-2 transition-colors" aria-label="TikTok">
-              <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.77a4.85 4.85 0 01-1.01-.08z"/></svg>
-            </a>
-            <a href="#" class="w-9 h-9 bg-vng-negro rounded-full flex items-center justify-center hover:bg-vng-negro-2 transition-colors" aria-label="WhatsApp">
-              <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            </a>
-          </div>
-          <a href="mailto:info@vanguard.com" class="font-cuerpo text-white/80 text-xs hover:text-white transition-colors">info@vanguard.com</a>
-        </address>
+  <!-- ═══════════════════════════════════════════════════
+       PIE DE PÁGINA — idéntico al resto del sitio
+  ═══════════════════════════════════════════════════ -->
+  <footer id="pie-pagina"
+          class="pie-pagina"
+          style="position: relative; z-index: 20;"
+          role="contentinfo"
+          aria-label="Pie de página VANGUARD">
+    <div class="pie-pagina__contenedor">
+
+      <div id="columna-logotipo-pie" class="col-span-2 md:col-span-1">
+        <a href="index.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">VNGRD</a>
       </div>
+
+      <nav id="navegacion-pie-principal" aria-label="Pie: enlaces principales">
+        <ul class="pie-pagina__lista-enlaces" role="list">
+          <li><a href="index.html"      class="pie-pagina__enlace">inicio</a></li>
+          <li><a href="categorias.html" class="pie-pagina__enlace">categorías</a></li>
+        </ul>
+      </nav>
+
+      <nav id="navegacion-pie-usuario" aria-label="Pie: acceso de usuario">
+        <ul class="pie-pagina__lista-enlaces" role="list">
+          <li><a href="login.html"    class="pie-pagina__enlace">iniciar sesión</a></li>
+          <li><a href="registro.html" class="pie-pagina__enlace">registrarme</a></li>
+        </ul>
+      </nav>
+
+      <address id="columna-contacto-pie" class="not-italic">
+        <p class="pie-pagina__titulo-columna">contáctanos</p>
+        <ul class="pie-pagina__redes" role="list" aria-label="Redes sociales de VANGUARD">
+          <li>
+            <a href="#" class="pie-pagina__icono-red" aria-label="Seguirnos en X (Twitter)">
+              <svg width="14" height="14" fill="white" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.741l7.732-8.853L2.059 2.25H8.28l4.261 5.633 5.703-5.633zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="pie-pagina__icono-red" aria-label="Seguirnos en Instagram">
+              <svg width="14" height="14" fill="white" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="pie-pagina__icono-red" aria-label="Seguirnos en TikTok">
+              <svg width="14" height="14" fill="white" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.77a4.85 4.85 0 01-1.01-.08z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="pie-pagina__icono-red" aria-label="Contactarnos por WhatsApp">
+              <svg width="14" height="14" fill="white" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <a href="mailto:info@vanguard.com" class="pie-pagina__correo">
+          info@vanguard.com
+        </a>
+      </address>
+
     </div>
   </footer>
 
-  <script>
-    // Toggle menú móvil
-    const botonMenu = document.getElementById('boton-menu-movil');
-    const menuMovil = document.getElementById('menu-movil');
-    if (botonMenu && menuMovil) {
-      botonMenu.addEventListener('click', () => {
-        menuMovil.classList.toggle('hidden');
-        botonMenu.setAttribute('aria-expanded', !menuMovil.classList.contains('hidden'));
-      });
-    }
 
+  <script src="assets/js/vanguard-principal.js" defer></script>
+
+  <script>
     /**
-     * HOOK JS: Validación y envío del formulario de registro
-     * Preparado para integrar con API REST: POST /api/v1/auth/registro
-     *
-     * Estructura esperada del payload:
-     * { nombre: string, correo: string, contrasena: string }
-     *
-     * Para activar: descomentar el bloque de fetch y configurar apiUrl
+     * VANGUARD — Lógica del formulario de Registro
+     * ================================================
+     * Endpoint futuro: POST /api/v1/autenticacion/registrar
+     * Payload: { nombre: string, correoElectronico: string, contrasenaNueva: string }
+     * Respuesta: { exito: true, mensaje: "Cuenta creada correctamente" }
      */
-    const formularioRegistro = document.getElementById('formulario-registro');
-    if (formularioRegistro) {
-      formularioRegistro.addEventListener('submit', async (evento) => {
+
+    const formularioRegistroUsuario = document.getElementById('formulario-registro-usuario');
+    const botonEnviarRegistro       = document.getElementById('boton-enviar-registro');
+
+    if (formularioRegistroUsuario) {
+      formularioRegistroUsuario.addEventListener('submit', async (evento) => {
         evento.preventDefault();
 
-        const nombre = document.getElementById('campo-nombre').value.trim();
-        const correo = document.getElementById('campo-correo').value.trim();
-        const contrasena = document.getElementById('campo-contrasena').value;
+        const valorNombre      = document.getElementById('campo-nombre-usuario').value.trim();
+        const valorCorreo      = document.getElementById('campo-correo-registro').value.trim();
+        const valorContrasena  = document.getElementById('campo-contrasena-registro').value;
 
-        // Validación básica — expandir con biblioteca de validación futura
-        let esValido = true;
+        /* ── Validación ── */
+        let formularioEsValido = true;
 
-        if (!nombre) {
-          mostrarError('error-nombre', 'El nombre es requerido');
-          esValido = false;
-        } else {
-          ocultarError('error-nombre');
+        if (!valorNombre || valorNombre.length < 2) {
+          mostrarErrorCampo('error-nombre-usuario', 'El nombre debe tener al menos 2 caracteres');
+          formularioEsValido = false;
+        } else { ocultarErrorCampo('error-nombre-usuario'); }
+
+        const expresionRegularCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!valorCorreo || !expresionRegularCorreo.test(valorCorreo)) {
+          mostrarErrorCampo('error-correo-registro', 'Ingresa un correo electrónico válido');
+          formularioEsValido = false;
+        } else { ocultarErrorCampo('error-correo-registro'); }
+
+        if (!valorContrasena || valorContrasena.length < 8) {
+          mostrarErrorCampo('error-contrasena-registro', 'La contraseña debe tener al menos 8 caracteres');
+          formularioEsValido = false;
+        } else { ocultarErrorCampo('error-contrasena-registro'); }
+
+        if (!formularioEsValido) return;
+
+        /* ── Estado cargando ── */
+        botonEnviarRegistro.textContent = 'ENVIANDO';
+        botonEnviarRegistro.dataset.estado = 'cargando';
+
+        try {
+          /*
+           * HOOK API — Descomentar al conectar backend:
+           *
+           * const respuesta = await fetch(
+           *   `${window.Vanguard.config.urlApi}/autenticacion/registrar`,
+           *   {
+           *     method:  'POST',
+           *     headers: { 'Content-Type': 'application/json' },
+           *     body: JSON.stringify({
+           *       nombre:            valorNombre,
+           *       correoElectronico: valorCorreo,
+           *       contrasenaNueva:   valorContrasena
+           *     })
+           *   }
+           * );
+           * const datos = await respuesta.json();
+           * if (datos.exito) {
+           *   window.location.href = 'login.html?registro=exitoso';
+           * } else {
+           *   mostrarErrorCampo('mensaje-estado-registro', datos.mensaje);
+           * }
+           */
+
+          console.log('[VANGUARD] Registro — datos listos:', {
+            nombre:            valorNombre,
+            correoElectronico: valorCorreo
+          });
+
+          /* Demo visual */
+          setTimeout(() => {
+            botonEnviarRegistro.textContent = 'ENVÍAR';
+            delete botonEnviarRegistro.dataset.estado;
+          }, 1200);
+
+        } catch (errorDeRed) {
+          console.error('[VANGUARD] Error de red:', errorDeRed);
+          mostrarErrorCampo('mensaje-estado-registro', 'Error de conexión. Intenta nuevamente.');
+          botonEnviarRegistro.textContent = 'ENVÍAR';
+          delete botonEnviarRegistro.dataset.estado;
         }
-
-        if (!correo || !correo.includes('@')) {
-          mostrarError('error-correo', 'Ingresa un correo válido');
-          esValido = false;
-        } else {
-          ocultarError('error-correo');
-        }
-
-        if (!contrasena || contrasena.length < 8) {
-          mostrarError('error-contrasena', 'La contraseña debe tener al menos 8 caracteres');
-          esValido = false;
-        } else {
-          ocultarError('error-contrasena');
-        }
-
-        if (!esValido) return;
-
-        // HOOK: Integración futura con backend
-        // const respuesta = await fetch(`${window.Vanguard.config.apiUrl}/auth/registro`, {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify({ nombre, correo, contrasena })
-        // });
-        // const datos = await respuesta.json();
-        // if (datos.exito) window.location.href = 'login.html';
-
-        console.log('[VANGUARD] Registro — datos listos para enviar:', { nombre, correo });
       });
     }
 
-    function mostrarError(idElemento, mensaje) {
-      const el = document.getElementById(idElemento);
-      if (el) { el.textContent = mensaje; el.classList.remove('hidden'); }
+    function mostrarErrorCampo(idElemento, mensaje) {
+      const elemento = document.getElementById(idElemento);
+      if (!elemento) return;
+      elemento.textContent = mensaje;
+      elemento.classList.add('mensaje-error-campo--visible');
     }
 
-    function ocultarError(idElemento) {
-      const el = document.getElementById(idElemento);
-      if (el) { el.textContent = ''; el.classList.add('hidden'); }
+    function ocultarErrorCampo(idElemento) {
+      const elemento = document.getElementById(idElemento);
+      if (!elemento) return;
+      elemento.textContent = '';
+      elemento.classList.remove('mensaje-error-campo--visible');
     }
-
-    window.Vanguard = window.Vanguard || { carrito: {}, usuario: {}, config: { apiUrl: '/api/v1' } };
   </script>
 
 </body>
