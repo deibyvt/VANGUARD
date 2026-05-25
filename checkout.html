@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es" data-pagina="checkout">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — VANGUARD</title>
+  <meta name="description" content="Completa tu compra en VANGUARD. Ingresa tu dirección y método de pago." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/sistema-diseno.css" />
+  <script>tailwind.config={theme:{extend:{colors:{'vng-negro':'#1a1a1a','vng-negro-2':'#2d2d2d','vng-rojo':'#e31e1e','vng-gris-fondo':'#ececec'},fontFamily:{'display':['Bebas Neue','Arial Black','sans-serif'],'condensada':['Barlow Condensed','Arial Narrow','sans-serif'],'cuerpo':['Barlow','Arial','sans-serif']}}}}</script>
+
+  <style>
+    /* ────────────────────────────────────────
+       Estilos específicos del checkout
+       Todos los selectores en español
+    ──────────────────────────────────────── */
+
+    /* Título de cada sección del checkout — centrado, fuente display */
+    .titulo-seccion-checkout {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      letter-spacing: 0.12em;
+      color: #1a1a1a;
+      text-align: center;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Contenedor de cada bloque del checkout:
+       borde rojo, fondo blanco, radio grande — fiel al PDF */
+    .bloque-checkout {
+      background: white;
+      border: 1.5px solid #e31e1e;
+      border-radius: 1.75rem;
+      padding: 2rem 2.5rem;
+    }
+
+    /* Fila de artículo dentro del resumen de productos */
+    .fila-resumen-producto {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .fila-resumen-producto:last-child { border-bottom: none; }
+
+    .fila-resumen-producto__imagen {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      flex-shrink: 0;
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 4px;
+    }
+
+    .fila-resumen-producto__nombre {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(0.85rem, 2vw, 1.1rem);
+      color: #1a1a1a;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .fila-resumen-producto__precio {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(0.9rem, 2vw, 1.15rem);
+      color: #1a1a1a;
+      flex-shrink: 0;
+    }
+
+    /* Fila de campo de dirección: etiqueta izquierda + input derecha */
+    .fila-campo-direccion {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .fila-campo-direccion:last-child { border-bottom: none; }
+
+    @media (max-width: 480px) {
+      .fila-campo-direccion { grid-template-columns: 1fr; }
+    }
+
+    .fila-campo-direccion__etiqueta {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #333;
+    }
+
+    /* Botón de método de pago — estado normal y seleccionado */
+    .boton-metodo-pago {
+      border: 2px solid transparent;
+      border-radius: 1rem;
+      padding: 1rem 1.5rem;
+      background: #f5f5f5;
+      cursor: pointer;
+      transition: border-color 200ms ease, background 200ms ease, transform 150ms ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 70px;
+    }
+
+    .boton-metodo-pago:hover {
+      background: #ececec;
+      transform: translateY(-2px);
+    }
+
+    .boton-metodo-pago--seleccionado {
+      border-color: #e31e1e;
+      background: rgba(227,30,30,0.04);
+    }
+
+    .boton-metodo-pago:focus-visible {
+      outline: 3px solid #e31e1e;
+      outline-offset: 2px;
+    }
+
+    /* Ícono SVG de PSE */
+    .icono-pse {
+      width: 52px;
+      height: 52px;
+    }
+
+    /* Ícono genérico de tarjeta */
+    .icono-tarjeta-credito {
+      width: 48px;
+      height: 36px;
+      stroke: #555;
+    }
+  </style>
+</head>
+
+<!-- Fondo gris claro — consistente con carrito, fiel al PDF -->
+<body class="font-cuerpo" style="background:#ececec;min-height:100vh;" id="pagina-checkout">
+
+  <!-- ═══════════════════════════════════════
+       BARRA DE NAVEGACIÓN — variante con buscador
+  ═══════════════════════════════════════ -->
+  <header id="cabecera-checkout" class="barra-navegacion" role="banner">
+    <nav class="flex items-center justify-between px-6 py-3 gap-4 max-w-full">
+      <a href="index.html" class="barra-navegacion__logotipo flex-shrink-0"
+         aria-label="VANGUARD — Inicio">VNGRD</a>
+
+      <a href="index.html" class="barra-navegacion__enlace hidden md:block flex-shrink-0">
+        INICIO
+      </a>
+
+      <div class="flex-1 max-w-md relative" role="search">
+        <label for="campo-buscar-checkout" class="sr-only">Buscar producto</label>
+        <input type="search" id="campo-buscar-checkout"
+               class="buscador-navegacion w-full pr-10"
+               placeholder="BUSCAR PRODUCTO" autocomplete="off" />
+        <button class="absolute right-3 top-1/2 -translate-y-1/2"
+                style="color:rgba(255,255,255,0.5);" aria-label="Buscar">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/></svg>
+        </button>
+      </div>
+
+      <div id="grupo-acciones-barra" class="flex items-center gap-3 flex-shrink-0">
+        <span class="barra-navegacion__enlace hidden md:block">CATEGORÍAS</span>
+        <!-- Carrito con contador -->
+        <a href="carrito.html" id="enlace-carrito-navbar"
+           class="icono-carrito-navbar" aria-label="Ver carrito"
+           data-enlace-nav="carrito">
+          <svg width="20" height="20" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+          <span id="contador-carrito-navbar" class="contador-carrito-navbar js-oculto"
+                aria-live="polite">0</span>
+        </a>
+        <button id="boton-menu-movil" class="barra-navegacion__boton-menu"
+                aria-expanded="false" aria-controls="menu-movil" aria-label="Abrir menú">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+               d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div id="menu-movil" class="menu-movil">
+      <ul class="menu-movil__lista" role="list">
+        <li><a href="index.html"      class="menu-movil__enlace">Inicio</a></li>
+        <li><a href="categorias.html" class="menu-movil__enlace">Categorías</a></li>
+        <li><a href="login.html"      class="menu-movil__enlace">Iniciar Sesión</a></li>
+        <li><a href="registro.html"   class="menu-movil__enlace">Registrarme</a></li>
+      </ul>
+    </div>
+  </header>
+
+
+  <!-- ═══════════════════════════════════════
+       CONTENIDO PRINCIPAL — CHECKOUT
+       3 secciones apiladas: productos / dirección / pago
+       Decisión: cada sección tiene su título centrado
+       y su bloque con borde rojo — fiel al PDF página 7
+  ═══════════════════════════════════════ -->
+  <main id="contenido-checkout"
+        class="max-w-4xl mx-auto px-6 py-12 flex flex-col gap-10"
+        role="main"
+        aria-label="Proceso de checkout">
+
+
+    <!-- ── SECCIÓN 1: PRODUCTOS DE LA BOLSA ── -->
+    <section id="seccion-resumen-productos"
+             class="js-animacion-entrada"
+             aria-labelledby="titulo-resumen-productos">
+
+      <h2 id="titulo-resumen-productos" class="titulo-seccion-checkout">
+        PRODUCTOS DE LA BOLSA
+      </h2>
+
+      <!-- Bloque con borde rojo -->
+      <div id="bloque-lista-productos-checkout"
+           class="bloque-checkout"
+           aria-label="Listado de productos a comprar"
+           data-seccion-checkout="productos">
+
+        <!-- Fila de producto 1 -->
+        <div class="fila-resumen-producto"
+             data-id-producto-checkout="prod-001">
+          <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=100&h=100&fit=crop"
+               alt="Camiseta Gigabyte Aorus" class="fila-resumen-producto__imagen"
+               loading="lazy" />
+          <span class="fila-resumen-producto__nombre">GIGABYTE AORUS MEN TSHIRT</span>
+          <span class="fila-resumen-producto__precio">$ 24.99</span>
+        </div>
+
+        <!-- Fila de producto 2 -->
+        <div class="fila-resumen-producto"
+             data-id-producto-checkout="prod-002">
+          <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=100&h=100&fit=crop"
+               alt="Camiseta Gigabyte Aorus" class="fila-resumen-producto__imagen"
+               loading="lazy" />
+          <span class="fila-resumen-producto__nombre">GIGABYTE AORUS MEN TSHIRT</span>
+          <span class="fila-resumen-producto__precio">$ 24.99</span>
+        </div>
+
+        <!-- Fila de producto 3 -->
+        <div class="fila-resumen-producto"
+             data-id-producto-checkout="prod-003">
+          <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=100&h=100&fit=crop"
+               alt="Camiseta Gigabyte Aorus" class="fila-resumen-producto__imagen"
+               loading="lazy" />
+          <span class="fila-resumen-producto__nombre">GIGABYTE AORUS MEN TSHIRT</span>
+          <span class="fila-resumen-producto__precio">$ 24.99</span>
+        </div>
+
+        <!-- Fila de producto 4 -->
+        <div class="fila-resumen-producto"
+             data-id-producto-checkout="prod-004">
+          <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=100&h=100&fit=crop"
+               alt="Camiseta Gigabyte Aorus" class="fila-resumen-producto__imagen"
+               loading="lazy" />
+          <span class="fila-resumen-producto__nombre">GIGABYTE AORUS MEN TSHIRT</span>
+          <span class="fila-resumen-producto__precio">$ 24.99</span>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ── SECCIÓN 2: DIRECCIÓN DE ENTREGA ── -->
+    <section id="seccion-direccion-entrega"
+             class="js-animacion-entrada"
+             aria-labelledby="titulo-direccion-entrega">
+
+      <h2 id="titulo-direccion-entrega" class="titulo-seccion-checkout">
+        DIRECCIÓN
+      </h2>
+
+      <div id="bloque-formulario-direccion"
+           class="bloque-checkout"
+           data-seccion-checkout="direccion">
+
+        <form id="formulario-datos-entrega"
+              novalidate
+              data-tipo-formulario="datos-entrega"
+              aria-label="Formulario de dirección de entrega">
+
+          <!-- Campo: Nombre completo -->
+          <div class="fila-campo-direccion">
+            <label for="campo-nombre-entrega"
+                   class="fila-campo-direccion__etiqueta">
+              NOMBRE
+            </label>
+            <input type="text"
+                   id="campo-nombre-entrega"
+                   name="nombre-destinatario"
+                   class="campo-formulario--claro"
+                   autocomplete="shipping name"
+                   required
+                   aria-required="true"
+                   aria-describedby="error-nombre-entrega"
+                   data-campo-validar="nombre" />
+            <p id="error-nombre-entrega"
+               class="mensaje-error-campo"
+               role="alert" aria-live="polite"
+               style="grid-column: 2;"></p>
+          </div>
+
+          <!-- Campo: Cédula / Documento -->
+          <div class="fila-campo-direccion">
+            <label for="campo-cedula-entrega"
+                   class="fila-campo-direccion__etiqueta">
+              CEDULA
+            </label>
+            <input type="text"
+                   id="campo-cedula-entrega"
+                   name="numero-documento"
+                   class="campo-formulario--claro"
+                   autocomplete="off"
+                   required
+                   aria-required="true"
+                   aria-describedby="error-cedula-entrega"
+                   data-campo-validar="cedula"
+                   inputmode="numeric" />
+            <p id="error-cedula-entrega"
+               class="mensaje-error-campo"
+               role="alert" aria-live="polite"
+               style="grid-column: 2;"></p>
+          </div>
+
+          <!-- Campo: Dirección de envío -->
+          <div class="fila-campo-direccion">
+            <label for="campo-direccion-envio"
+                   class="fila-campo-direccion__etiqueta">
+              DIRECCIÓN
+            </label>
+            <input type="text"
+                   id="campo-direccion-envio"
+                   name="direccion-envio"
+                   class="campo-formulario--claro"
+                   autocomplete="shipping street-address"
+                   required
+                   aria-required="true"
+                   aria-describedby="error-direccion-envio"
+                   data-campo-validar="direccion" />
+            <p id="error-direccion-envio"
+               class="mensaje-error-campo"
+               role="alert" aria-live="polite"
+               style="grid-column: 2;"></p>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+
+    <!-- ── SECCIÓN 3: MÉTODO DE PAGO ── -->
+    <!-- Decisión: 3 opciones en fila — PSE, Tarjeta, Google Pay
+         Fiel al PDF página 7. Selección visual con borde rojo.
+         Hook JS: data-metodo-pago para capturar selección -->
+    <section id="seccion-metodo-pago"
+             class="js-animacion-entrada"
+             aria-labelledby="titulo-metodo-pago">
+
+      <h2 id="titulo-metodo-pago" class="titulo-seccion-checkout">
+        METODO DE PAGO
+      </h2>
+
+      <div id="bloque-opciones-pago"
+           class="bloque-checkout"
+           data-seccion-checkout="metodo-pago">
+
+        <div id="grilla-metodos-pago"
+             class="grid grid-cols-1 sm:grid-cols-3 gap-4"
+             role="radiogroup"
+             aria-label="Selecciona tu método de pago">
+
+          <!-- Opción 1: PSE -->
+          <button id="boton-pago-pse"
+                  class="boton-metodo-pago boton-metodo-pago--seleccionado"
+                  role="radio"
+                  aria-checked="true"
+                  data-metodo-pago="pse"
+                  aria-label="Pagar con PSE">
+            <!-- SVG PSE — ícono circular azul con letras PSE -->
+            <svg class="icono-pse" viewBox="0 0 60 60" fill="none"
+                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="30" cy="30" r="28" fill="#1565C0" stroke="#0D47A1" stroke-width="2"/>
+              <text x="30" y="36" text-anchor="middle"
+                    font-family="Arial Black, sans-serif" font-size="16" font-weight="900"
+                    fill="white" letter-spacing="1">PSE</text>
+            </svg>
+          </button>
+
+          <!-- Opción 2: Tarjeta de crédito/débito -->
+          <button id="boton-pago-tarjeta"
+                  class="boton-metodo-pago"
+                  role="radio"
+                  aria-checked="false"
+                  data-metodo-pago="tarjeta"
+                  aria-label="Pagar con tarjeta de crédito o débito">
+            <!-- SVG tarjeta genérica -->
+            <svg class="icono-tarjeta-credito" viewBox="0 0 52 38" fill="none"
+                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="1" y="1" width="50" height="36" rx="5" ry="5"
+                    stroke="#555" stroke-width="2" fill="#f0f0f0"/>
+              <rect x="1" y="9" width="50" height="8" fill="#bbb"/>
+              <rect x="8" y="23" width="16" height="4" rx="2" fill="#999"/>
+              <rect x="8" y="29" width="10" height="3" rx="1.5" fill="#bbb"/>
+              <circle cx="38" cy="27" r="6" fill="#f44336" opacity="0.8"/>
+              <circle cx="44" cy="27" r="6" fill="#FF9800" opacity="0.8"/>
+            </svg>
+          </button>
+
+          <!-- Opción 3: Google Pay -->
+          <button id="boton-pago-google"
+                  class="boton-metodo-pago"
+                  role="radio"
+                  aria-checked="false"
+                  data-metodo-pago="google-pay"
+                  aria-label="Pagar con Google Pay">
+            <!-- SVG Google Pay aproximado con letras de colores -->
+            <svg viewBox="0 0 90 36" fill="none" xmlns="http://www.w3.org/2000/svg"
+                 style="width:90px;height:36px;" aria-hidden="true">
+              <text x="0" y="26" font-family="Arial, sans-serif" font-size="24" font-weight="500">
+                <tspan fill="#4285F4">G</tspan>
+                <tspan fill="#EA4335">o</tspan>
+                <tspan fill="#FBBC05">o</tspan>
+                <tspan fill="#4285F4">g</tspan>
+                <tspan fill="#34A853">l</tspan>
+                <tspan fill="#EA4335">e </tspan>
+                <tspan fill="#5f6368" font-size="20">Pay</tspan>
+              </text>
+            </svg>
+          </button>
+
+        </div>
+
+        <!-- Campo oculto que almacena el método seleccionado -->
+        <!-- Hook JS: JS actualiza este valor al seleccionar -->
+        <input type="hidden"
+               id="campo-metodo-pago-seleccionado"
+               name="metodo-pago"
+               value="pse"
+               data-campo-pago="metodo-seleccionado" />
+
+      </div>
+    </section>
+
+
+    <!-- ── BOTÓN CONFIRMAR PEDIDO ── -->
+    <!-- Decisión: no está en el PDF explícitamente, pero es
+         necesario para completar el flujo UX del checkout.
+         Se añade como extensión natural del diseño. -->
+    <div id="contenedor-boton-confirmar-pedido"
+         class="flex justify-center pb-4">
+      <button id="boton-confirmar-pedido"
+              type="button"
+              class="boton-primario text-base px-12 py-4"
+              aria-label="Confirmar y procesar mi pedido"
+              data-accion-boton="confirmar-pedido">
+        CONFIRMAR PEDIDO
+      </button>
+    </div>
+
+    <!-- Mensaje de confirmación — Hook JS -->
+    <div id="mensaje-confirmacion-pedido"
+         class="hidden text-center py-8"
+         role="status"
+         aria-live="polite">
+      <p class="font-display text-3xl" style="color:#1a1a1a;">
+        ¡PEDIDO CONFIRMADO!
+      </p>
+      <p class="font-condensada text-sm mt-2 tracking-widest" style="color:#666;">
+        RECIBIRÁS UN CORREO DE CONFIRMACIÓN
+      </p>
+      <a href="index.html" class="boton-primario mt-6 inline-flex">
+        VOLVER AL INICIO
+      </a>
+    </div>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════
+       PIE DE PÁGINA
+  ═══════════════════════════════════════ -->
+  <footer id="pie-pagina" class="pie-pagina mt-4" role="contentinfo">
+    <div class="pie-pagina__contenedor">
+      <div class="col-span-2 md:col-span-1">
+        <a href="index.html" class="pie-pagina__logotipo" aria-label="VANGUARD">VNGRD</a>
+      </div>
+      <nav aria-label="Pie: enlaces principales">
+        <ul class="pie-pagina__lista-enlaces" role="list">
+          <li><a href="index.html"      class="pie-pagina__enlace">inicio</a></li>
+          <li><a href="categorias.html" class="pie-pagina__enlace">categorías</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Pie: acceso usuario">
+        <ul class="pie-pagina__lista-enlaces" role="list">
+          <li><a href="login.html"    class="pie-pagina__enlace">iniciar sesión</a></li>
+          <li><a href="registro.html" class="pie-pagina__enlace">registrarme</a></li>
+        </ul>
+      </nav>
+      <address class="not-italic">
+        <p class="pie-pagina__titulo-columna">contáctanos</p>
+        <ul class="pie-pagina__redes" role="list">
+          <li><a href="#" class="pie-pagina__icono-red" aria-label="X Twitter"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.741l7.732-8.853L2.059 2.25H8.28l4.261 5.633 5.703-5.633zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></li>
+          <li><a href="#" class="pie-pagina__icono-red" aria-label="Instagram"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a></li>
+          <li><a href="#" class="pie-pagina__icono-red" aria-label="TikTok"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.77a4.85 4.85 0 01-1.01-.08z"/></svg></a></li>
+          <li><a href="#" class="pie-pagina__icono-red" aria-label="WhatsApp"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a></li>
+        </ul>
+        <a href="mailto:info@vanguard.com" class="pie-pagina__correo">info@vanguard.com</a>
+      </address>
+    </div>
+  </footer>
+
+  <script src="assets/js/vanguard-principal.js" defer></script>
+  <script>
+    /**
+     * VANGUARD — Lógica del Checkout
+     * ================================
+     * Módulos:
+     *   1. Renderizar productos desde el carrito real (localStorage)
+     *   2. Selección de método de pago (estado visual)
+     *   3. Validación del formulario de dirección
+     *   4. Confirmación del pedido (listo para API)
+     */
+
+    /* ─── Plantilla de fila de producto en el resumen ─── */
+    function crearFilaProductoCheckout(articulo) {
+      const precioTotal = articulo.precio * articulo.cantidad;
+      return `
+        <div class="fila-resumen-producto" data-id-producto-checkout="${articulo.id}">
+          <img src="${articulo.imagen || 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=100&h=100&fit=crop'}"
+               alt="${articulo.nombre}"
+               class="fila-resumen-producto__imagen"
+               loading="lazy" />
+          <span class="fila-resumen-producto__nombre">
+            ${articulo.nombre}${articulo.cantidad > 1 ? ` ×${articulo.cantidad}` : ''}
+          </span>
+          <span class="fila-resumen-producto__precio">
+            $ ${precioTotal.toFixed(2)}
+          </span>
+        </div>
+      `;
+    }
+
+    /* ─── Renderizar bloque de total en el checkout ─── */
+    function renderizarTotalCheckout(total) {
+      const contenedor = document.getElementById('bloque-lista-productos-checkout');
+      if (!contenedor) return;
+
+      /* Eliminar total previo si existe */
+      document.getElementById('fila-total-checkout')?.remove();
+
+      if (total <= 0) return;
+
+      const filaTotal = document.createElement('div');
+      filaTotal.id = 'fila-total-checkout';
+      filaTotal.style.cssText = `
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0 0;
+        margin-top: 0.5rem;
+        border-top: 2px solid rgba(227,30,30,0.25);
+      `;
+      filaTotal.innerHTML = `
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;
+                     font-size:0.8rem;letter-spacing:.12em;text-transform:uppercase;color:#666;">
+          TOTAL DEL PEDIDO
+        </span>
+        <strong style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:#1a1a1a;">
+          $ ${total.toFixed(2)}
+        </strong>
+      `;
+      contenedor.appendChild(filaTotal);
+    }
+
+    /* ─── Cargar productos desde carrito real ─── */
+    function cargarProductosDesdeCarrito() {
+      const articulosCarrito = window.Vanguard?.carrito?.obtenerArticulos() || [];
+      const contenedor = document.getElementById('bloque-lista-productos-checkout');
+      if (!contenedor) return;
+
+      if (articulosCarrito.length === 0) {
+        /* Sin artículos reales → mantener los demo del HTML */
+        return;
+      }
+
+      /* Limpiar demo y renderizar reales */
+      contenedor.innerHTML = '';
+      articulosCarrito.forEach(articulo => {
+        contenedor.insertAdjacentHTML('beforeend', crearFilaProductoCheckout(articulo));
+      });
+
+      /* Mostrar total calculado */
+      const totalReal = window.Vanguard.carrito.calcularTotal();
+      renderizarTotalCheckout(totalReal);
+    }
+
+    /* ─── 1. Selección de método de pago ─── */
+    const botonesMetodoPago = document.querySelectorAll('[data-metodo-pago]');
+    const campoMetodoPago   = document.getElementById('campo-metodo-pago-seleccionado');
+
+    botonesMetodoPago.forEach(boton => {
+      boton.addEventListener('click', () => {
+        botonesMetodoPago.forEach(b => {
+          b.classList.remove('boton-metodo-pago--seleccionado');
+          b.setAttribute('aria-checked', 'false');
+        });
+        boton.classList.add('boton-metodo-pago--seleccionado');
+        boton.setAttribute('aria-checked', 'true');
+        if (campoMetodoPago) campoMetodoPago.value = boton.dataset.metodoPago;
+        window.Vanguard?.notificaciones?.informacion(
+          `Método de pago: ${boton.dataset.metodoPago.toUpperCase()}`
+        );
+      });
+    });
+
+    /* ─── 2. Validación del formulario de dirección ─── */
+    function validarFormularioDireccion() {
+      const nombreEntrega  = document.getElementById('campo-nombre-entrega')?.value.trim();
+      const cedulaEntrega  = document.getElementById('campo-cedula-entrega')?.value.trim();
+      const direccionEnvio = document.getElementById('campo-direccion-envio')?.value.trim();
+      let formularioValido = true;
+
+      if (!nombreEntrega || nombreEntrega.length < 3) {
+        mostrarErrorCampo('error-nombre-entrega', 'El nombre es requerido');
+        formularioValido = false;
+      } else { ocultarErrorCampo('error-nombre-entrega'); }
+
+      if (!cedulaEntrega || !/^\d{6,12}$/.test(cedulaEntrega)) {
+        mostrarErrorCampo('error-cedula-entrega', 'Ingresa un documento válido (6–12 dígitos)');
+        formularioValido = false;
+      } else { ocultarErrorCampo('error-cedula-entrega'); }
+
+      if (!direccionEnvio || direccionEnvio.length < 5) {
+        mostrarErrorCampo('error-direccion-envio', 'La dirección de envío es requerida');
+        formularioValido = false;
+      } else { ocultarErrorCampo('error-direccion-envio'); }
+
+      return formularioValido;
+    }
+
+    /* ─── 3. Confirmar pedido ─── */
+    document.getElementById('boton-confirmar-pedido')?.addEventListener('click', async () => {
+      if (!validarFormularioDireccion()) return;
+
+      const metodoPagoElegido  = campoMetodoPago?.value || 'pse';
+      const nombreDestinatario = document.getElementById('campo-nombre-entrega').value.trim();
+      const cedulaDestinatario = document.getElementById('campo-cedula-entrega').value.trim();
+      const direccionDespacho  = document.getElementById('campo-direccion-envio').value.trim();
+      const articulosPedido    = window.Vanguard?.carrito?.obtenerArticulos() || [];
+      const totalPedido        = window.Vanguard?.carrito?.calcularTotal() || 0;
+
+      const cargaUtilPedido = {
+        datosEntrega: {
+          nombre:    nombreDestinatario,
+          cedula:    cedulaDestinatario,
+          direccion: direccionDespacho
+        },
+        metodoPago: metodoPagoElegido,
+        articulos:  articulosPedido,
+        totalPedido: totalPedido,
+        fechaPedido: new Date().toISOString()
+      };
+
+      /* Cambiar botón a estado cargando */
+      const botonConfirmar = document.getElementById('boton-confirmar-pedido');
+      botonConfirmar.textContent = 'PROCESANDO...';
+      botonConfirmar.disabled = true;
+
+      try {
+        /**
+         * HOOK API — Descomentar al conectar backend:
+         *
+         * const respuesta = await fetch(
+         *   `${window.Vanguard.config.urlApi}/pedidos`,
+         *   {
+         *     method:  'POST',
+         *     headers: {
+         *       'Content-Type':  'application/json',
+         *       'Authorization': `Bearer ${window.Vanguard.autenticacion.obtenerToken()}`
+         *     },
+         *     body: JSON.stringify(cargaUtilPedido)
+         *   }
+         * );
+         * const datos = await respuesta.json();
+         * if (datos.exito) {
+         *   window.Vanguard.carrito.vaciar();
+         *   mostrarConfirmacionPedido();
+         * } else {
+         *   throw new Error(datos.mensaje || 'Error al procesar el pedido');
+         * }
+         */
+
+        console.log('[VANGUARD] Pedido listo para enviar:', cargaUtilPedido);
+
+        /* Simular procesamiento (500ms) antes de confirmar */
+        await new Promise(resolucion => setTimeout(resolucion, 600));
+
+        /* Vaciar el carrito tras confirmar */
+        window.Vanguard?.carrito?.vaciar();
+
+        /* Mostrar confirmación visual */
+        mostrarConfirmacionPedido();
+
+      } catch (errorPedido) {
+        console.error('[VANGUARD] Error en pedido:', errorPedido);
+        window.Vanguard?.notificaciones?.error('Error al procesar el pedido. Intenta de nuevo.');
+        botonConfirmar.textContent = 'CONFIRMAR PEDIDO';
+        botonConfirmar.disabled = false;
+      }
+    });
+
+    function mostrarConfirmacionPedido() {
+      document.getElementById('contenedor-boton-confirmar-pedido')?.classList.add('hidden');
+      const mensajeConfirmacion = document.getElementById('mensaje-confirmacion-pedido');
+      if (mensajeConfirmacion) {
+        mensajeConfirmacion.classList.remove('hidden');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ─── Utilidades de validación ─── */
+    function mostrarErrorCampo(idElemento, mensaje) {
+      const el = document.getElementById(idElemento);
+      if (!el) return;
+      el.textContent = mensaje;
+      el.classList.add('mensaje-error-campo--visible');
+    }
+
+    function ocultarErrorCampo(idElemento) {
+      const el = document.getElementById(idElemento);
+      if (!el) return;
+      el.textContent = '';
+      el.classList.remove('mensaje-error-campo--visible');
+    }
+
+    /* ─── Inicializar cuando el DOM y el JS principal están listos ─── */
+    document.addEventListener('DOMContentLoaded', () => {
+      cargarProductosDesdeCarrito();
+    });
+  </script>
+
+    // ── Utilidades de validación ──
+    function mostrarErrorCampo(idElemento, mensaje) {
+      const elemento = document.getElementById(idElemento);
+      if (elemento) {
+        elemento.textContent = mensaje;
+        elemento.classList.add('mensaje-error-campo--visible');
+      }
+    }
+
+    function ocultarErrorCampo(idElemento) {
+      const elemento = document.getElementById(idElemento);
+      if (elemento) {
+        elemento.textContent = '';
+        elemento.classList.remove('mensaje-error-campo--visible');
+      }
+    }
+
+    window.Vanguard = window.Vanguard || {};
+  </script>
+
+</body>
+</html>

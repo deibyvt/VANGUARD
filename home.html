@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="refresh" content="0; url=index.html" />
+  <title>VANGUARD — Redirigiendo al inicio</title>
+  <meta name="description" content="VANGUARD — Mantente a la vanguardia." />
+  <!--
+    HOME.HTML — Alias semántico de index.html
+    ==========================================
+    Decisión de arquitectura:
+    Este archivo sirve como punto de entrada alternativo para
+    cumplir con la estructura definida en arquitectura.md.
+
+    Usa meta refresh como redirección inmediata. En un entorno
+    de producción con servidor web (Apache/Nginx), esto se
+    implementaría con una redirección 301 en el servidor:
+
+    Apache (.htaccess):
+      Redirect 301 /home.html /index.html
+
+    Nginx:
+      location = /home.html {
+        return 301 /index.html;
+      }
+
+    Esta solución HTML pura funciona sin configuración de servidor.
+  -->
+</head>
+<body>
+  <p style="font-family: sans-serif; text-align: center; padding: 3rem; color: #999;">
+    Redirigiendo a
+    <a href="index.html" style="color: #e31e1e;">VANGUARD</a>...
+  </p>
+  <script>window.location.replace('index.html');</script>
+</body>
+</html>
