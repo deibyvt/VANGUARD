@@ -786,6 +786,7 @@ button { cursor: pointer; }
   margin-top: 0.5rem;
 }
 
+.modal-producto__precio-bloque {}
 
 .modal-producto__etiqueta-disponibles {
   font-family: var(--fuente-condensada);
@@ -860,39 +861,38 @@ button { cursor: pointer; }
    Selector: .seccion-heroe
 ────────────────────────────────────────── */
 .seccion-heroe {
+  background: var(--color-negro-hero);
   position: relative;
   overflow: hidden;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* 1. CAMBIO: Añadimos la imagen de fondo cubriendo todo el contenedor */
-  background-image: url('recursos/imagenes/bg_1.png'); /* Pon aquí la ruta de tu imagen */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 .seccion-heroe__fondo-blob {
   position: absolute;
   inset: 0;
-  /* 2. CAMBIO: Eliminamos el background sólido y el clip-path. */
-  /* Colocamos un gradiente oscuro para que el título blanco siga siendo legible */
-  background: linear-gradient(to right, rgba(26, 26, 26, 0.85), rgba(26, 26, 26, 0.4));
-  z-index: 1; /* Le asignamos z-index 1 */
+  background: #3a3a3a;
+  clip-path: polygon(
+    0% 0%, 100% 0%, 100% 55%,
+    80% 65%, 65% 72%, 50% 80%,
+    35% 85%, 20% 82%, 8% 75%, 0% 65%
+  );
+  z-index: 0;
 }
 
 .seccion-heroe__imagen-modelo {
   position: absolute;
   bottom: 0;
-  z-index: 2; /* 3. CAMBIO: Subimos a 2 para que quede sobre el fondo */
+  z-index: 1;
   pointer-events: none;
   filter: drop-shadow(0 20px 60px rgba(0,0,0,0.6));
 }
 
 .seccion-heroe__contenido {
   position: relative;
-  z-index: 3; /* 3. CAMBIO: Subimos a 3 para que los textos y botones estén al frente de todo */
+  z-index: 2;
   max-width: 1280px;
   margin: 0 auto;
   width: 100%;
@@ -1030,3 +1030,74 @@ button { cursor: pointer; }
 .js-cargando { cursor: wait; opacity: 0.6; pointer-events: none; }
 .js-oculto   { display: none !important; }
 .js-visible  { display: block !important; }
+
+/* ──────────────────────────────────────────
+   CONTADOR DE ARTÍCULOS EN NAVBAR
+   Selector: .contador-carrito-navbar
+   ──────────────────────────────────────────
+   Badge rojo circular que aparece sobre el
+   ícono del carrito en la barra de navegación.
+   El módulo JS lo actualiza tras cada cambio
+   en el carrito (agregar/eliminar).
+   Principio: invisible por defecto, solo visible
+   cuando hay artículos (.js-oculto lo gestiona).
+────────────────────────────────────────── */
+.icono-carrito-navbar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--fuente-condensada);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--color-blanco);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color var(--transicion-rapida);
+}
+
+.icono-carrito-navbar:hover { color: var(--color-rojo-principal); }
+
+.contador-carrito-navbar {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  background: var(--color-rojo-principal);
+  color: var(--color-blanco);
+  font-family: var(--fuente-condensada);
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0;
+  border-radius: var(--radio-total);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  line-height: 1;
+  transition: transform var(--transicion-rapida), background var(--transicion-normal);
+  pointer-events: none;
+}
+
+/* Animación de pulso al agregar un artículo */
+.contador-carrito-navbar--pulsando {
+  animation: pulso-contador 400ms ease forwards;
+}
+
+@keyframes pulso-contador {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.4); background: #ff4444; }
+  100% { transform: scale(1); }
+}
+
+/* ──────────────────────────────────────────
+   BARRA DE NAVEGACIÓN — variante con buscador
+   Usada en: categorias, producto, carrito, checkout
+   Clase diferenciadora: .barra-navegacion--con-buscador
+────────────────────────────────────────── */
+.barra-navegacion--con-buscador .barra-navegacion__contenedor {
+  max-width: 100%;
+  gap: 1rem;
+}
