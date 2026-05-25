@@ -1,660 +1,625 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-pagina="categorias">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Categorías — VANGUARD</title>
-  <meta name="description" content="Explora todas las categorías de VANGUARD: moda, tecnología, vehículos y más." />
-
+  <meta name="description" content="Explora todas las categorías de VANGUARD." />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/sistema-diseno.css" />
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'vng-negro': '#1a1a1a',
-            'vng-negro-2': '#2d2d2d',
-            'vng-rojo': '#e31e1e',
-            'vng-rojo-hover': '#c41818',
-            'vng-gris': '#e8e8e8',
-            'vng-gris-fondo': '#ececec',
-            'vng-gris-sidebar': '#c8c8c8',
-          },
-          fontFamily: {
-            'display': ['Bebas Neue', 'Arial Black', 'sans-serif'],
-            'condensada': ['Barlow Condensed', 'Arial Narrow', 'sans-serif'],
-            'cuerpo': ['Barlow', 'Arial', 'sans-serif'],
-          },
-        }
-      }
-    }
-  </script>
-
-  <style>
-    /* Layout principal: área de contenido + sidebar gris */
-    .contenedor-categorias-layout {
-      display: grid;
-      grid-template-columns: 1fr;
-      min-height: calc(100vh - 72px);
-    }
-
-    @media (min-width: 1024px) {
-      .contenedor-categorias-layout {
-        grid-template-columns: 1fr 280px;
-      }
-    }
-
-    /* Área principal oscura (fondo) */
-    .area-productos {
-      background: #2a2a2a;
-      padding: 2rem 1.5rem;
-    }
-
-    /* Sidebar gris claro */
-    .sidebar-categorias {
-      background: #c8c8c8;
-      padding: 2rem 1.5rem;
-    }
-
-    /* Tarjeta de producto en grid */
-    .tarjeta-producto-grid {
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 200ms ease, box-shadow 200ms ease;
-    }
-
-    .tarjeta-producto-grid:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.25);
-    }
-
-    /* Modal de producto */
-    .overlay-modal-producto {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-
-    .overlay-modal-producto.activo {
-      display: flex;
-    }
-
-    .contenedor-modal-producto {
-      background: white;
-      border-radius: 24px;
-      max-width: 700px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
-      padding: 2rem;
-    }
-
-    /* Navbar especial para página categorías: oscura con buscador */
-    .buscador-navbar {
-      background: transparent;
-      border: 1.5px solid rgba(255,255,255,0.3);
-      border-radius: 9999px;
-      padding: 0.5rem 1rem;
-      color: white;
-      font-size: 0.85rem;
-      outline: none;
-      width: 280px;
-      transition: border-color 200ms ease, width 300ms ease;
-    }
-
-    .buscador-navbar:focus {
-      border-color: white;
-      width: 340px;
-    }
-
-    .buscador-navbar::placeholder {
-      color: rgba(255,255,255,0.5);
-      text-transform: uppercase;
-      font-family: 'Barlow Condensed', sans-serif;
-      letter-spacing: 0.1em;
-    }
-
-    @media (max-width: 640px) {
-      .buscador-navbar, .buscador-navbar:focus { width: 100%; }
-    }
-
-    /* Lista del sidebar */
-    .lista-subcategoria {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #333;
-      cursor: pointer;
-      transition: color 200ms;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.15rem 0;
-    }
-
-    .lista-subcategoria::before {
-      content: '•';
-      color: #1a1a1a;
-      font-size: 0.6rem;
-    }
-
-    .lista-subcategoria:hover { color: #e31e1e; }
-    .lista-subcategoria.activa { color: #e31e1e; }
-
-    .titulo-grupo-sidebar {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.3rem;
-      letter-spacing: 0.05em;
-      color: #1a1a1a;
-      margin-bottom: 0.5rem;
-      margin-top: 1.5rem;
-    }
-    .titulo-grupo-sidebar:first-child { margin-top: 0; }
-  </style>
+  <script>tailwind.config={theme:{extend:{colors:{'vng-negro':'#1a1a1a','vng-negro-2':'#2d2d2d','vng-rojo':'#e31e1e','vng-gris-fondo':'#ececec','vng-gris-barra':'#c8c8c8'},fontFamily:{'display':['Bebas Neue','Arial Black','sans-serif'],'condensada':['Barlow Condensed','Arial Narrow','sans-serif'],'cuerpo':['Barlow','Arial','sans-serif']}}}}</script>
 </head>
 
-<body class="font-cuerpo bg-vng-negro" id="pagina-categorias">
+<body class="font-cuerpo" style="background:#2a2a2a;" id="pagina-categorias">
 
-  <!-- ─── NAVBAR ESPECIAL (con buscador, versión oscura) ─── -->
-  <header id="navbar-categorias" class="bg-vng-negro sticky top-0 z-50 w-full border-b border-white/10" role="banner">
-    <nav class="flex items-center justify-between px-6 py-3 gap-4">
-      <!-- Logo -->
-      <a href="index.html" class="font-display text-white text-2xl tracking-widest hover:text-vng-rojo transition-colors flex-shrink-0" aria-label="VANGUARD">VNGRD</a>
+  <!-- ═══════════════════════════════════════
+       BARRA DE NAVEGACIÓN CATEGORÍAS
+       Variante con buscador central — fiel al PDF pág 4
+  ═══════════════════════════════════════ -->
+  <header id="cabecera-categorias" class="barra-navegacion" role="banner">
+    <nav id="navegacion-categorias" class="flex items-center justify-between px-6 py-3 gap-4 max-w-full"
+         aria-label="Navegación de categorías">
 
-      <!-- Link Inicio -->
-      <a href="index.html" class="font-condensada text-white text-sm tracking-widest uppercase hover:text-vng-rojo transition-colors hidden md:block flex-shrink-0">INICIO</a>
+      <!-- Logotipo -->
+      <a href="index.html" id="logotipo-vanguard"
+         class="barra-navegacion__logotipo flex-shrink-0"
+         aria-label="VANGUARD — Inicio">VNGRD</a>
+
+      <!-- Enlace Inicio (solo desktop) -->
+      <a href="index.html"
+         class="barra-navegacion__enlace hidden md:block flex-shrink-0"
+         data-enlace-nav="inicio">INICIO</a>
 
       <!-- Buscador central -->
-      <div class="flex-1 max-w-md relative" role="search">
-        <label for="campo-buscar-producto" class="sr-only">Buscar producto</label>
+      <div id="contenedor-buscador" class="flex-1 max-w-md relative" role="search">
+        <label for="campo-buscar-productos" class="sr-only">Buscar producto</label>
         <input
           type="search"
-          id="campo-buscar-producto"
-          class="buscador-navbar w-full"
+          id="campo-buscar-productos"
+          name="busqueda"
+          class="buscador-navegacion w-full pr-10"
           placeholder="BUSCAR PRODUCTO"
           aria-label="Buscar producto en VANGUARD"
           autocomplete="off"
-          data-buscador="productos"
+          data-accion-buscador="productos"
         />
         <button
-          class="absolute right-3 top-1/2 -translate-y-1/2 text-white/60 hover:text-white"
-          aria-label="Ejecutar búsqueda"
+          id="boton-ejecutar-busqueda"
+          class="absolute right-3 top-1/2 -translate-y-1/2"
+          style="color:rgba(255,255,255,0.5);"
+          aria-label="Buscar"
         >
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+          </svg>
         </button>
       </div>
 
-      <!-- Categorías + menú hamburguesa -->
-      <div class="flex items-center gap-3 flex-shrink-0">
-        <span class="font-condensada text-white text-sm tracking-widest uppercase hidden md:block">CATEGORÍAS</span>
+      <!-- Categorías + hamburguesa -->
+      <div id="grupo-acciones-barra" class="flex items-center gap-3 flex-shrink-0">
+        <span class="barra-navegacion__enlace hidden md:block"
+              aria-hidden="true">CATEGORÍAS</span>
+        <!-- Carrito con contador -->
+        <a href="carrito.html" id="enlace-carrito-navbar"
+           class="icono-carrito-navbar" aria-label="Ver carrito"
+           data-enlace-nav="carrito">
+          <svg width="20" height="20" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+          <span id="contador-carrito-navbar" class="contador-carrito-navbar js-oculto"
+                aria-live="polite">0</span>
+        </a>
         <button
-          id="boton-menu-categorias"
-          class="text-white p-1 focus:outline-none focus:ring-2 focus:ring-vng-rojo rounded"
-          aria-label="Menú de categorías"
+          id="boton-menu-movil"
+          class="barra-navegacion__boton-menu"
           aria-expanded="false"
-          aria-controls="panel-categorias-movil"
+          aria-controls="panel-menu-categorias"
+          aria-label="Abrir menú de categorías"
         >
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
         </button>
       </div>
     </nav>
 
-    <!-- Panel categorías móvil -->
-    <div id="panel-categorias-movil" class="hidden bg-vng-negro-2 border-t border-white/10 px-6 py-4 md:hidden">
-      <ul class="grid grid-cols-2 gap-2 list-none">
-        <li><a href="?cat=moda-hombre" class="font-condensada text-white/80 text-xs tracking-wider uppercase hover:text-vng-rojo">Moda Hombre</a></li>
-        <li><a href="?cat=moda-mujer" class="font-condensada text-white/80 text-xs tracking-wider uppercase hover:text-vng-rojo">Moda Mujer</a></li>
-        <li><a href="?cat=accesorios-tecnologia" class="font-condensada text-white/80 text-xs tracking-wider uppercase hover:text-vng-rojo">Accesorios</a></li>
-        <li><a href="?cat=vehiculos-deporte" class="font-condensada text-white/80 text-xs tracking-wider uppercase hover:text-vng-rojo">Vehículos</a></li>
-        <li><a href="login.html" class="font-condensada text-white/80 text-xs tracking-wider uppercase hover:text-vng-rojo">Iniciar Sesión</a></li>
-        <li><a href="registro.html" class="font-condensada text-white/80 text-xs tracking-wider uppercase hover:text-vng-rojo">Registrarme</a></li>
+    <!-- Panel menú móvil -->
+    <div id="panel-menu-categorias" class="menu-movil" role="navigation"
+         aria-label="Menú móvil categorías">
+      <ul class="menu-movil__lista" role="list">
+        <li><a href="index.html"          class="menu-movil__enlace">Inicio</a></li>
+        <li><a href="categorias.html"     class="menu-movil__enlace" style="color:#e31e1e;">Categorías</a></li>
+        <li><a href="login.html"          class="menu-movil__enlace">Iniciar Sesión</a></li>
+        <li><a href="registro.html"       class="menu-movil__enlace">Registrarme</a></li>
       </ul>
     </div>
   </header>
 
 
-  <!-- ─── LAYOUT PRINCIPAL ─── -->
-  <div class="contenedor-categorias-layout">
+  <!-- ═══════════════════════════════════════
+       LAYOUT PRINCIPAL: área productos + barra lateral
+       Decisión técnica: CSS Grid 2 columnas
+       Mobile: 1 col (barra lateral se oculta, accesible vía hamburguesa)
+       Desktop (lg): col principal flexible + 280px barra lateral fija
+  ═══════════════════════════════════════ -->
+  <div id="contenedor-pagina-categorias" class="contenedor-pagina-categorias">
 
-    <!-- Área de productos (izquierda/principal) -->
-    <main id="contenido-principal" class="area-productos" role="main" aria-label="Listado de productos">
+    <!-- ── ÁREA PRINCIPAL DE PRODUCTOS ── -->
+    <main id="area-listado-productos" class="area-productos-principal" role="main"
+          aria-label="Listado de productos por categoría">
 
       <!-- Encabezado de categoría activa -->
-      <header class="mb-8" aria-label="Categoría activa">
-        <h1 class="font-display text-white leading-none" style="font-size: clamp(2.5rem, 7vw, 4.5rem);">
-          <span id="nombre-categoria-activa">MODA HOMBRE</span>
-          <span
-            id="nombre-subcategoria-activa"
-            class="font-condensada italic font-bold text-white/50 ml-4"
-            style="font-size: clamp(1rem, 3vw, 1.8rem);"
-          >
+      <header id="encabezado-categoria-activa" class="mb-8"
+              aria-label="Categoría seleccionada actualmente">
+        <h1 id="titulo-categoria-activa"
+            class="font-display text-white leading-none"
+            style="font-size:clamp(2.5rem,7vw,4.5rem);">
+          MODA HOMBRE
+          <span id="etiqueta-subcategoria-activa"
+                class="font-condensada italic font-bold"
+                style="font-size:clamp(1rem,3vw,1.8rem);color:rgba(255,255,255,0.45);margin-left:1rem;">
             ZAPATOS DE HOMBRE
           </span>
         </h1>
       </header>
 
-      <!-- Grid de productos 3 columnas -->
-      <section
-        id="grid-productos"
-        class="grid grid-cols-2 md:grid-cols-3 gap-4"
-        role="list"
-        aria-label="Productos de la categoría seleccionada"
-        data-categoria="moda-hombre"
-      >
+      <!-- Grilla de tarjetas de producto — 3 columnas -->
+      <!-- Decisión: 2 col en mobile, 3 col desde md.
+           Preparado para JS: cada tarjeta tiene data-id-producto
+           para que el script cargue datos reales desde API -->
+      <section id="grilla-tarjetas-producto"
+               class="grid grid-cols-2 md:grid-cols-3 gap-4"
+               role="list"
+               aria-label="Productos de la categoría seleccionada"
+               data-categoria-activa="moda-hombre">
 
         <!-- Tarjeta de producto — patrón reutilizable -->
-        <!-- JS futuro: estas tarjetas se generarán dinámicamente desde API -->
-
-        <article
-          class="tarjeta-producto-grid"
-          role="listitem"
-          data-producto-id="prod-001"
-          data-abrir-modal="true"
-          tabindex="0"
-          aria-label="Ver producto: Gigabyte Aorus Men Tshirt — $24.99"
-        >
-          <div class="aspect-square bg-white flex items-center justify-center p-4">
-            <img
-              src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300&h=300&fit=crop"
-              alt="Camiseta Gigabyte Aorus hombre"
-              class="w-full h-full object-contain"
-              loading="lazy"
-            />
+        <!-- JS futuro: renderizar dinámicamente desde: GET /api/v1/productos?categoria=moda-hombre -->
+        <article class="tarjeta-producto js-animacion-entrada"
+                 role="listitem"
+                 data-id-producto="prod-001"
+                 data-abrir-modal-producto="true"
+                 tabindex="0"
+                 aria-label="Ver Gigabyte Aorus Men Tshirt — $24.99">
+          <div class="tarjeta-producto__imagen-contenedor">
+            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300&h=300&fit=crop"
+                 alt="Camiseta Gigabyte Aorus" class="tarjeta-producto__imagen" loading="lazy" />
           </div>
-          <div class="p-3">
-            <p class="font-condensada font-bold text-vng-negro text-xs tracking-[0.15em] uppercase">MODA HOMBRE</p>
-          </div>
+          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
         </article>
 
-        <article class="tarjeta-producto-grid" role="listitem" data-producto-id="prod-002" data-abrir-modal="true" tabindex="0" aria-label="Ver producto">
-          <div class="aspect-square bg-white flex items-center justify-center p-4">
-            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300&h=300&fit=crop&sat=-50" alt="Camiseta hombre 2" class="w-full h-full object-contain" loading="lazy" />
+        <article class="tarjeta-producto js-animacion-entrada"
+                 role="listitem" data-id-producto="prod-002"
+                 data-abrir-modal-producto="true" tabindex="0"
+                 aria-label="Ver producto de moda hombre">
+          <div class="tarjeta-producto__imagen-contenedor">
+            <img src="https://images.unsplash.com/photo-1562157873-818bc0726f68?w=300&h=300&fit=crop"
+                 alt="Camiseta hombre 2" class="tarjeta-producto__imagen" loading="lazy" />
           </div>
-          <div class="p-3"><p class="font-condensada font-bold text-vng-negro text-xs tracking-[0.15em] uppercase">MODA HOMBRE</p></div>
+          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
         </article>
 
-        <article class="tarjeta-producto-grid" role="listitem" data-producto-id="prod-003" data-abrir-modal="true" tabindex="0" aria-label="Ver producto">
-          <div class="aspect-square bg-white flex items-center justify-center p-4">
-            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300&h=300&fit=crop&hue=180" alt="Camiseta hombre 3" class="w-full h-full object-contain" loading="lazy" />
+        <article class="tarjeta-producto js-animacion-entrada"
+                 role="listitem" data-id-producto="prod-003"
+                 data-abrir-modal-producto="true" tabindex="0"
+                 aria-label="Ver producto de moda hombre">
+          <div class="tarjeta-producto__imagen-contenedor">
+            <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=300&h=300&fit=crop"
+                 alt="Camiseta hombre 3" class="tarjeta-producto__imagen" loading="lazy" />
           </div>
-          <div class="p-3"><p class="font-condensada font-bold text-vng-negro text-xs tracking-[0.15em] uppercase">MODA HOMBRE</p></div>
+          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
         </article>
 
-        <article class="tarjeta-producto-grid" role="listitem" data-producto-id="prod-004" data-abrir-modal="true" tabindex="0" aria-label="Ver producto">
-          <div class="aspect-square bg-white flex items-center justify-center p-4">
-            <img src="https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=300&h=300&fit=crop" alt="Camiseta hombre 4" class="w-full h-full object-contain" loading="lazy" />
+        <article class="tarjeta-producto js-animacion-entrada"
+                 role="listitem" data-id-producto="prod-004"
+                 data-abrir-modal-producto="true" tabindex="0"
+                 aria-label="Ver producto de moda hombre">
+          <div class="tarjeta-producto__imagen-contenedor">
+            <img src="https://images.unsplash.com/photo-1554568218-0f1715e72254?w=300&h=300&fit=crop"
+                 alt="Camiseta hombre 4" class="tarjeta-producto__imagen" loading="lazy" />
           </div>
-          <div class="p-3"><p class="font-condensada font-bold text-vng-negro text-xs tracking-[0.15em] uppercase">MODA HOMBRE</p></div>
+          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
         </article>
 
-        <article class="tarjeta-producto-grid" role="listitem" data-producto-id="prod-005" data-abrir-modal="true" tabindex="0" aria-label="Ver producto">
-          <div class="aspect-square bg-white flex items-center justify-center p-4">
-            <img src="https://images.unsplash.com/photo-1562157873-818bc0726f68?w=300&h=300&fit=crop" alt="Camiseta hombre 5" class="w-full h-full object-contain" loading="lazy" />
+        <article class="tarjeta-producto js-animacion-entrada"
+                 role="listitem" data-id-producto="prod-005"
+                 data-abrir-modal-producto="true" tabindex="0"
+                 aria-label="Ver producto de moda hombre">
+          <div class="tarjeta-producto__imagen-contenedor">
+            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300&h=300&fit=crop&flip=h"
+                 alt="Camiseta hombre 5" class="tarjeta-producto__imagen" loading="lazy" />
           </div>
-          <div class="p-3"><p class="font-condensada font-bold text-vng-negro text-xs tracking-[0.15em] uppercase">MODA HOMBRE</p></div>
+          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
         </article>
 
-        <article class="tarjeta-producto-grid" role="listitem" data-producto-id="prod-006" data-abrir-modal="true" tabindex="0" aria-label="Ver producto">
-          <div class="aspect-square bg-white flex items-center justify-center p-4">
-            <img src="https://images.unsplash.com/photo-1622445275576-721325763afe?w=300&h=300&fit=crop" alt="Camiseta hombre 6" class="w-full h-full object-contain" loading="lazy" />
+        <article class="tarjeta-producto js-animacion-entrada"
+                 role="listitem" data-id-producto="prod-006"
+                 data-abrir-modal-producto="true" tabindex="0"
+                 aria-label="Ver producto de moda hombre">
+          <div class="tarjeta-producto__imagen-contenedor">
+            <img src="https://images.unsplash.com/photo-1622445275576-721325763afe?w=300&h=300&fit=crop"
+                 alt="Camiseta hombre 6" class="tarjeta-producto__imagen" loading="lazy" />
           </div>
-          <div class="p-3"><p class="font-condensada font-bold text-vng-negro text-xs tracking-[0.15em] uppercase">MODA HOMBRE</p></div>
+          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
         </article>
 
-        <article class="tarjeta-producto-grid" role="listitem" data-producto-id="prod-007" data-abrir-modal="true" tabindex="0" aria-label="Ver producto">
-          <div class="aspect-square bg-white flex items-center justify-center p-4">
-            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300&h=300&fit=crop&flip=h" alt="Camiseta hombre 7" class="w-full h-full object-contain" loading="lazy" />
+        <article class="tarjeta-producto js-animacion-entrada"
+                 role="listitem" data-id-producto="prod-007"
+                 data-abrir-modal-producto="true" tabindex="0"
+                 aria-label="Ver producto de moda hombre">
+          <div class="tarjeta-producto__imagen-contenedor">
+            <img src="https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=300&h=300&fit=crop"
+                 alt="Camiseta hombre 7" class="tarjeta-producto__imagen" loading="lazy" />
           </div>
-          <div class="p-3"><p class="font-condensada font-bold text-vng-negro text-xs tracking-[0.15em] uppercase">MODA HOMBRE</p></div>
+          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
         </article>
 
-        <article class="tarjeta-producto-grid" role="listitem" data-producto-id="prod-008" data-abrir-modal="true" tabindex="0" aria-label="Ver producto">
-          <div class="aspect-square bg-white flex items-center justify-center p-4">
-            <img src="https://images.unsplash.com/photo-1554568218-0f1715e72254?w=300&h=300&fit=crop" alt="Ropa hombre 8" class="w-full h-full object-contain" loading="lazy" />
+        <article class="tarjeta-producto js-animacion-entrada"
+                 role="listitem" data-id-producto="prod-008"
+                 data-abrir-modal-producto="true" tabindex="0"
+                 aria-label="Ver producto de moda hombre">
+          <div class="tarjeta-producto__imagen-contenedor">
+            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300&h=300&fit=crop&sat=-30"
+                 alt="Camiseta hombre 8" class="tarjeta-producto__imagen" loading="lazy" />
           </div>
-          <div class="p-3"><p class="font-condensada font-bold text-vng-negro text-xs tracking-[0.15em] uppercase">MODA HOMBRE</p></div>
+          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
         </article>
 
-        <article class="tarjeta-producto-grid" role="listitem" data-producto-id="prod-009" data-abrir-modal="true" tabindex="0" aria-label="Ver producto">
-          <div class="aspect-square bg-white flex items-center justify-center p-4">
-            <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=300&h=300&fit=crop" alt="Ropa hombre 9" class="w-full h-full object-contain" loading="lazy" />
+        <article class="tarjeta-producto js-animacion-entrada"
+                 role="listitem" data-id-producto="prod-009"
+                 data-abrir-modal-producto="true" tabindex="0"
+                 aria-label="Ver producto de moda hombre">
+          <div class="tarjeta-producto__imagen-contenedor">
+            <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=300&h=300&fit=crop&flip=h"
+                 alt="Camiseta hombre 9" class="tarjeta-producto__imagen" loading="lazy" />
           </div>
-          <div class="p-3"><p class="font-condensada font-bold text-vng-negro text-xs tracking-[0.15em] uppercase">MODA HOMBRE</p></div>
+          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
         </article>
 
       </section>
 
-      <!-- Paginación — Hook JS para paginación futura -->
-      <nav
-        id="paginacion-productos"
-        class="flex items-center justify-center gap-3 mt-12"
-        aria-label="Paginación de productos"
-      >
-        <button
-          class="w-8 h-3 rounded-full bg-white/60 hover:bg-white transition-colors"
-          aria-label="Página 1"
-          data-pagina="1"
-        ></button>
-        <button
-          class="w-8 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-colors"
-          aria-label="Página 2"
-          data-pagina="2"
-        ></button>
+      <!-- Paginación — Hook JS para carga dinámica futura -->
+      <nav id="paginacion-productos"
+           class="flex items-center justify-center gap-3 mt-12 pb-4"
+           aria-label="Paginación de productos">
+        <button class="w-8 h-3 rounded-full bg-white/70 hover:bg-white transition-colors"
+                aria-label="Página 1 — activa" data-numero-pagina="1"
+                style="cursor:pointer;border:none;"></button>
+        <button class="w-8 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-colors"
+                aria-label="Página 2" data-numero-pagina="2"
+                style="cursor:pointer;border:none;"></button>
       </nav>
 
     </main>
 
 
-    <!-- Sidebar derecho de categorías -->
-    <aside
-      id="sidebar-categorias"
-      class="sidebar-categorias hidden lg:block"
-      role="navigation"
-      aria-label="Categorías y subcategorías"
-    >
+    <!-- ── BARRA LATERAL DE CATEGORÍAS ── -->
+    <!-- Decisión: se oculta en mobile (display:none en <lg) y
+         en mobile el usuario navega por el menú hamburguesa.
+         En desktop aparece como sidebar fija de 280px. -->
+    <aside id="barra-lateral-categorias"
+           class="barra-lateral-categorias hidden lg:block"
+           role="navigation"
+           aria-label="Categorías y subcategorías">
 
-      <!-- Moda Hombre -->
-      <div class="grupo-sidebar" data-grupo="moda-hombre">
-        <h2 class="titulo-grupo-sidebar">MODA HOMBRE</h2>
-        <ul class="flex flex-col gap-1 list-none" role="list">
-          <li><button class="lista-subcategoria" data-cat="moda-hombre" data-subcat="camisas-hombre" aria-label="Camisas de hombre">CAMISAS DE HOMBRE</button></li>
-          <li><button class="lista-subcategoria" data-cat="moda-hombre" data-subcat="zapatos-hombre" aria-label="Zapatos de hombre">ZAPATOS DE HOMBRE</button></li>
-          <li><button class="lista-subcategoria" data-cat="moda-hombre" data-subcat="relojes-hombre" aria-label="Relojes de hombre">RELOJES DE HOMBRE</button></li>
+      <!-- Grupo: Moda Hombre -->
+      <div class="grupo-barra-lateral" data-grupo-categoria="moda-hombre">
+        <h2 class="barra-lateral-categorias__titulo-grupo">MODA HOMBRE</h2>
+        <ul class="barra-lateral-categorias__lista" role="list">
+          <li>
+            <button class="barra-lateral-categorias__enlace"
+                    data-categoria="moda-hombre"
+                    data-subcategoria="camisas-hombre"
+                    aria-label="Filtrar por Camisas de Hombre">
+              CAMISAS DE HOMBRE
+            </button>
+          </li>
+          <li>
+            <button class="barra-lateral-categorias__enlace barra-lateral-categorias__enlace--activo"
+                    data-categoria="moda-hombre"
+                    data-subcategoria="zapatos-hombre"
+                    aria-label="Filtrar por Zapatos de Hombre — activo"
+                    aria-pressed="true">
+              ZAPATOS DE HOMBRE
+            </button>
+          </li>
+          <li>
+            <button class="barra-lateral-categorias__enlace"
+                    data-categoria="moda-hombre"
+                    data-subcategoria="relojes-hombre"
+                    aria-label="Filtrar por Relojes de Hombre">
+              RELOJES DE HOMBRE
+            </button>
+          </li>
         </ul>
       </div>
 
-      <!-- Moda Mujer -->
-      <div class="grupo-sidebar" data-grupo="moda-mujer">
-        <h2 class="titulo-grupo-sidebar">MODA MUJER</h2>
-        <ul class="flex flex-col gap-1 list-none" role="list">
-          <li><button class="lista-subcategoria" data-cat="moda-mujer" data-subcat="bolsos-mujer">BOLSOS DE MUJER</button></li>
-          <li><button class="lista-subcategoria" data-cat="moda-mujer" data-subcat="vestidos-mujer">VESTIDOS DE MUJER</button></li>
-          <li><button class="lista-subcategoria" data-cat="moda-mujer" data-subcat="joyeria-mujer">JOYERÍA DE MUJER</button></li>
-          <li><button class="lista-subcategoria" data-cat="moda-mujer" data-subcat="zapatos-mujer">ZAPATOS DE MUJER</button></li>
-          <li><button class="lista-subcategoria" data-cat="moda-mujer" data-subcat="relojes-mujer">RELOJES DE MUJER</button></li>
-          <li><button class="lista-subcategoria" data-cat="moda-mujer" data-subcat="blusas-mujer">PRENDAS SUPERIORES/BLUSAS</button></li>
+      <!-- Grupo: Moda Mujer -->
+      <div class="grupo-barra-lateral" data-grupo-categoria="moda-mujer">
+        <h2 class="barra-lateral-categorias__titulo-grupo">MODA MUJER</h2>
+        <ul class="barra-lateral-categorias__lista" role="list">
+          <li><button class="barra-lateral-categorias__enlace" data-categoria="moda-mujer" data-subcategoria="bolsos-mujer">BOLSOS DE MUJER</button></li>
+          <li><button class="barra-lateral-categorias__enlace" data-categoria="moda-mujer" data-subcategoria="vestidos-mujer">VESTIDOS DE MUJER</button></li>
+          <li><button class="barra-lateral-categorias__enlace" data-categoria="moda-mujer" data-subcategoria="joyeria-mujer">JOYERÍA DE MUJER</button></li>
+          <li><button class="barra-lateral-categorias__enlace" data-categoria="moda-mujer" data-subcategoria="zapatos-mujer">ZAPATOS DE MUJER</button></li>
+          <li><button class="barra-lateral-categorias__enlace" data-categoria="moda-mujer" data-subcategoria="relojes-mujer">RELOJES DE MUJER</button></li>
+          <li><button class="barra-lateral-categorias__enlace" data-categoria="moda-mujer" data-subcategoria="blusas-mujer">PRENDAS SUPERIORES/BLUSAS</button></li>
         </ul>
       </div>
 
-      <!-- Accesorios y Tecnología -->
-      <div class="grupo-sidebar" data-grupo="accesorios-tecnologia">
-        <h2 class="titulo-grupo-sidebar">ACCESORIOS Y TECNOLOGÍA</h2>
-        <ul class="flex flex-col gap-1 list-none" role="list">
-          <li><button class="lista-subcategoria" data-cat="accesorios-tecnologia" data-subcat="portatiles">PORTÁTILES</button></li>
-          <li><button class="lista-subcategoria" data-cat="accesorios-tecnologia" data-subcat="accesorios-celulares">ACCESORIOS PARA CELULARES</button></li>
-          <li><button class="lista-subcategoria" data-cat="accesorios-tecnologia" data-subcat="celulares">CELULARES</button></li>
-          <li><button class="lista-subcategoria" data-cat="accesorios-tecnologia" data-subcat="tablets">TABLETS</button></li>
+      <!-- Grupo: Accesorios y Tecnología -->
+      <div class="grupo-barra-lateral" data-grupo-categoria="accesorios-tecnologia">
+        <h2 class="barra-lateral-categorias__titulo-grupo">ACCESORIOS Y TECNOLOGÍA</h2>
+        <ul class="barra-lateral-categorias__lista" role="list">
+          <li><button class="barra-lateral-categorias__enlace" data-categoria="accesorios-tecnologia" data-subcategoria="portatiles">PORTÁTILES</button></li>
+          <li><button class="barra-lateral-categorias__enlace" data-categoria="accesorios-tecnologia" data-subcategoria="accesorios-celular">ACCESORIOS PARA CELULARES</button></li>
+          <li><button class="barra-lateral-categorias__enlace" data-categoria="accesorios-tecnologia" data-subcategoria="celulares">CELULARES</button></li>
+          <li><button class="barra-lateral-categorias__enlace" data-categoria="accesorios-tecnologia" data-subcategoria="tablets">TABLETS</button></li>
         </ul>
       </div>
 
-      <!-- Vehículos y Deporte -->
-      <div class="grupo-sidebar" data-grupo="vehiculos-deporte">
-        <h2 class="titulo-grupo-sidebar">VEHICULOS Y DEPORTE</h2>
-        <ul class="flex flex-col gap-1 list-none" role="list">
-          <li><button class="lista-subcategoria" data-cat="vehiculos-deporte" data-subcat="motocicletas">MOTOCICLETAS</button></li>
-          <li><button class="lista-subcategoria" data-cat="vehiculos-deporte" data-subcat="vehiculos-automoviles">VEHÍCULOS/AUTOMÓVILES</button></li>
-          <li><button class="lista-subcategoria" data-cat="vehiculos-deporte" data-subcat="accesorios-deportivos">ACCESORIOS DEPORTIVOS</button></li>
+      <!-- Grupo: Vehículos y Deporte -->
+      <div class="grupo-barra-lateral" data-grupo-categoria="vehiculos-deporte">
+        <h2 class="barra-lateral-categorias__titulo-grupo">VEHICULOS Y DEPORTE</h2>
+        <ul class="barra-lateral-categorias__lista" role="list">
+          <li><button class="barra-lateral-categorias__enlace" data-categoria="vehiculos-deporte" data-subcategoria="motocicletas">MOTOCICLETAS</button></li>
+          <li><button class="barra-lateral-categorias__enlace" data-categoria="vehiculos-deporte" data-subcategoria="vehiculos-automoviles">VEHÍCULOS/AUTOMÓVILES</button></li>
+          <li><button class="barra-lateral-categorias__enlace" data-categoria="vehiculos-deporte" data-subcategoria="accesorios-deportivos">ACCESORIOS DEPORTIVOS</button></li>
         </ul>
       </div>
 
     </aside>
 
-  </div><!-- fin contenedor-categorias-layout -->
+  </div><!-- fin contenedor-pagina-categorias -->
 
 
-  <!-- ═══════════════════════════════════════════
+  <!-- ═══════════════════════════════════════
        MODAL DE PRODUCTO INDIVIDUAL
-       Se activa al hacer click en una tarjeta
-       Replica exactamente el diseño del PDF página 5
-  ════════════════════════════════════════════ -->
-  <div
-    id="overlay-modal-producto"
-    class="overlay-modal-producto"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="modal-nombre-producto"
-    aria-describedby="modal-descripcion-producto"
-  >
-    <div class="contenedor-modal-producto" id="contenedor-modal">
+       Fiel al PDF página 5: modal sobre fondo oscuro
+       con imagen izquierda + info derecha + botón cerrar rojo
+       Arquitectura: 1 solo modal que JS rellena dinámicamente
+  ═══════════════════════════════════════ -->
+  <div id="capa-modal-producto"
+       class="capa-modal-producto"
+       role="dialog"
+       aria-modal="true"
+       aria-labelledby="modal-nombre-producto"
+       aria-describedby="modal-descripcion-producto">
 
-      <!-- Botón cerrar modal -->
-      <button
-        id="boton-cerrar-modal"
-        class="absolute top-4 right-4 w-8 h-8 bg-vng-rojo text-white rounded-full flex items-center justify-center hover:bg-vng-rojo-hover transition-colors z-10"
-        aria-label="Cerrar detalle de producto"
-      >
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    <div id="contenedor-modal-producto" class="contenedor-modal-producto">
+
+      <!-- Botón cerrar -->
+      <button id="boton-cerrar-modal-producto"
+              class="modal-producto__boton-cerrar"
+              aria-label="Cerrar detalle del producto">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="3"
+             viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
       </button>
 
-      <!-- Contenido del modal: imagen izquierda + info derecha -->
-      <div class="flex flex-col md:flex-row gap-8 items-start">
+      <!-- Cuerpo del modal: imagen + información -->
+      <div class="modal-producto__cuerpo">
 
         <!-- Imagen del producto -->
-        <div class="w-full md:w-1/2 flex items-center justify-center bg-gray-50 rounded-xl p-6 min-h-[280px]">
-          <img
-            id="modal-imagen-producto"
-            src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400&h=400&fit=crop"
-            alt="Imagen del producto seleccionado"
-            class="max-h-64 object-contain"
-          />
+        <div class="modal-producto__imagen-contenedor">
+          <img id="modal-imagen-producto"
+               src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400&h=400&fit=crop"
+               alt="Imagen del producto seleccionado"
+               class="modal-producto__imagen" />
         </div>
 
         <!-- Información del producto -->
-        <div class="w-full md:w-1/2 flex flex-col gap-4">
-          <h2
-            id="modal-nombre-producto"
-            class="font-display text-vng-negro leading-tight"
-            style="font-size: clamp(1.5rem, 4vw, 2.2rem);"
-          >
+        <div class="modal-producto__informacion">
+
+          <h2 id="modal-nombre-producto" class="modal-producto__nombre">
             GIGABYTE AORUS MEN TSHIRT
           </h2>
 
-          <p
-            id="modal-descripcion-producto"
-            class="font-cuerpo text-gray-600 text-sm leading-relaxed"
-          >
-            The Gigabyte Aorus Men Tshirt is a cool and casual shirt for gaming enthusiasts. With the Aorus logo and sleek design, it's perfect for expressing your gaming style.
+          <p id="modal-descripcion-producto" class="modal-producto__descripcion">
+            The Gigabyte Aorus Men Tshirt is a cool and casual shirt for gaming
+            enthusiasts. With the Aorus logo and sleek design, it's perfect for
+            expressing your gaming style.
           </p>
 
-          <div class="flex flex-col gap-1">
-            <p id="modal-marca-producto" class="font-cuerpo text-gray-500 text-sm">
-              <span class="font-semibold">Marca:</span> Gigabyte
+          <div id="bloque-meta-producto">
+            <p id="modal-marca-producto" class="modal-producto__meta-texto">
+              Marca: Gigabyte
             </p>
-            <p id="modal-sku-producto" class="font-cuerpo text-gray-500 text-sm">
-              <span class="font-semibold">Sku:</span> MEN-GIG-GIG-084
+            <p id="modal-sku-producto" class="modal-producto__meta-texto">
+              Sku: MEN-GIG-GIG-084
             </p>
           </div>
 
-          <!-- Precio y stock + botón -->
-          <div class="flex items-center justify-between gap-4 mt-4">
-            <div>
-              <p id="modal-stock-producto" class="font-condensada text-gray-400 text-xs tracking-widest uppercase">STOCK 90</p>
-              <p id="modal-precio-producto" class="font-display text-vng-negro text-4xl">$ 24.99</p>
+          <!-- Precio + stock + CTA -->
+          <div class="modal-producto__pie">
+            <div id="bloque-precio-producto" class="modal-producto__precio-bloque">
+              <p id="modal-etiqueta-disponibles" class="modal-producto__etiqueta-disponibles">
+                STOCK 90
+              </p>
+              <p id="modal-precio-producto" class="modal-producto__precio">
+                $ 24.99
+              </p>
             </div>
 
-            <button
-              id="boton-agregar-carrito-modal"
-              class="boton-primario flex items-center gap-2"
-              aria-label="Agregar este producto al carrito"
-              data-accion="agregar-carrito"
-              data-producto-id="prod-001"
-            >
-              AGREGAR AL CARRITO
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-              </svg>
-            </button>
+            <div class="flex flex-col gap-2 items-end">
+              <!-- Botón principal: agregar al carrito -->
+              <button id="boton-agregar-al-carrito"
+                      class="boton-primario"
+                      aria-label="Agregar este producto al carrito de compras"
+                      data-accion-boton="agregar-carrito"
+                      data-id-producto-modal="prod-001">
+                AGREGAR AL CARRITO
+                <svg width="18" height="18" fill="none" stroke="currentColor"
+                     stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+              </button>
+              <!-- Enlace secundario: ver página completa del producto -->
+              <a id="enlace-ver-detalle-producto"
+                 href="producto.html"
+                 class="font-condensada text-xs tracking-widest uppercase"
+                 style="color: rgba(0,0,0,0.4); text-decoration: underline;"
+                 data-accion-enlace="ver-detalle-completo">
+                Ver detalle completo →
+              </a>
+            </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
   </div>
 
 
-  <!-- ─── FOOTER ─── -->
-  <footer id="pie-pagina" class="bg-vng-rojo py-12" role="contentinfo">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-start">
-        <div class="col-span-2 md:col-span-1">
-          <a href="index.html" class="font-display text-white text-3xl tracking-widest">VNGRD</a>
-        </div>
-        <nav aria-label="Footer 1">
-          <ul class="flex flex-col gap-2 list-none">
-            <li><a href="index.html" class="font-condensada text-white/90 text-sm hover:text-white">inicio</a></li>
-            <li><a href="categorias.html" class="font-condensada text-white/90 text-sm hover:text-white">categorías</a></li>
-          </ul>
-        </nav>
-        <nav aria-label="Footer 2">
-          <ul class="flex flex-col gap-2 list-none">
-            <li><a href="login.html" class="font-condensada text-white/90 text-sm hover:text-white">iniciar sesión</a></li>
-            <li><a href="registro.html" class="font-condensada text-white/90 text-sm hover:text-white">registrarme</a></li>
-          </ul>
-        </nav>
-        <address class="not-italic">
-          <p class="font-condensada text-white font-bold text-sm tracking-wider mb-3">contáctanos</p>
-          <div class="flex items-center gap-2 mb-3">
-            <a href="#" class="w-9 h-9 bg-vng-negro rounded-full flex items-center justify-center hover:bg-vng-negro-2 transition-colors" aria-label="X">
-              <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.741l7.732-8.853L2.059 2.25H8.28l4.261 5.633 5.703-5.633zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-            <a href="#" class="w-9 h-9 bg-vng-negro rounded-full flex items-center justify-center hover:bg-vng-negro-2 transition-colors" aria-label="Instagram">
-              <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-            </a>
-            <a href="#" class="w-9 h-9 bg-vng-negro rounded-full flex items-center justify-center hover:bg-vng-negro-2 transition-colors" aria-label="TikTok">
-              <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.77a4.85 4.85 0 01-1.01-.08z"/></svg>
-            </a>
-            <a href="#" class="w-9 h-9 bg-vng-negro rounded-full flex items-center justify-center hover:bg-vng-negro-2 transition-colors" aria-label="WhatsApp">
-              <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            </a>
-          </div>
-          <a href="mailto:info@vanguard.com" class="font-cuerpo text-white/80 text-xs hover:text-white">info@vanguard.com</a>
-        </address>
+  <!-- ═══════════════════════════════════════
+       PIE DE PÁGINA
+  ═══════════════════════════════════════ -->
+  <footer id="pie-pagina" class="pie-pagina" role="contentinfo">
+    <div class="pie-pagina__contenedor">
+      <div class="col-span-2 md:col-span-1">
+        <a href="index.html" class="pie-pagina__logotipo" aria-label="VANGUARD">VNGRD</a>
       </div>
+      <nav aria-label="Pie: enlaces principales">
+        <ul class="pie-pagina__lista-enlaces" role="list">
+          <li><a href="index.html"          class="pie-pagina__enlace">inicio</a></li>
+          <li><a href="categorias.html"     class="pie-pagina__enlace">categorías</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Pie: acceso usuario">
+        <ul class="pie-pagina__lista-enlaces" role="list">
+          <li><a href="login.html"    class="pie-pagina__enlace">iniciar sesión</a></li>
+          <li><a href="registro.html" class="pie-pagina__enlace">registrarme</a></li>
+        </ul>
+      </nav>
+      <address class="not-italic">
+        <p class="pie-pagina__titulo-columna">contáctanos</p>
+        <ul class="pie-pagina__redes" role="list" aria-label="Redes sociales">
+          <li><a href="#" class="pie-pagina__icono-red" aria-label="X Twitter"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.741l7.732-8.853L2.059 2.25H8.28l4.261 5.633 5.703-5.633zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></li>
+          <li><a href="#" class="pie-pagina__icono-red" aria-label="Instagram"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a></li>
+          <li><a href="#" class="pie-pagina__icono-red" aria-label="TikTok"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.77a4.85 4.85 0 01-1.01-.08z"/></svg></a></li>
+          <li><a href="#" class="pie-pagina__icono-red" aria-label="WhatsApp"><svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a></li>
+        </ul>
+        <a href="mailto:info@vanguard.com" class="pie-pagina__correo">info@vanguard.com</a>
+      </address>
     </div>
   </footer>
 
-
+  <script src="assets/js/vanguard-principal.js" defer></script>
   <script>
     /**
-     * VANGUARD — Scripts de la página de categorías
-     *
-     * Funcionalidades implementadas:
-     * 1. Toggle panel categorías móvil
-     * 2. Apertura/cierre de modal de producto
-     * 3. Filtrado por subcategoría (hook listo para API)
-     * 4. Buscador en tiempo real (hook listo para implementación)
+     * VANGUARD — Lógica de la página de Categorías
+     * ================================================
+     * Módulos:
+     *   1. Toggle menú móvil
+     *   2. Apertura y cierre del modal de producto
+     *   3. Filtrado por subcategoría (hook para API)
+     *   4. Buscador con debounce (hook para API)
+     *   5. Agregar al carrito (hook para localStorage/API)
      */
 
-    // ── 1. Toggle panel categorías móvil ──
-    const botonMenuCategorias = document.getElementById('boton-menu-categorias');
-    const panelCategorias = document.getElementById('panel-categorias-movil');
-    if (botonMenuCategorias && panelCategorias) {
-      botonMenuCategorias.addEventListener('click', () => {
-        panelCategorias.classList.toggle('hidden');
-        const estaAbierto = !panelCategorias.classList.contains('hidden');
-        botonMenuCategorias.setAttribute('aria-expanded', estaAbierto);
+    // ── 1. Toggle menú móvil ──
+    const botonMenuMovil       = document.getElementById('boton-menu-movil');
+    const panelMenuCategorias  = document.getElementById('panel-menu-categorias');
+    if (botonMenuMovil && panelMenuCategorias) {
+      botonMenuMovil.addEventListener('click', () => {
+        const estaAbierto = panelMenuCategorias.classList.toggle('menu-movil--abierto');
+        botonMenuMovil.setAttribute('aria-expanded', String(estaAbierto));
       });
     }
 
     // ── 2. Modal de producto ──
-    const overlayModal = document.getElementById('overlay-modal-producto');
-    const botonCerrarModal = document.getElementById('boton-cerrar-modal');
+    const capaModalProducto       = document.getElementById('capa-modal-producto');
+    const botonCerrarModalProducto = document.getElementById('boton-cerrar-modal-producto');
 
-    // Abrir modal al hacer click en tarjeta
-    document.querySelectorAll('[data-abrir-modal="true"]').forEach(tarjeta => {
-      tarjeta.addEventListener('click', () => abrirModal(tarjeta.dataset.productoId));
-
-      // Accesibilidad: abrir con teclado
-      tarjeta.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          abrirModal(tarjeta.dataset.productoId);
+    // Activar modal al hacer clic en tarjeta
+    document.querySelectorAll('[data-abrir-modal-producto="true"]').forEach(tarjeta => {
+      tarjeta.addEventListener('click',  () => abrirModalProducto(tarjeta.dataset.idProducto));
+      tarjeta.addEventListener('keydown', (evento) => {
+        if (evento.key === 'Enter' || evento.key === ' ') {
+          evento.preventDefault();
+          abrirModalProducto(tarjeta.dataset.idProducto);
         }
       });
     });
 
-    function abrirModal(productoId) {
-      // HOOK: En producción, cargar datos reales del producto desde API
-      // const producto = await fetch(`${window.Vanguard.config.apiUrl}/productos/${productoId}`);
-      overlayModal.classList.add('activo');
+    function abrirModalProducto(idProducto) {
+      /**
+       * HOOK API: En producción cargar datos reales:
+       * GET /api/v1/productos/:idProducto
+       * Luego actualizar los campos del modal dinámicamente.
+       *
+       * Ejemplo de actualización dinámica:
+       *   document.getElementById('modal-nombre-producto').textContent   = datos.nombre;
+       *   document.getElementById('modal-precio-producto').textContent   = `$ ${datos.precio}`;
+       *   document.getElementById('modal-imagen-producto').src           = datos.imagenUrl;
+       *   document.getElementById('modal-descripcion-producto').textContent = datos.descripcion;
+       *   document.getElementById('boton-agregar-al-carrito').dataset.idProductoModal = idProducto;
+       */
+      capaModalProducto.classList.add('capa-modal-producto--activo');
       document.body.style.overflow = 'hidden';
-      botonCerrarModal.focus();
+      botonCerrarModalProducto.focus();
     }
 
-    function cerrarModal() {
-      overlayModal.classList.remove('activo');
+    function cerrarModalProducto() {
+      capaModalProducto.classList.remove('capa-modal-producto--activo');
       document.body.style.overflow = '';
     }
 
-    botonCerrarModal?.addEventListener('click', cerrarModal);
-
-    // Cerrar modal al hacer click fuera
-    overlayModal?.addEventListener('click', (e) => {
-      if (e.target === overlayModal) cerrarModal();
+    botonCerrarModalProducto?.addEventListener('click', cerrarModalProducto);
+    capaModalProducto?.addEventListener('click', (evento) => {
+      if (evento.target === capaModalProducto) cerrarModalProducto();
     });
-
-    // Cerrar modal con Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') cerrarModal();
+    document.addEventListener('keydown', (evento) => {
+      if (evento.key === 'Escape') cerrarModalProducto();
     });
 
     // ── 3. Filtrado por subcategoría ──
-    document.querySelectorAll('.lista-subcategoria').forEach(boton => {
+    document.querySelectorAll('.barra-lateral-categorias__enlace').forEach(boton => {
       boton.addEventListener('click', () => {
-        // Actualizar estado visual
-        document.querySelectorAll('.lista-subcategoria').forEach(b => b.classList.remove('activa'));
-        boton.classList.add('activa');
+        // Actualizar estado visual activo
+        document.querySelectorAll('.barra-lateral-categorias__enlace')
+                .forEach(b => {
+                  b.classList.remove('barra-lateral-categorias__enlace--activo');
+                  b.removeAttribute('aria-pressed');
+                });
+        boton.classList.add('barra-lateral-categorias__enlace--activo');
+        boton.setAttribute('aria-pressed', 'true');
 
-        const categoria = boton.dataset.cat;
-        const subcategoria = boton.dataset.subcat;
+        // Actualizar encabezado visible
+        const nombreSubcategoria = boton.textContent.trim();
+        document.getElementById('etiqueta-subcategoria-activa').textContent = nombreSubcategoria;
 
-        // Actualizar encabezado
-        document.getElementById('nombre-subcategoria-activa').textContent =
-          boton.textContent;
-
-        // HOOK: Cargar productos desde API
-        // cargarProductos(categoria, subcategoria);
-        console.log(`[VANGUARD] Filtrar: ${categoria} > ${subcategoria}`);
+        /**
+         * HOOK API: Cargar productos filtrados
+         * GET /api/v1/productos?categoria={cat}&subcategoria={subcat}&pagina=1
+         */
+        const parametrosConsulta = {
+          categoria:    boton.dataset.categoria,
+          subcategoria: boton.dataset.subcategoria
+        };
+        console.log('[VANGUARD] Filtrar productos:', parametrosConsulta);
       });
     });
 
-    // ── 4. Buscador ──
-    const campoBuscar = document.getElementById('campo-buscar-producto');
-    let timerBusqueda;
-    campoBuscar?.addEventListener('input', () => {
-      clearTimeout(timerBusqueda);
-      timerBusqueda = setTimeout(() => {
-        const consulta = campoBuscar.value.trim();
-        // HOOK: Integrar con API de búsqueda
-        // if (consulta.length >= 2) buscarProductos(consulta);
-        console.log('[VANGUARD] Búsqueda:', consulta);
-      }, 300);
+    // ── 4. Buscador con debounce ──
+    const campoBuscarProductos = document.getElementById('campo-buscar-productos');
+    let temporizadorBusqueda;
+    campoBuscarProductos?.addEventListener('input', () => {
+      clearTimeout(temporizadorBusqueda);
+      temporizadorBusqueda = setTimeout(() => {
+        const textoBusqueda = campoBuscarProductos.value.trim();
+        if (textoBusqueda.length < 2) return;
+        /**
+         * HOOK API: Buscar productos
+         * GET /api/v1/productos/buscar?q={textoBusqueda}
+         */
+        console.log('[VANGUARD] Búsqueda:', textoBusqueda);
+      }, 350);
     });
 
-    // ── 5. Agregar al carrito desde modal ──
-    document.getElementById('boton-agregar-carrito-modal')?.addEventListener('click', () => {
-      const productoId = document.getElementById('boton-agregar-carrito-modal').dataset.productoId;
-      // HOOK: Añadir al carrito con localStorage/API
-      // window.Vanguard.carrito.agregar(productoId);
-      window.location.href = 'carrito.html';
+    // ── 5. Agregar al carrito desde el modal ──
+    document.getElementById('boton-agregar-al-carrito')?.addEventListener('click', () => {
+      const botonCarrito = document.getElementById('boton-agregar-al-carrito');
+
+      /* Construir datos del artículo para el carrito */
+      const datosArticulo = {
+        id:       botonCarrito.dataset.idProductoModal || 'prod-001',
+        nombre:   document.getElementById('modal-nombre-producto')?.textContent?.trim()
+                    || 'GIGABYTE AORUS MEN TSHIRT',
+        precio:   parseFloat(
+                    document.getElementById('modal-precio-producto')
+                              ?.textContent?.replace(/[^0-9.]/g, '') || '24.99'
+                  ),
+        imagen:   document.getElementById('modal-imagen-producto')?.src || '',
+        talla:    'unica',
+        cantidad: 1,
+        marca:    'Gigabyte',
+        sku:      'MEN-GIG-GIG-084'
+      };
+
+      /* Usar el módulo real del carrito con localStorage */
+      window.Vanguard.carrito.agregar(datosArticulo);
+
+      /* Mostrar notificación toast */
+      window.Vanguard.notificaciones.exito('¡Producto agregado al carrito!');
+
+      /* Cerrar el modal */
+      cerrarModalProducto();
     });
 
-    window.Vanguard = window.Vanguard || { carrito: {}, usuario: {}, config: { apiUrl: '/api/v1' } };
+    window.Vanguard = window.Vanguard || {
+      carrito: { articulos: [] },
+      config:  { urlApi: '/api/v1' }
+    };
   </script>
 
 </body>
