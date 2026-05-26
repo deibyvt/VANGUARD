@@ -8,8 +8,8 @@ Proyecto en etapa de estructuración. Arquitectura completa con HTML, CSS y JS s
 
 ## Tecnologías
 
-- HTML5 semántico en `pages/`
-- CSS3 modular con sistema de diseño basado en tokens (`css/`)
+- HTML5 semántico en `paginas/`
+- CSS3 modular con sistema de diseño basado en tokens (`estilos/`)
 - Tailwind CSS v3 vía CDN + config centralizada en `app/tailwind-config.js`
 - Google Fonts (Bebas Neue, Barlow Condensed, Barlow)
 - JavaScript vanilla modular con ES Modules (`app/`)
@@ -18,37 +18,37 @@ Proyecto en etapa de estructuración. Arquitectura completa con HTML, CSS y JS s
 
 ```
 VANGUARD
-├── index.html               # Entry point → redirige a pages/inicio.html
-├── .gitignore
-│
-├── pages/                   # 7 páginas HTML (sin CSS/JS inline)
+├── paginas/                 # Páginas HTML
+│   ├── index.html           # Entry point → redirige a inicio.html
+│   ├── home.html            # Alias semántico → redirige a index.html
 │   ├── inicio.html
 │   ├── login.html
 │   ├── registro.html
 │   ├── categorias.html
 │   ├── producto.html
 │   ├── carrito.html
-│   └── checkout.html
+│   └── pago.html
 │
-├── css/                     # CSS modular
+├── estilos/                 # CSS modular
 │   ├── main.css             # Entry point con @imports
-│   ├── base/                # variables.css, reset.css
+│   ├── base/                # variables.css, reinicio.css
 │   ├── components/          # barra-navegacion, pie-pagina, botones…
 │   ├── layout/              # grid.css
-│   └── pages/               # inicio.css, login.css, checkout.css…
+│   └── paginas/             # inicio.css, login.css, pago.css…
 │
 ├── app/                     # JavaScript modular
 │   ├── main.js              # Entry point ES Module
 │   ├── tailwind-config.js   # Config Tailwind centralizada
-│   ├── utils/               # helpers.js, constantes.js
+│   ├── utilidades/          # helpers.js, notificaciones.js
 │   ├── modulos/             # carrito.js, autenticacion.js
-│   └── pages/               # inicio.js, checkout.js…
+│   └── paginas/             # inicio.js, pago.js…
 │
-├── assets/
-│   ├── images/
-│   └── icons/
+├── recursos/
+│   ├── imagenes/
+│   └── iconos/
 │
 └── documentacion/
+    ├── README.md
     ├── arquitectura.md
     ├── sistema-visual.md
     └── hoja-de-ruta.md
@@ -64,7 +64,7 @@ VANGUARD
 | `categorias.html` | Grid productos + sidebar + modal     |
 | `producto.html`   | Detalle con galería y variantes      |
 | `carrito.html`    | Lista de artículos + total           |
-| `checkout.html`   | Dirección + método de pago           |
+| `pago.html`       | Dirección + método de pago           |
 
 ## Categorías
 

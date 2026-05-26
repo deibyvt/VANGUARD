@@ -2,8 +2,8 @@
 
 import { Carrito } from './modulos/carrito.js';
 import { Autenticacion } from './modulos/autenticacion.js';
-import { Notificaciones } from './utils/notificaciones.js';
-import { Utilidades } from './utils/helpers.js';
+import { Notificaciones } from './utilidades/notificaciones.js';
+import { Utilidades } from './utilidades/helpers.js';
 import { inicializarMenuMovil } from './modulos/menu-movil.js';
 import { inicializarAnimacionesEntrada } from './modulos/animaciones.js';
 import { marcarEnlaceNavActivo } from './modulos/navegacion.js';

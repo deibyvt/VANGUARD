@@ -68,6 +68,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 350);
   });
 
+  if (window.Vanguard?.autenticacion?.estaAutenticado()) {
+    const navs = document.querySelectorAll('#pie-pagina nav');
+    if (navs.length >= 2) {
+      navs[1].style.display = 'none';
+    }
+  }
+
   // ── Agregar al carrito desde el modal ──
   document.getElementById('boton-agregar-al-carrito')?.addEventListener('click', () => {
     const botonCarrito = document.getElementById('boton-agregar-al-carrito');

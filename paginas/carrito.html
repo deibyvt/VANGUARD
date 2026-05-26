@@ -8,7 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="../app/tailwind-config.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../estilos/main.css" />
 
 </head>
 
@@ -24,7 +24,7 @@
 
       <div id="columna-logotipo-pie" class="col-span-2 md:col-span-1 flex items-center">
         <a href="inicio.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
-          <img src="../assets/images/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
+          <img src="../recursos/imagenes/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
         </a>
       </div>
 
@@ -44,7 +44,7 @@
       </div>
 
       <div id="grupo-acciones-barra" class="flex items-center gap-3 flex-shrink-0">
-        <span class="barra-navegacion__enlace hidden md:block">CATEGORÍAS</span>
+        <a href="categorias.html" class="barra-navegacion__enlace hidden md:block">CATEGORÍAS</a>
         <!-- Carrito activo en esta página — solo ícono sin enlace -->
         <span id="enlace-carrito-navbar"
               class="icono-carrito-navbar"
@@ -224,7 +224,7 @@
     <!-- Botón IR A PAGAR — alineado a la derecha -->
     <div id="contenedor-boton-pago"
          class="flex justify-end mt-10">
-      <a href="checkout.html"
+      <a href="pago.html"
          id="boton-ir-a-pagar"
          class="boton-primario text-base px-10 py-4"
          aria-label="Proceder al proceso de pago"
@@ -243,7 +243,7 @@
     <div class="pie-pagina__contenedor">
       <div id="columna-logotipo-pie" class="col-span-2 md:col-span-1 flex items-center">
         <a href="inicio.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
-          <img src="../assets/images/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
+          <img src="../recursos/imagenes/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
         </a>
       </div>
       <nav aria-label="Pie: enlaces principales">
@@ -272,7 +272,7 @@
   </footer>
 
   <script src="../app/main.js" type="module" defer></script>
-  <script src="../app/pages/carrito.js" defer></script>
+  <script src="../app/paginas/carrito.js" defer></script>
 
 </body>
 </html>

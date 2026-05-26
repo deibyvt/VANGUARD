@@ -9,7 +9,7 @@ function crearHtmlArticuloCarrito(articulo) {
       aria-label="${articulo.nombre} — ${window.Vanguard.utilidades.formatearPrecio(articulo.precio)}"
     >
       <img
-        src="${articulo.imagen || 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200&h=200&fit=crop'}"
+        src="${articulo.imagen && articulo.imagen.startsWith('http') ? articulo.imagen : 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200&h=200&fit=crop'}"
         alt="${articulo.nombre}"
         class="articulo-carrito__imagen"
         loading="lazy"
@@ -108,7 +108,7 @@ function asignarListenerEliminar(elementoArticulo) {
       window.Vanguard.carrito.eliminarPorLineaCarrito(idLinea);
       renderizarTotalCarrito();
       verificarCarritoVacio();
-      window.Vanguard.notificaciones.informacion('Artículo eliminado del carrito');
+      window.Vanguard.notificaciones.exito('Producto eliminado');
     }, 290);
   });
 }
@@ -131,12 +131,26 @@ function renderizarCarritoDesdeAlmacenamiento() {
   });
 
   renderizarTotalCarrito();
+
+  requestAnimationFrame(() => {
+    listaCarrito.querySelectorAll('.js-animacion-entrada').forEach(el => {
+      el.classList.add('js-animacion-entrada--visible');
+    });
+  });
+
   return true;
 }
 
 function inicializarArticulosDemo() {
-  document.querySelectorAll('[data-id-articulo-carrito]').forEach(articulo => {
+  const articulos = document.querySelectorAll('[data-id-articulo-carrito]');
+  articulos.forEach(articulo => {
     asignarListenerEliminar(articulo);
+  });
+
+  requestAnimationFrame(() => {
+    articulos.forEach(el => {
+      el.classList.add('js-animacion-entrada--visible');
+    });
   });
 }
 
@@ -153,4 +167,11 @@ document.addEventListener('DOMContentLoaded', () => {
     renderizarCarritoDesdeAlmacenamiento();
     verificarCarritoVacio();
   });
+
+  if (window.Vanguard?.autenticacion?.estaAutenticado()) {
+    const navs = document.querySelectorAll('#pie-pagina nav');
+    if (navs.length >= 2) {
+      navs[1].style.display = 'none';
+    }
+  }
 });

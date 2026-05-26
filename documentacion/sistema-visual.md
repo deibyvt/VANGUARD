@@ -1,5 +1,5 @@
 # VANGUARD — Sistema Visual Completo (Design Tokens)
-**Versión:** 3.0 | Archivo fuente: `css/base/variables.css`
+**Versión:** 3.0 | Archivo fuente: `estilos/base/variables.css`
 
 ---
 

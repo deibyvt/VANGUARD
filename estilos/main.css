@@ -1,5 +1,5 @@
 @import url('base/variables.css');
-@import url('base/reset.css');
+@import url('base/reinicio.css');
 @import url('components/barra-navegacion.css');
 @import url('components/pie-pagina.css');
 @import url('components/botones.css');
@@ -9,12 +9,12 @@
 @import url('components/carrito.css');
 @import url('components/buscador.css');
 @import url('layout/grid.css');
-@import url('pages/inicio.css');
-@import url('pages/login.css');
-@import url('pages/registro.css');
-@import url('pages/categorias.css');
-@import url('pages/checkout.css');
-@import url('pages/producto.css');
+@import url('paginas/inicio.css');
+@import url('paginas/login.css');
+@import url('paginas/registro.css');
+@import url('paginas/categorias.css');
+@import url('paginas/pago.css');
+@import url('paginas/producto.css');
 
 .fuente-display    { font-family: var(--fuente-display); }
 .fuente-condensada { font-family: var(--fuente-condensada); }

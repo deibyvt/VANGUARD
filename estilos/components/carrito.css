@@ -15,8 +15,10 @@
 .articulo-carrito__imagen {
   width: 80px;
   height: 80px;
-  object-fit: contain;
+  object-fit: cover;
   flex-shrink: 0;
+  border-radius: 0.75rem;
+  background: var(--color-gris-fondo);
 }
 
 .articulo-carrito__informacion { flex: 1; min-width: 0; }
@@ -51,11 +53,16 @@
   font-size: clamp(1.2rem, 3vw, 2rem);
 }
 
+#pagina-carrito {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#pagina-carrito main { flex: 1; }
+
 .articulo-carrito__boton-eliminar {
-  position: absolute;
-  right: -1rem;
-  top: 50%;
-  transform: translateY(-50%);
+  flex-shrink: 0;
   width: 2.25rem;
   height: 2.25rem;
   background: var(--color-negro-secundario);
@@ -65,6 +72,7 @@
   align-items: center;
   justify-content: center;
   color: var(--color-blanco);
+  cursor: pointer;
   transition: background var(--transicion-normal);
 }
 
@@ -73,13 +81,4 @@
 .articulo-carrito__boton-eliminar:focus-visible {
   outline: 2px solid var(--color-rojo-principal);
   outline-offset: 2px;
-}
-
-@media (max-width: 640px) {
-  .articulo-carrito__boton-eliminar {
-    right: 0.75rem;
-    top: 0.75rem;
-    transform: none;
-  }
-  .articulo-carrito { flex-wrap: wrap; padding-right: 3.5rem; }
 }

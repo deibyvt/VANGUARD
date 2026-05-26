@@ -9,7 +9,7 @@ export function marcarEnlaceNavActivo() {
     'login.html':      'iniciar-sesion',
     'registro.html':   'registrarme',
     'carrito.html':    'carrito',
-    'checkout.html':   'checkout',
+    'pago.html':   'checkout',
     'producto.html':   'categorias',
   };
 

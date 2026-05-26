@@ -11,7 +11,7 @@
 - [x] Sistema de capas Z documentado
 
 ## FASE 2 — Sistema Visual ✅ COMPLETADA
-- [x] Variables CSS (design tokens) en `css/base/variables.css`
+- [x] Variables CSS (design tokens) en `estilos/base/variables.css`
 - [x] Tipografía: Bebas Neue + Barlow Condensed + Barlow
 - [x] Paleta extraída exactamente del PDF
 - [x] Sistema de espaciado base 8px con `clamp()`
@@ -30,19 +30,19 @@
 - [x] Sistema de notificaciones toast
 
 ## FASE 4 — Páginas ✅ COMPLETADA
-- [x] `pages/inicio.html` — Hero + categorías
-- [x] `pages/login.html` — Moto decorativa + formulario
-- [x] `pages/registro.html` — Modelo decorativa + formulario
-- [x] `pages/categorias.html` — Grid + sidebar + modal de producto
-- [x] `pages/producto.html` — Página completa: galería + variantes
-- [x] `pages/carrito.html` — Lista con eliminación animada + total
-- [x] `pages/checkout.html` — 3 secciones: productos/dirección/pago
+- [x] `paginas/inicio.html` — Hero + categorías
+- [x] `paginas/login.html` — Moto decorativa + formulario
+- [x] `paginas/registro.html` — Modelo decorativa + formulario
+- [x] `paginas/categorias.html` — Grid + sidebar + modal de producto
+- [x] `paginas/producto.html` — Página completa: galería + variantes
+- [x] `paginas/carrito.html` — Lista con eliminación animada + total
+- [x] `paginas/pago.html` — 3 secciones: productos/dirección/pago
 
 ## FASE 5 — JavaScript Base ✅ COMPLETADA
 - [x] `app/main.js` como entry point con ES Modules
 - [x] `app/modulos/carrito.js` con localStorage REAL
 - [x] `app/modulos/autenticacion.js` (estructura lista para API)
-- [x] Módulo de notificaciones toast en `app/utils/`
+- [x] Módulo de notificaciones toast en `app/utilidades/`
 - [x] Sincronización multi-pestaña via `storage` events
 - [x] IntersectionObserver para animaciones escalonadas
 - [x] `marcarEnlaceNavActivo()` automático
@@ -50,16 +50,15 @@
 - [x] `formatearPrecio()`, `esCorreoValido()` compartidos
 
 ## FASE 6 — Refactor de arquitectura ✅ COMPLETADA
-- [x] HTML movidos a `pages/` (sin CSS/JS inline)
-- [x] CSS monolithic (`assets/css/sistema-diseno.css`) separado en 18 archivos modulares en `css/`
-- [x] JS monolithic (`assets/js/vanguard-principal.js`) separado en 15 archivos modulares en `app/`
-- [x] `css/main.css` como entry point con @imports
+- [x] HTML movidos a `paginas/` (sin CSS/JS inline)
+- [x] CSS monolithic separado en 18 archivos modulares en `estilos/`
+- [x] JS monolithic separado en 15 archivos modulares en `app/`
+- [x] `estilos/main.css` como entry point con @imports
 - [x] `app/main.js` como entry point ES Module
 - [x] `app/tailwind-config.js` centralizado (eliminados 7 bloques inline duplicados)
-- [x] Imágenes migradas a `assets/images/`, iconos a `assets/icons/`
-- [x] Carpeta `recursos/` eliminada
-- [x] 6 HTML duplicados en raíz eliminados
-- [x] `index.html` raíz redirige a `pages/inicio.html`
+- [x] Imágenes migradas a `recursos/imagenes/`, iconos a `recursos/iconos/`
+- [x] Notación 100% en español (paginas, estilos, recursos, utilidades, reinicio, pago)
+- [x] `index.html` y `home.html` movidos a `paginas/`
 
 ## FASE 7 — Backend / API ⏳ PENDIENTE
 Cuando el equipo de backend esté listo, descomentar hooks en:
@@ -67,7 +66,7 @@ Cuando el equipo de backend esté listo, descomentar hooks en:
 - `registro.html` → `POST /api/v1/autenticacion/registrar`
 - `categorias.html` → `GET /api/v1/productos?categoria=...`
 - `producto.html` → `GET /api/v1/productos/:id`
-- `checkout.html` → `POST /api/v1/pedidos`
+- `pago.html` → `POST /api/v1/pedidos`
 
 Headers requeridos:
 ```

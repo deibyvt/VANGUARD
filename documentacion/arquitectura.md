@@ -8,23 +8,22 @@
 ```
 VANGUARD/
 │
-├── index.html                   ← Entry point → redirige a pages/inicio.html
-├── .gitignore
-│
-├── pages/                       ← 7 páginas HTML (sin CSS/JS inline)
+├── paginas/                     ← Páginas HTML
+│   ├── index.html               ← Entry point → redirige a inicio.html
+│   ├── home.html                ← Alias semántico → redirige a index.html
 │   ├── inicio.html              ← Hero + categorías
 │   ├── login.html               ← Inicio de sesión
 │   ├── registro.html            ← Creación de cuenta
 │   ├── categorias.html          ← Grid productos + sidebar + modal
 │   ├── producto.html            ← Detalle individual de producto
 │   ├── carrito.html             ← Carrito de compras
-│   └── checkout.html            ← Proceso de pago
+│   └── pago.html                ← Proceso de pago
 │
-├── css/                         ← CSS modular por responsabilidad
+├── estilos/                     ← CSS modular por responsabilidad
 │   ├── main.css                 ← Entry point (solo @imports)
 │   ├── base/
 │   │   ├── variables.css        ← Design tokens (colores, fuentes, sombras)
-│   │   └── reset.css            ← Normalize / reset
+│   │   └── reinicio.css         ← Normalize / reset
 │   ├── components/              ← Componentes reutilizables
 │   │   ├── barra-navegacion.css
 │   │   ├── pie-pagina.css
@@ -36,38 +35,41 @@ VANGUARD/
 │   │   └── buscador.css
 │   ├── layout/
 │   │   └── grid.css
-│   └── pages/                   ← Estilos específicos por página
+│   └── paginas/                 ← Estilos específicos por página
 │       ├── inicio.css
 │       ├── login.css
 │       ├── registro.css
 │       ├── categorias.css
-│       ├── checkout.css
+│       ├── pago.css
 │       └── producto.css
 │
 ├── app/                         ← JavaScript modular con ES Modules
 │   ├── main.js                  ← Entry point (importa módulos, inicia todo)
 │   ├── tailwind-config.js       ← Config Tailwind v3 centralizada
-│   ├── utils/
+│   ├── utilidades/
 │   │   ├── helpers.js           ← formatearPrecio, esCorreoValido, etc.
-│   │   └── constantes.js        ← CLAVE_ALMACENAMIENTO_CARRITO, etc.
+│   │   └── notificaciones.js    ← Sistema de notificaciones toast
 │   ├── modulos/
 │   │   ├── carrito.js           ← Carrito con localStorage real
 │   │   ├── autenticacion.js     ← Estructura para API futura
-│   │   └── configuracion.js     ← Config por ambiente
-│   └── pages/                   ← Scripts específicos por página
+│   │   ├── animaciones.js       ← Animaciones de entrada
+│   │   ├── menu-movil.js        ← Menú móvil accesible
+│   │   └── navegacion.js        ← Enlace activo automático
+│   └── paginas/                 ← Scripts específicos por página
 │       ├── inicio.js
 │       ├── login.js
 │       ├── registro.js
 │       ├── categorias.js
 │       ├── producto.js
 │       ├── carrito.js
-│       └── checkout.js
+│       └── pago.js
 │
-├── assets/
-│   ├── images/                  ← Imágenes del proyecto (11 archivos)
-│   └── icons/                   ← SVGs del sistema de iconografía (4 archivos)
+├── recursos/
+│   ├── imagenes/                ← Imágenes del proyecto (11 archivos)
+│   └── iconos/                  ← SVGs del sistema de iconografía (4 archivos)
 │
 └── documentacion/
+    ├── README.md                ← Documentación principal
     ├── arquitectura.md          ← Este archivo
     ├── sistema-visual.md        ← Design tokens documentados
     └── hoja-de-ruta.md          ← Fases de desarrollo y estado
@@ -84,7 +86,7 @@ import './modulos/autenticacion.js';
 // Inicializa menú móvil, animaciones, navbar
 ```
 
-Los scripts de página (`app/pages/*.js`) se cargan con `defer` (no module)
+Los scripts de página (`app/paginas/*.js`) se cargan con `defer` (no module)
 y consumen `window.Vanguard` expuesto por `main.js`.
 
 ### Flujo de datos del carrito
@@ -159,10 +161,10 @@ camelCase en español:
 ```html
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../app/tailwind-config.js"></script>
-<link rel="stylesheet" href="../css/main.css" />
+<link rel="stylesheet" href="../estilos/main.css" />
 ...
 <script src="../app/main.js" type="module" defer></script>
-<script src="../app/pages/{pagina}.js" defer></script>
+<script src="../app/paginas/{pagina}.js" defer></script>
 ```
 
 ---
@@ -176,7 +178,7 @@ camelCase en español:
 | `categorias.html` | `/api/v1/productos?categoria=...`        | GET    |
 | `producto.html`   | `/api/v1/productos/:id`                  | GET    |
 | `carrito.html`    | `/api/v1/carrito`                        | GET    |
-| `checkout.html`   | `/api/v1/pedidos`                        | POST   |
+| `pago.html`       | `/api/v1/pedidos`                        | POST   |
 
 Header de autenticación:
 ```
