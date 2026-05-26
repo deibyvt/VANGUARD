@@ -6,9 +6,10 @@
   <title>Carrito de Compras — VANGUARD</title>
   <meta name="description" content="Revisa y gestiona los productos en tu carrito VANGUARD." />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../app/tailwind-config.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/sistema-diseno.css" />
-  <script>tailwind.config={theme:{extend:{colors:{'vng-negro':'#1a1a1a','vng-negro-2':'#2d2d2d','vng-rojo':'#e31e1e','vng-gris-fondo':'#ececec'},fontFamily:{'display':['Bebas Neue','Arial Black','sans-serif'],'condensada':['Barlow Condensed','Arial Narrow','sans-serif'],'cuerpo':['Barlow','Arial','sans-serif']}}}}</script>
+  <link rel="stylesheet" href="../css/main.css" />
+
 </head>
 
 <!-- Fondo gris claro — fiel al PDF página 6 -->
@@ -22,12 +23,12 @@
          class="flex items-center justify-between px-6 py-3 gap-4 max-w-full">
 
       <div id="columna-logotipo-pie" class="col-span-2 md:col-span-1 flex items-center">
-        <a href="index.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
-          <img src="recursos/imagenes/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
+        <a href="inicio.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
+          <img src="../assets/images/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
         </a>
       </div>
 
-      <a href="index.html" class="barra-navegacion__enlace hidden md:block flex-shrink-0">
+      <a href="inicio.html" class="barra-navegacion__enlace hidden md:block flex-shrink-0">
         INICIO
       </a>
 
@@ -67,7 +68,7 @@
     </nav>
     <div id="menu-movil" class="menu-movil" role="navigation" aria-label="Menú móvil">
       <ul class="menu-movil__lista" role="list">
-        <li><a href="index.html"      class="menu-movil__enlace">Inicio</a></li>
+        <li><a href="inicio.html"      class="menu-movil__enlace">Inicio</a></li>
         <li><a href="categorias.html" class="menu-movil__enlace">Categorías</a></li>
         <li><a href="login.html"      class="menu-movil__enlace">Iniciar Sesión</a></li>
         <li><a href="registro.html"   class="menu-movil__enlace">Registrarme</a></li>
@@ -241,13 +242,13 @@
   <footer id="pie-pagina" class="pie-pagina mt-8" role="contentinfo">
     <div class="pie-pagina__contenedor">
       <div id="columna-logotipo-pie" class="col-span-2 md:col-span-1 flex items-center">
-        <a href="index.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
-          <img src="recursos/imagenes/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
+        <a href="inicio.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
+          <img src="../assets/images/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
         </a>
       </div>
       <nav aria-label="Pie: enlaces principales">
         <ul class="pie-pagina__lista-enlaces" role="list">
-          <li><a href="index.html"      class="pie-pagina__enlace">inicio</a></li>
+          <li><a href="inicio.html"      class="pie-pagina__enlace">inicio</a></li>
           <li><a href="categorias.html" class="pie-pagina__enlace">categorías</a></li>
         </ul>
       </nav>
@@ -270,197 +271,8 @@
     </div>
   </footer>
 
-  <script src="assets/js/vanguard-principal.js" defer></script>
-  <script>
-    /**
-     * VANGUARD — Lógica de la página Carrito
-     * =========================================
-     * Esta página tiene DOS modos de operación:
-     *
-     * MODO A — Artículos desde localStorage (producción parcial):
-     *   Renderiza dinámicamente los artículos guardados por
-     *   window.Vanguard.carrito. Activo cuando hay artículos en localStorage.
-     *
-     * MODO B — Artículos de demostración (sin localStorage):
-     *   Muestra los artículos HTML estáticos del maquetado.
-     *   Activo cuando localStorage está vacío (primera visita).
-     *
-     * La función renderizarCarrito() detecta automáticamente cuál usar.
-     */
-
-    /* ─── Plantilla HTML para una línea de artículo ─── */
-    function crearHtmlArticuloCarrito(articulo) {
-      return `
-        <article
-          class="articulo-carrito js-animacion-entrada"
-          role="listitem"
-          data-id-articulo-carrito="${articulo.idLineaCarrito}"
-          aria-label="${articulo.nombre} — ${window.Vanguard.utilidades.formatearPrecio(articulo.precio)}"
-        >
-          <img
-            src="${articulo.imagen || 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200&h=200&fit=crop'}"
-            alt="${articulo.nombre}"
-            class="articulo-carrito__imagen"
-            loading="lazy"
-          />
-          <div class="articulo-carrito__informacion">
-            <h2 class="articulo-carrito__nombre">${articulo.nombre}</h2>
-            <p class="articulo-carrito__meta">Marca: ${articulo.marca || '—'}</p>
-            <p class="articulo-carrito__meta">Sku: ${articulo.sku || '—'}</p>
-            ${articulo.talla && articulo.talla !== 'unica'
-              ? `<p class="articulo-carrito__meta">Talla: ${articulo.talla}</p>`
-              : ''}
-            ${articulo.cantidad > 1
-              ? `<p class="articulo-carrito__meta">Cantidad: ${articulo.cantidad}</p>`
-              : ''}
-          </div>
-          <div class="articulo-carrito__precio-contenedor">
-            <p class="articulo-carrito__precio">
-              ${window.Vanguard.utilidades.formatearPrecio(articulo.precio * articulo.cantidad)}
-            </p>
-          </div>
-          <button
-            class="articulo-carrito__boton-eliminar"
-            aria-label="Eliminar ${articulo.nombre} del carrito"
-            data-accion-boton="eliminar-articulo"
-            data-id-linea-carrito="${articulo.idLineaCarrito}"
-          >
-            <svg width="13" height="13" fill="none" stroke="currentColor"
-                 stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-              <polyline points="3 6 5 6 21 6"/>
-              <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
-              <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
-            </svg>
-          </button>
-        </article>
-      `;
-    }
-
-    /* ─── Renderizar total del carrito ─── */
-    function renderizarTotalCarrito() {
-      const total = window.Vanguard.carrito.calcularTotal();
-      let bloqueTotal = document.getElementById('bloque-total-carrito');
-
-      if (!bloqueTotal) {
-        bloqueTotal = document.createElement('div');
-        bloqueTotal.id = 'bloque-total-carrito';
-        bloqueTotal.style.cssText = `
-          text-align: right;
-          margin-top: 0.5rem;
-          font-family: 'Barlow Condensed', sans-serif;
-          font-size: 0.85rem;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: #666;
-        `;
-        document.getElementById('contenedor-boton-pago')?.prepend(bloqueTotal);
-      }
-
-      if (total > 0) {
-        const unidades = window.Vanguard.carrito.contarUnidades();
-        bloqueTotal.innerHTML = `
-          <span>${unidades} ${unidades === 1 ? 'artículo' : 'artículos'} — </span>
-          <strong style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:#1a1a1a;">
-            ${window.Vanguard.utilidades.formatearPrecio(total)}
-          </strong>
-        `;
-      }
-    }
-
-    /* ─── Verificar si el carrito quedó vacío ─── */
-    function verificarCarritoVacio() {
-      const articulosEnDOM  = document.querySelectorAll('[data-id-articulo-carrito]');
-      const estadoVacio     = document.getElementById('estado-carrito-vacio');
-      const botonPago       = document.getElementById('contenedor-boton-pago');
-      const listaCarrito    = document.getElementById('lista-articulos-carrito');
-
-      const carritoEstaVacio = articulosEnDOM.length === 0;
-
-      estadoVacio?.classList.toggle('hidden', !carritoEstaVacio);
-      botonPago?.classList.toggle('hidden', carritoEstaVacio);
-      if (listaCarrito) {
-        listaCarrito.style.display = carritoEstaVacio ? 'none' : '';
-      }
-    }
-
-    /* ─── Asignar listeners de eliminar a un elemento ─── */
-    function asignarListenerEliminar(elementoArticulo) {
-      const botonEliminar = elementoArticulo.querySelector('[data-accion-boton="eliminar-articulo"]');
-      if (!botonEliminar) return;
-
-      botonEliminar.addEventListener('click', () => {
-        const idLinea = botonEliminar.dataset.idLineaCarrito;
-
-        /* Animación de salida */
-        elementoArticulo.style.transition = 'opacity 280ms ease, transform 280ms ease';
-        elementoArticulo.style.opacity    = '0';
-        elementoArticulo.style.transform  = 'translateX(-24px)';
-
-        setTimeout(() => {
-          /* Eliminar del DOM */
-          elementoArticulo.remove();
-          /* Eliminar del localStorage via módulo */
-          window.Vanguard.carrito.eliminarPorLineaCarrito(idLinea);
-          /* Actualizar UI */
-          renderizarTotalCarrito();
-          verificarCarritoVacio();
-          /* Notificar */
-          window.Vanguard.notificaciones.informacion('Artículo eliminado del carrito');
-        }, 290);
-      });
-    }
-
-    /* ─── Renderizar carrito desde localStorage ─── */
-    function renderizarCarritoDesdeAlmacenamiento() {
-      const articulosGuardados = window.Vanguard.carrito.obtenerArticulos();
-      if (articulosGuardados.length === 0) return false; /* Usar modo demo */
-
-      const listaCarrito = document.getElementById('lista-articulos-carrito');
-      if (!listaCarrito) return false;
-
-      /* Limpiar artículos de demo HTML */
-      listaCarrito.innerHTML = '';
-
-      /* Renderizar artículos reales */
-      articulosGuardados.forEach(articulo => {
-        const contenedorTemporal = document.createElement('div');
-        contenedorTemporal.innerHTML = crearHtmlArticuloCarrito(articulo).trim();
-        const elementoArticulo = contenedorTemporal.firstElementChild;
-        listaCarrito.appendChild(elementoArticulo);
-        asignarListenerEliminar(elementoArticulo);
-      });
-
-      renderizarTotalCarrito();
-      return true; /* Se renderizaron artículos reales */
-    }
-
-    /* ─── Asignar listeners a artículos demo HTML ─── */
-    function inicializarArticulosDemo() {
-      document.querySelectorAll('[data-id-articulo-carrito]').forEach(articulo => {
-        asignarListenerEliminar(articulo);
-      });
-    }
-
-    /* ─── INICIALIZACIÓN ───
-       Esperar a que vanguard-principal.js haya cargado */
-    document.addEventListener('DOMContentLoaded', () => {
-      /* Intentar renderizar desde localStorage */
-      const seRenderizaronArticulosReales = renderizarCarritoDesdeAlmacenamiento();
-
-      if (!seRenderizaronArticulosReales) {
-        /* Modo demo: usar artículos HTML estáticos */
-        inicializarArticulosDemo();
-      }
-
-      verificarCarritoVacio();
-
-      /* Escuchar actualizaciones del carrito desde otras páginas */
-      window.addEventListener('vng:carrito-actualizado', () => {
-        renderizarCarritoDesdeAlmacenamiento();
-        verificarCarritoVacio();
-      });
-    });
-  </script>
+  <script src="../app/main.js" type="module" defer></script>
+  <script src="../app/pages/carrito.js" defer></script>
 
 </body>
 </html>

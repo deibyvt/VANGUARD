@@ -1,0 +1,27 @@
+.buscador-navegacion {
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.30);
+  border-radius: var(--radio-total);
+  padding: 0.5rem 1rem;
+  color: var(--color-blanco);
+  font-family: var(--fuente-condensada);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  width: 280px;
+  outline: none;
+  transition: border-color var(--transicion-normal), width var(--transicion-suave);
+}
+
+.buscador-navegacion::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+}
+
+.buscador-navegacion:focus {
+  border-color: rgba(255, 255, 255, 0.7);
+  width: 340px;
+}
+
+@media (max-width: 640px) {
+  .buscador-navegacion, .buscador-navegacion:focus { width: 100%; }
+}

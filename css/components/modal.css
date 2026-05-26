@@ -1,0 +1,121 @@
+.capa-modal-producto {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.70);
+  z-index: var(--capa-modal);
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.capa-modal-producto--activo { display: flex; }
+
+.contenedor-modal-producto {
+  background: var(--color-blanco);
+  border-radius: 1.5rem;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 2rem;
+  box-shadow: var(--sombra-modal);
+}
+
+.modal-producto__boton-cerrar {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  background: var(--color-rojo-principal);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-blanco);
+  transition: background var(--transicion-normal);
+  z-index: 10;
+}
+
+.modal-producto__boton-cerrar:hover    { background: var(--color-rojo-oscuro); }
+
+.modal-producto__cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+@media (min-width: 640px) {
+  .modal-producto__cuerpo { flex-direction: row; align-items: flex-start; }
+}
+
+.modal-producto__imagen-contenedor {
+  width: 100%;
+  min-height: 220px;
+  background: #f5f5f5;
+  border-radius: var(--radio-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+@media (min-width: 640px) { .modal-producto__imagen-contenedor { width: 50%; } }
+
+.modal-producto__imagen { max-height: 16rem; object-fit: contain; }
+
+.modal-producto__informacion {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) { .modal-producto__informacion { width: 50%; } }
+
+.modal-producto__nombre {
+  font-family: var(--fuente-display);
+  color: var(--color-negro-principal);
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  line-height: 1.1;
+}
+
+.modal-producto__descripcion {
+  font-family: var(--fuente-cuerpo);
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.modal-producto__meta-texto {
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-producto__pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.modal-producto__precio-bloque {}
+
+.modal-producto__etiqueta-disponibles {
+  font-family: var(--fuente-condensada);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-producto__precio {
+  font-family: var(--fuente-display);
+  font-size: 2.5rem;
+  color: var(--color-negro-principal);
+}

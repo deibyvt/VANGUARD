@@ -1,0 +1,111 @@
+.barra-navegacion {
+  background-color: var(--color-negro-principal);
+  position: sticky;
+  top: 0;
+  z-index: var(--capa-navegacion);
+  width: 100%;
+}
+
+.barra-navegacion__contenedor {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+}
+
+.barra-navegacion__logotipo {
+  font-family: var(--fuente-display);
+  color: var(--color-blanco);
+  font-size: 1.5rem;
+  letter-spacing: 0.15em;
+  transition: color var(--transicion-rapida);
+}
+
+.barra-navegacion__logotipo:hover { color: var(--color-rojo-principal); }
+
+.barra-navegacion__lista-enlaces {
+  display: none;
+  list-style: none;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .barra-navegacion__lista-enlaces { display: flex; }
+}
+
+.barra-navegacion__enlace {
+  font-family: var(--fuente-condensada);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--color-blanco);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color var(--transicion-rapida);
+}
+
+.barra-navegacion__enlace:hover          { color: var(--color-rojo-principal); }
+.barra-navegacion__enlace--activo        { color: var(--color-rojo-principal); }
+
+.barra-navegacion__acciones {
+  display: none;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .barra-navegacion__acciones { display: flex; }
+}
+
+.barra-navegacion__boton-menu {
+  display: flex;
+  background: none;
+  border: none;
+  color: var(--color-blanco);
+  padding: 0.5rem;
+  border-radius: var(--radio-sm);
+  transition: color var(--transicion-rapida);
+}
+
+.barra-navegacion__boton-menu:focus-visible {
+  outline: 2px solid var(--color-rojo-principal);
+  outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+  .barra-navegacion__boton-menu { display: none; }
+}
+
+.menu-movil {
+  background-color: var(--color-negro-secundario);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: none;
+}
+
+.menu-movil--abierto { display: block; }
+
+.menu-movil__lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+}
+
+.menu-movil__enlace {
+  font-family: var(--fuente-condensada);
+  color: var(--color-blanco);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color var(--transicion-rapida);
+}
+
+.menu-movil__enlace:hover { color: var(--color-rojo-principal); }
+
+.barra-navegacion--con-buscador .barra-navegacion__contenedor {
+  max-width: 100%;
+  gap: 1rem;
+}

@@ -1,0 +1,15 @@
+.imagen-modelo-decorativa {
+  position: absolute;
+  bottom: 25%;
+  right: 0;
+  width: 44%;
+  max-width: 440px;
+  z-index: 5;
+  pointer-events: none;
+}
+@media (max-width: 1024px) {
+  .imagen-modelo-decorativa { width: 40%; }
+}
+@media (max-width: 768px) {
+  .imagen-modelo-decorativa { display: none; }
+}

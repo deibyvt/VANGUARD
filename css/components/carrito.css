@@ -1,0 +1,85 @@
+.articulo-carrito {
+  background: var(--color-blanco);
+  border: 2px solid var(--color-rojo-principal);
+  border-radius: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  position: relative;
+  transition: box-shadow var(--transicion-normal);
+}
+
+.articulo-carrito:hover { box-shadow: var(--sombra-tarjeta-roja); }
+
+.articulo-carrito__imagen {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.articulo-carrito__informacion { flex: 1; min-width: 0; }
+
+.articulo-carrito__nombre {
+  font-family: var(--fuente-display);
+  color: var(--color-negro-principal);
+  font-size: clamp(1rem, 3vw, 1.6rem);
+  line-height: 1.1;
+}
+
+.articulo-carrito__meta {
+  font-family: var(--fuente-cuerpo);
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.articulo-carrito__precio-contenedor { text-align: right; flex-shrink: 0; }
+
+.articulo-carrito__etiqueta-disponibles {
+  font-family: var(--fuente-condensada);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.articulo-carrito__precio {
+  font-family: var(--fuente-display);
+  color: var(--color-negro-principal);
+  font-size: clamp(1.2rem, 3vw, 2rem);
+}
+
+.articulo-carrito__boton-eliminar {
+  position: absolute;
+  right: -1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.25rem;
+  height: 2.25rem;
+  background: var(--color-negro-secundario);
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-blanco);
+  transition: background var(--transicion-normal);
+}
+
+.articulo-carrito__boton-eliminar:hover { background: var(--color-rojo-principal); }
+
+.articulo-carrito__boton-eliminar:focus-visible {
+  outline: 2px solid var(--color-rojo-principal);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .articulo-carrito__boton-eliminar {
+    right: 0.75rem;
+    top: 0.75rem;
+    transform: none;
+  }
+  .articulo-carrito { flex-wrap: wrap; padding-right: 3.5rem; }
+}

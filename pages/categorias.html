@@ -6,9 +6,10 @@
   <title>Categorías — VANGUARD</title>
   <meta name="description" content="Explora todas las categorías de VANGUARD." />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../app/tailwind-config.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/sistema-diseno.css" />
-  <script>tailwind.config={theme:{extend:{colors:{'vng-negro':'#1a1a1a','vng-negro-2':'#2d2d2d','vng-rojo':'#e31e1e','vng-gris-fondo':'#ececec','vng-gris-barra':'#c8c8c8'},fontFamily:{'display':['Bebas Neue','Arial Black','sans-serif'],'condensada':['Barlow Condensed','Arial Narrow','sans-serif'],'cuerpo':['Barlow','Arial','sans-serif']}}}}</script>
+  <link rel="stylesheet" href="../css/main.css" />
+
 </head>
 
 <body class="font-cuerpo" style="background:#2a2a2a;" id="pagina-categorias">
@@ -23,13 +24,13 @@
 
       <!-- Logotipo -->
       <div id="columna-logotipo-pie" class="col-span-2 md:col-span-1 flex items-center">
-        <a href="index.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
-          <img src="recursos/imagenes/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
+        <a href="inicio.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
+          <img src="../assets/images/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
         </a>
       </div>
 
       <!-- Enlace Inicio (solo desktop) -->
-      <a href="index.html"
+      <a href="inicio.html"
          class="barra-navegacion__enlace hidden md:block flex-shrink-0"
          data-enlace-nav="inicio">INICIO</a>
 
@@ -96,7 +97,7 @@
     <div id="panel-menu-categorias" class="menu-movil" role="navigation"
          aria-label="Menú móvil categorías">
       <ul class="menu-movil__lista" role="list">
-        <li><a href="index.html"          class="menu-movil__enlace">Inicio</a></li>
+        <li><a href="inicio.html"          class="menu-movil__enlace">Inicio</a></li>
         <li><a href="categorias.html"     class="menu-movil__enlace" style="color:#e31e1e;">Categorías</a></li>
         <li><a href="login.html"          class="menu-movil__enlace">Iniciar Sesión</a></li>
         <li><a href="registro.html"       class="menu-movil__enlace">Registrarme</a></li>
@@ -448,13 +449,13 @@
   <footer id="pie-pagina" class="pie-pagina" role="contentinfo">
     <div class="pie-pagina__contenedor">
       <div id="columna-logotipo-pie" class="col-span-2 md:col-span-1 flex items-center">
-        <a href="index.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
-          <img src="recursos/imagenes/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
+        <a href="inicio.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
+          <img src="../assets/images/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
         </a>
       </div>
       <nav aria-label="Pie: enlaces principales">
         <ul class="pie-pagina__lista-enlaces" role="list">
-          <li><a href="index.html"          class="pie-pagina__enlace">inicio</a></li>
+          <li><a href="inicio.html"          class="pie-pagina__enlace">inicio</a></li>
           <li><a href="categorias.html"     class="pie-pagina__enlace">categorías</a></li>
         </ul>
       </nav>
@@ -477,154 +478,8 @@
     </div>
   </footer>
 
-  <script src="assets/js/vanguard-principal.js" defer></script>
-  <script>
-    /**
-     * VANGUARD — Lógica de la página de Categorías
-     * ================================================
-     * Módulos:
-     *   1. Toggle menú móvil
-     *   2. Apertura y cierre del modal de producto
-     *   3. Filtrado por subcategoría (hook para API)
-     *   4. Buscador con debounce (hook para API)
-     *   5. Agregar al carrito (hook para localStorage/API)
-     */
-
-    // ── 1. Toggle menú móvil ──
-    const botonMenuMovil       = document.getElementById('boton-menu-movil');
-    const panelMenuCategorias  = document.getElementById('panel-menu-categorias');
-    if (botonMenuMovil && panelMenuCategorias) {
-      botonMenuMovil.addEventListener('click', () => {
-        const estaAbierto = panelMenuCategorias.classList.toggle('menu-movil--abierto');
-        botonMenuMovil.setAttribute('aria-expanded', String(estaAbierto));
-      });
-    }
-
-    // ── 2. Modal de producto ──
-    const capaModalProducto       = document.getElementById('capa-modal-producto');
-    const botonCerrarModalProducto = document.getElementById('boton-cerrar-modal-producto');
-
-    // Activar modal al hacer clic en tarjeta
-    document.querySelectorAll('[data-abrir-modal-producto="true"]').forEach(tarjeta => {
-      tarjeta.addEventListener('click',  () => abrirModalProducto(tarjeta.dataset.idProducto));
-      tarjeta.addEventListener('keydown', (evento) => {
-        if (evento.key === 'Enter' || evento.key === ' ') {
-          evento.preventDefault();
-          abrirModalProducto(tarjeta.dataset.idProducto);
-        }
-      });
-    });
-
-    function abrirModalProducto(idProducto) {
-      /**
-       * HOOK API: En producción cargar datos reales:
-       * GET /api/v1/productos/:idProducto
-       * Luego actualizar los campos del modal dinámicamente.
-       *
-       * Ejemplo de actualización dinámica:
-       *   document.getElementById('modal-nombre-producto').textContent   = datos.nombre;
-       *   document.getElementById('modal-precio-producto').textContent   = `$ ${datos.precio}`;
-       *   document.getElementById('modal-imagen-producto').src           = datos.imagenUrl;
-       *   document.getElementById('modal-descripcion-producto').textContent = datos.descripcion;
-       *   document.getElementById('boton-agregar-al-carrito').dataset.idProductoModal = idProducto;
-       */
-      capaModalProducto.classList.add('capa-modal-producto--activo');
-      document.body.style.overflow = 'hidden';
-      botonCerrarModalProducto.focus();
-    }
-
-    function cerrarModalProducto() {
-      capaModalProducto.classList.remove('capa-modal-producto--activo');
-      document.body.style.overflow = '';
-    }
-
-    botonCerrarModalProducto?.addEventListener('click', cerrarModalProducto);
-    capaModalProducto?.addEventListener('click', (evento) => {
-      if (evento.target === capaModalProducto) cerrarModalProducto();
-    });
-    document.addEventListener('keydown', (evento) => {
-      if (evento.key === 'Escape') cerrarModalProducto();
-    });
-
-    // ── 3. Filtrado por subcategoría ──
-    document.querySelectorAll('.barra-lateral-categorias__enlace').forEach(boton => {
-      boton.addEventListener('click', () => {
-        // Actualizar estado visual activo
-        document.querySelectorAll('.barra-lateral-categorias__enlace')
-                .forEach(b => {
-                  b.classList.remove('barra-lateral-categorias__enlace--activo');
-                  b.removeAttribute('aria-pressed');
-                });
-        boton.classList.add('barra-lateral-categorias__enlace--activo');
-        boton.setAttribute('aria-pressed', 'true');
-
-        // Actualizar encabezado visible
-        const nombreSubcategoria = boton.textContent.trim();
-        document.getElementById('etiqueta-subcategoria-activa').textContent = nombreSubcategoria;
-
-        /**
-         * HOOK API: Cargar productos filtrados
-         * GET /api/v1/productos?categoria={cat}&subcategoria={subcat}&pagina=1
-         */
-        const parametrosConsulta = {
-          categoria:    boton.dataset.categoria,
-          subcategoria: boton.dataset.subcategoria
-        };
-        console.log('[VANGUARD] Filtrar productos:', parametrosConsulta);
-      });
-    });
-
-    // ── 4. Buscador con debounce ──
-    const campoBuscarProductos = document.getElementById('campo-buscar-productos');
-    let temporizadorBusqueda;
-    campoBuscarProductos?.addEventListener('input', () => {
-      clearTimeout(temporizadorBusqueda);
-      temporizadorBusqueda = setTimeout(() => {
-        const textoBusqueda = campoBuscarProductos.value.trim();
-        if (textoBusqueda.length < 2) return;
-        /**
-         * HOOK API: Buscar productos
-         * GET /api/v1/productos/buscar?q={textoBusqueda}
-         */
-        console.log('[VANGUARD] Búsqueda:', textoBusqueda);
-      }, 350);
-    });
-
-    // ── 5. Agregar al carrito desde el modal ──
-    document.getElementById('boton-agregar-al-carrito')?.addEventListener('click', () => {
-      const botonCarrito = document.getElementById('boton-agregar-al-carrito');
-
-      /* Construir datos del artículo para el carrito */
-      const datosArticulo = {
-        id:       botonCarrito.dataset.idProductoModal || 'prod-001',
-        nombre:   document.getElementById('modal-nombre-producto')?.textContent?.trim()
-                    || 'GIGABYTE AORUS MEN TSHIRT',
-        precio:   parseFloat(
-                    document.getElementById('modal-precio-producto')
-                              ?.textContent?.replace(/[^0-9.]/g, '') || '24.99'
-                  ),
-        imagen:   document.getElementById('modal-imagen-producto')?.src || '',
-        talla:    'unica',
-        cantidad: 1,
-        marca:    'Gigabyte',
-        sku:      'MEN-GIG-GIG-084'
-      };
-
-      /* Usar el módulo real del carrito con localStorage */
-      window.Vanguard.carrito.agregar(datosArticulo);
-
-      /* Mostrar notificación toast */
-      window.Vanguard.notificaciones.exito('¡Producto agregado al carrito!');
-
-      /* Cerrar el modal */
-      cerrarModalProducto();
-    });
-
-    window.Vanguard = window.Vanguard || {
-      carrito: { articulos: [] },
-      config:  { urlApi: '/api/v1' }
-    };
-  </script>
+  <script src="../app/main.js" type="module" defer></script>
+  <script src="../app/pages/categorias.js" defer></script>
 
 </body>
 </html>

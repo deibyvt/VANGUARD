@@ -7,56 +7,13 @@
   <meta name="description" content="Crea tu cuenta en VANGUARD y accede a los mejores productos." />
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../app/tailwind-config.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/sistema-diseno.css" />
+  <link rel="stylesheet" href="../css/main.css" />
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'vng-negro':       '#1a1a1a',
-            'vng-negro-2':     '#2d2d2d',
-            'vng-rojo':        '#e31e1e',
-            'vng-rojo-oscuro': '#c41818',
-            'vng-gris-fondo':  '#ececec',
-          },
-          fontFamily: {
-            'display':    ['Bebas Neue',       'Arial Black',  'sans-serif'],
-            'condensada': ['Barlow Condensed', 'Arial Narrow', 'sans-serif'],
-            'cuerpo':     ['Barlow',           'Arial',        'sans-serif'],
-          },
-        }
-      }
-    }
-  </script>
 
-  <style>
-    /*
-     * IMAGEN MODELO DECORATIVA (registro)
-     * ────────────────────────────────────
-     * Fiel al PDF página 2: modelo femenina con cabello rosa
-     * posicionada en la esquina derecha, emergiendo del blob oscuro.
-     * La imagen está sobre el gris claro para dar profundidad.
-     */
-    .imagen-modelo-decorativa {
-      position: absolute;
-      bottom: 25%;
-      right: 0;
-      width: 44%;
-      max-width: 440px;
-      z-index: 5;
-      pointer-events: none;
-    }
-    @media (max-width: 1024px) {
-      .imagen-modelo-decorativa { width: 40%; }
-    }
-    @media (max-width: 768px) {
-      .imagen-modelo-decorativa { display: none; }
-    }
-  </style>
 </head>
 
 <body class="font-cuerpo fondo-formulario" id="pagina-registro">
@@ -70,8 +27,8 @@
          aria-label="Menú principal">
 
       <div id="columna-logotipo-pie" class="col-span-2 md:col-span-1 flex items-center">
-        <a href="index.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
-          <img src="recursos/imagenes/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
+        <a href="inicio.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
+          <img src="../assets/images/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
         </a>
       </div>
 
@@ -79,7 +36,7 @@
           class="barra-navegacion__lista-enlaces"
           role="list">
         <li>
-          <a href="index.html"
+          <a href="inicio.html"
              class="barra-navegacion__enlace"
              data-enlace-nav="inicio">inicio</a>
         </li>
@@ -130,7 +87,7 @@
 
     <div id="menu-movil" class="menu-movil" role="navigation">
       <ul class="menu-movil__lista" role="list">
-        <li><a href="index.html"      class="menu-movil__enlace">Inicio</a></li>
+        <li><a href="inicio.html"      class="menu-movil__enlace">Inicio</a></li>
         <li><a href="categorias.html" class="menu-movil__enlace">Categorías</a></li>
         <li><a href="login.html"      class="menu-movil__enlace">Iniciar Sesión</a></li>
         <li>
@@ -323,14 +280,14 @@
     <div class="pie-pagina__contenedor">
 
       <div id="columna-logotipo-pie" class="col-span-2 md:col-span-1 flex items-center">
-        <a href="index.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
-          <img src="recursos/imagenes/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
+        <a href="inicio.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
+          <img src="../assets/images/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
         </a>
       </div>
 
       <nav id="navegacion-pie-principal" aria-label="Pie: enlaces principales">
         <ul class="pie-pagina__lista-enlaces" role="list">
-          <li><a href="index.html"      class="pie-pagina__enlace">inicio</a></li>
+          <li><a href="inicio.html"      class="pie-pagina__enlace">inicio</a></li>
           <li><a href="categorias.html" class="pie-pagina__enlace">categorías</a></li>
         </ul>
       </nav>
@@ -382,112 +339,8 @@
     </div>
   </footer>
 
-
-  <script src="assets/js/vanguard-principal.js" defer></script>
-
-  <script>
-    /**
-     * VANGUARD — Lógica del formulario de Registro
-     * ================================================
-     * Endpoint futuro: POST /api/v1/autenticacion/registrar
-     * Payload: { nombre: string, correoElectronico: string, contrasenaNueva: string }
-     * Respuesta: { exito: true, mensaje: "Cuenta creada correctamente" }
-     */
-
-    const formularioRegistroUsuario = document.getElementById('formulario-registro-usuario');
-    const botonEnviarRegistro       = document.getElementById('boton-enviar-registro');
-
-    if (formularioRegistroUsuario) {
-      formularioRegistroUsuario.addEventListener('submit', async (evento) => {
-        evento.preventDefault();
-
-        const valorNombre      = document.getElementById('campo-nombre-usuario').value.trim();
-        const valorCorreo      = document.getElementById('campo-correo-registro').value.trim();
-        const valorContrasena  = document.getElementById('campo-contrasena-registro').value;
-
-        /* ── Validación ── */
-        let formularioEsValido = true;
-
-        if (!valorNombre || valorNombre.length < 2) {
-          mostrarErrorCampo('error-nombre-usuario', 'El nombre debe tener al menos 2 caracteres');
-          formularioEsValido = false;
-        } else { ocultarErrorCampo('error-nombre-usuario'); }
-
-        const expresionRegularCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!valorCorreo || !expresionRegularCorreo.test(valorCorreo)) {
-          mostrarErrorCampo('error-correo-registro', 'Ingresa un correo electrónico válido');
-          formularioEsValido = false;
-        } else { ocultarErrorCampo('error-correo-registro'); }
-
-        if (!valorContrasena || valorContrasena.length < 8) {
-          mostrarErrorCampo('error-contrasena-registro', 'La contraseña debe tener al menos 8 caracteres');
-          formularioEsValido = false;
-        } else { ocultarErrorCampo('error-contrasena-registro'); }
-
-        if (!formularioEsValido) return;
-
-        /* ── Estado cargando ── */
-        botonEnviarRegistro.textContent = 'ENVIANDO';
-        botonEnviarRegistro.dataset.estado = 'cargando';
-
-        try {
-          /*
-           * HOOK API — Descomentar al conectar backend:
-           *
-           * const respuesta = await fetch(
-           *   `${window.Vanguard.config.urlApi}/autenticacion/registrar`,
-           *   {
-           *     method:  'POST',
-           *     headers: { 'Content-Type': 'application/json' },
-           *     body: JSON.stringify({
-           *       nombre:            valorNombre,
-           *       correoElectronico: valorCorreo,
-           *       contrasenaNueva:   valorContrasena
-           *     })
-           *   }
-           * );
-           * const datos = await respuesta.json();
-           * if (datos.exito) {
-           *   window.location.href = 'login.html?registro=exitoso';
-           * } else {
-           *   mostrarErrorCampo('mensaje-estado-registro', datos.mensaje);
-           * }
-           */
-
-          console.log('[VANGUARD] Registro — datos listos:', {
-            nombre:            valorNombre,
-            correoElectronico: valorCorreo
-          });
-
-          /* Demo visual */
-          setTimeout(() => {
-            botonEnviarRegistro.textContent = 'ENVÍAR';
-            delete botonEnviarRegistro.dataset.estado;
-          }, 1200);
-
-        } catch (errorDeRed) {
-          console.error('[VANGUARD] Error de red:', errorDeRed);
-          mostrarErrorCampo('mensaje-estado-registro', 'Error de conexión. Intenta nuevamente.');
-          botonEnviarRegistro.textContent = 'ENVÍAR';
-          delete botonEnviarRegistro.dataset.estado;
-        }
-      });
-    }
-
-    function mostrarErrorCampo(idElemento, mensaje) {
-      const elemento = document.getElementById(idElemento);
-      if (!elemento) return;
-      elemento.textContent = mensaje;
-      elemento.classList.add('mensaje-error-campo--visible');
-    }
-
-    function ocultarErrorCampo(idElemento) {
-      const elemento = document.getElementById(idElemento);
-      if (!elemento) return;
-      elemento.textContent = '';
-      elemento.classList.remove('mensaje-error-campo--visible');
-    }
-  </script>
+  <script src="../app/main.js" type="module" defer></script>
+  <script src="../app/pages/registro.js" defer></script>
 
 </body>
 </html>

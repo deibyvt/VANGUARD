@@ -1,0 +1,104 @@
+.mini-tarjeta-vista-previa {
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 200ms ease;
+}
+
+.mini-tarjeta-vista-previa:hover {
+  transform: scale(1.05);
+}
+
+@media (min-width: 768px) {
+  .mini-tarjeta-vista-previa {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+.seccion-heroe {
+  background: var(--color-negro-hero);
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.seccion-heroe__fondo-blob {
+  position: absolute;
+  inset: 0;
+  background: #3a3a3a;
+  clip-path: polygon(
+    0% 0%, 100% 0%, 100% 55%,
+    80% 65%, 65% 72%, 50% 80%,
+    35% 85%, 20% 82%, 8% 75%, 0% 65%
+  );
+  z-index: 0;
+}
+
+.seccion-heroe__imagen-modelo {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.6));
+}
+
+.seccion-heroe__contenido {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 1.5rem;
+}
+
+.seccion-heroe__titulo {
+  font-family: var(--fuente-display);
+  color: var(--color-blanco);
+  font-size: var(--texto-gigante);
+  line-height: 0.85;
+  letter-spacing: 0.02em;
+}
+
+.seccion-elige {
+  background: var(--color-negro-principal);
+  padding: 5rem 0 7rem;
+}
+
+.seccion-elige__titulo {
+  font-family: var(--fuente-display);
+  color: var(--color-blanco);
+  font-size: clamp(5rem, 15vw, 11rem);
+  line-height: 0.85;
+  text-align: center;
+}
+
+.seccion-elige__subtitulo {
+  font-family: var(--fuente-condensada);
+  font-style: italic;
+  font-weight: 800;
+  color: var(--color-rojo-principal);
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  line-height: 1;
+  text-align: center;
+  margin-top: -0.5rem;
+}
+
+.seccion-elige__etiqueta {
+  font-family: var(--fuente-condensada);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 1.5rem;
+}

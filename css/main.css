@@ -1,0 +1,89 @@
+@import url('base/variables.css');
+@import url('base/reset.css');
+@import url('components/barra-navegacion.css');
+@import url('components/pie-pagina.css');
+@import url('components/botones.css');
+@import url('components/formularios.css');
+@import url('components/tarjetas.css');
+@import url('components/modal.css');
+@import url('components/carrito.css');
+@import url('components/buscador.css');
+@import url('layout/grid.css');
+@import url('pages/inicio.css');
+@import url('pages/login.css');
+@import url('pages/registro.css');
+@import url('pages/categorias.css');
+@import url('pages/checkout.css');
+@import url('pages/producto.css');
+
+.fuente-display    { font-family: var(--fuente-display); }
+.fuente-condensada { font-family: var(--fuente-condensada); }
+.fuente-cuerpo     { font-family: var(--fuente-cuerpo); }
+
+.js-animacion-entrada {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--transicion-suave), transform var(--transicion-suave);
+}
+
+.js-animacion-entrada--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.js-cargando { cursor: wait; opacity: 0.6; pointer-events: none; }
+.js-oculto   { display: none !important; }
+.js-visible  { display: block !important; }
+
+.icono-carrito-navbar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--fuente-condensada);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--color-blanco);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color var(--transicion-rapida);
+}
+
+.icono-carrito-navbar:hover { color: var(--color-rojo-principal); }
+
+.contador-carrito-navbar {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  background: var(--color-rojo-principal);
+  color: var(--color-blanco);
+  font-family: var(--fuente-condensada);
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0;
+  border-radius: var(--radio-total);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  line-height: 1;
+  transition: transform var(--transicion-rapida), background var(--transicion-normal);
+  pointer-events: none;
+}
+
+.contador-carrito-navbar--pulsando {
+  animation: pulso-contador 400ms ease forwards;
+}
+
+@keyframes pulso-contador {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.4); background: #ff4444; }
+  100% { transform: scale(1); }
+}
+
+::-webkit-scrollbar         { width: 5px; }
+::-webkit-scrollbar-track   { background: var(--color-gris-fondo); }
+::-webkit-scrollbar-thumb   { background: var(--color-rojo-principal); border-radius: var(--radio-total); }

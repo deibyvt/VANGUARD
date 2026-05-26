@@ -7,143 +7,13 @@
   <meta name="description" content="Camiseta Gigabyte Aorus para hombre. Diseño gaming, cómoda y casual. Stock disponible." />
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../app/tailwind-config.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/sistema-diseno.css" />
+  <link rel="stylesheet" href="../css/main.css" />
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'vng-negro':       '#1a1a1a',
-            'vng-negro-2':     '#2d2d2d',
-            'vng-rojo':        '#e31e1e',
-            'vng-rojo-oscuro': '#c41818',
-            'vng-gris-fondo':  '#ececec',
-            'vng-gris-barra':  '#c8c8c8',
-          },
-          fontFamily: {
-            'display':    ['Bebas Neue',       'Arial Black',  'sans-serif'],
-            'condensada': ['Barlow Condensed', 'Arial Narrow', 'sans-serif'],
-            'cuerpo':     ['Barlow',           'Arial',        'sans-serif'],
-          },
-        }
-      }
-    }
-  </script>
 
-  <style>
-    /*
-     * LAYOUT PRODUCTO INDIVIDUAL
-     * ───────────────────────────
-     * Misma estructura de 2 columnas que categorías:
-     * área principal + barra lateral de categorías.
-     * El detalle del producto ocupa el área principal con
-     * fondo gris claro (diferente a la oscura del listado).
-     *
-     * Decisión UX: mantener la barra lateral visible para
-     * que el usuario pueda navegar a otras categorías sin
-     * volver atrás — reduce la tasa de abandono.
-     */
-
-    /* Miniaturas de galería de imágenes */
-    .miniatura-galeria {
-      width: 72px;
-      height: 72px;
-      border-radius: 10px;
-      overflow: hidden;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: border-color 200ms ease, transform 150ms ease;
-      background: white;
-      flex-shrink: 0;
-    }
-    .miniatura-galeria:hover {
-      transform: scale(1.05);
-      border-color: rgba(227, 30, 30, 0.4);
-    }
-    .miniatura-galeria--activa {
-      border-color: var(--color-rojo-principal);
-    }
-    .miniatura-galeria img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      padding: 4px;
-    }
-
-    /* Imagen principal del producto */
-    .imagen-principal-producto {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      transition: transform 350ms ease, opacity 250ms ease;
-    }
-
-    /* Animación de cambio de imagen */
-    .imagen-principal-producto.js-cambiando {
-      opacity: 0;
-      transform: scale(0.97);
-    }
-
-    /* Badge de disponibilidad de stock */
-    .indicador-disponibilidad {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-family: var(--fuente-condensada);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #555;
-    }
-    .indicador-disponibilidad::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #22c55e;
-      display: block;
-    }
-
-    /* Línea divisoria sutil */
-    .divisor-producto {
-      height: 1px;
-      background: rgba(0,0,0,0.08);
-      margin: 1.25rem 0;
-    }
-
-    /* Precio grande */
-    .precio-producto-principal {
-      font-family: var(--fuente-display);
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      color: var(--color-negro-principal);
-      line-height: 1;
-    }
-
-    /* Breadcrumb de navegación */
-    .miga-de-pan {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: var(--fuente-condensada);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 1.5rem;
-    }
-    .miga-de-pan__enlace {
-      color: rgba(255,255,255,0.5);
-      transition: color 150ms ease;
-    }
-    .miga-de-pan__enlace:hover { color: white; }
-    .miga-de-pan__separador { font-size: 0.6rem; }
-    .miga-de-pan__actual     { color: rgba(255,255,255,0.8); }
-  </style>
 </head>
 
 <body class="font-cuerpo" style="background: #2a2a2a;" id="pagina-producto">
@@ -159,12 +29,12 @@
          aria-label="Menú de navegación">
 
       <div id="columna-logotipo-pie" class="col-span-2 md:col-span-1 flex items-center">
-        <a href="index.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
-          <img src="recursos/imagenes/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
+        <a href="inicio.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
+          <img src="../assets/images/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
         </a>
       </div>
 
-      <a href="index.html"
+      <a href="inicio.html"
          class="barra-navegacion__enlace hidden md:block flex-shrink-0"
          data-enlace-nav="inicio">INICIO</a>
 
@@ -224,7 +94,7 @@
 
     <div id="panel-menu-producto" class="menu-movil" role="navigation">
       <ul class="menu-movil__lista" role="list">
-        <li><a href="index.html"          class="menu-movil__enlace">Inicio</a></li>
+        <li><a href="inicio.html"          class="menu-movil__enlace">Inicio</a></li>
         <li><a href="categorias.html"     class="menu-movil__enlace">Categorías</a></li>
         <li><a href="login.html"          class="menu-movil__enlace">Iniciar Sesión</a></li>
         <li><a href="registro.html"       class="menu-movil__enlace">Registrarme</a></li>
@@ -250,7 +120,7 @@
            class="miga-de-pan"
            aria-label="Ruta de navegación"
            style="color: rgba(0,0,0,0.4);">
-        <a href="index.html"
+        <a href="inicio.html"
            class="miga-de-pan__enlace"
            style="color: rgba(0,0,0,0.4);"
            data-enlace-miga="inicio">inicio</a>
@@ -572,13 +442,13 @@
           aria-label="Pie de página VANGUARD">
     <div class="pie-pagina__contenedor">
       <div id="columna-logotipo-pie" class="col-span-2 md:col-span-1 flex items-center">
-        <a href="index.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
-          <img src="recursos/imagenes/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
+        <a href="inicio.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
+          <img src="../assets/images/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
         </a>
       </div>
       <nav aria-label="Pie: enlaces principales">
         <ul class="pie-pagina__lista-enlaces" role="list">
-          <li><a href="index.html"      class="pie-pagina__enlace">inicio</a></li>
+          <li><a href="inicio.html"      class="pie-pagina__enlace">inicio</a></li>
           <li><a href="categorias.html" class="pie-pagina__enlace">categorías</a></li>
         </ul>
       </nav>
@@ -601,146 +471,8 @@
     </div>
   </footer>
 
-
-  <script src="assets/js/vanguard-principal.js" defer></script>
-
-  <script>
-    /**
-     * VANGUARD — Lógica de la página de Producto Individual
-     * =======================================================
-     * Módulos:
-     *   1. Toggle menú móvil
-     *   2. Galería de imágenes interactiva
-     *   3. Selector de talla
-     *   4. Contador de cantidad
-     *   5. Agregar al carrito (con localStorage)
-     *   6. Navegación desde barra lateral
-     */
-
-    // ── 1. Menú móvil ──
-    const botonMenuMovil    = document.getElementById('boton-menu-movil');
-    const panelMenuProducto = document.getElementById('panel-menu-producto');
-    if (botonMenuMovil && panelMenuProducto) {
-      botonMenuMovil.addEventListener('click', () => {
-        const estaAbierto = panelMenuProducto.classList.toggle('menu-movil--abierto');
-        botonMenuMovil.setAttribute('aria-expanded', String(estaAbierto));
-      });
-    }
-
-    // ── 2. Galería de imágenes ──
-    const imagenPrincipal = document.getElementById('imagen-principal-producto');
-
-    document.querySelectorAll('.miniatura-galeria').forEach(miniatura => {
-      miniatura.addEventListener('click', () => {
-        const urlNuevaImagen = miniatura.dataset.urlImagen;
-        const altNuevaImagen = miniatura.dataset.altImagen;
-
-        /* Animación de transición */
-        imagenPrincipal.classList.add('js-cambiando');
-
-        setTimeout(() => {
-          imagenPrincipal.src = urlNuevaImagen;
-          imagenPrincipal.alt = altNuevaImagen;
-          imagenPrincipal.classList.remove('js-cambiando');
-        }, 200);
-
-        /* Actualizar estado de miniaturas */
-        document.querySelectorAll('.miniatura-galeria').forEach(m => {
-          m.classList.remove('miniatura-galeria--activa');
-          m.setAttribute('aria-pressed', 'false');
-        });
-        miniatura.classList.add('miniatura-galeria--activa');
-        miniatura.setAttribute('aria-pressed', 'true');
-      });
-    });
-
-    // ── 3. Selector de talla ──
-    let tallaSeleccionada = 'S';
-    document.querySelectorAll('[data-talla]').forEach(botonTalla => {
-      botonTalla.addEventListener('click', () => {
-        tallaSeleccionada = botonTalla.dataset.talla;
-
-        /* Actualizar estado visual */
-        document.querySelectorAll('[data-talla]').forEach(b => {
-          b.classList.remove('border-vng-rojo', 'text-vng-rojo', 'bg-red-50');
-          b.classList.add('border-gray-200', 'text-gray-500', 'bg-white');
-          b.setAttribute('aria-checked', 'false');
-        });
-        botonTalla.classList.add('border-vng-rojo', 'text-vng-rojo', 'bg-red-50');
-        botonTalla.classList.remove('border-gray-200', 'text-gray-500', 'bg-white');
-        botonTalla.setAttribute('aria-checked', 'true');
-      });
-    });
-
-    // ── 4. Contador de cantidad ──
-    let cantidadSeleccionada = 1;
-    const contadorCantidad   = document.getElementById('contador-cantidad-producto');
-    const stockMaximo        = 90; /* Hook: cargar desde API */
-
-    document.getElementById('boton-disminuir-cantidad')?.addEventListener('click', () => {
-      if (cantidadSeleccionada > 1) {
-        cantidadSeleccionada--;
-        contadorCantidad.textContent = cantidadSeleccionada;
-      }
-    });
-
-    document.getElementById('boton-aumentar-cantidad')?.addEventListener('click', () => {
-      if (cantidadSeleccionada < stockMaximo) {
-        cantidadSeleccionada++;
-        contadorCantidad.textContent = cantidadSeleccionada;
-      }
-    });
-
-    // ── 5. Agregar al carrito con localStorage real ──
-    document.getElementById('boton-agregar-carrito-producto')?.addEventListener('click', () => {
-      const tallaElegida    = tallaSeleccionada;
-      const cantidadElegida = cantidadSeleccionada;
-
-      const datosArticulo = {
-        id:       document.getElementById('boton-agregar-carrito-producto').dataset.idProducto,
-        nombre:   document.getElementById('nombre-producto-principal')?.textContent?.trim()
-                    || 'GIGABYTE AORUS MEN TSHIRT',
-        precio:   parseFloat(
-                    document.getElementById('precio-producto-principal')
-                              ?.textContent?.replace(/[^0-9.]/g, '') || '24.99'
-                  ),
-        imagen:   document.getElementById('imagen-principal-producto')?.src || '',
-        talla:    tallaElegida,
-        cantidad: cantidadElegida,
-        marca:    'Gigabyte',
-        sku:      'MEN-GIG-GIG-084'
-      };
-
-      /* Usar módulo real de carrito con localStorage */
-      window.Vanguard.carrito.agregar(datosArticulo);
-
-      /* Notificación toast */
-      window.Vanguard.notificaciones.exito(
-        `¡${cantidadElegida > 1 ? cantidadElegida + 'x ' : ''}${datosArticulo.nombre} agregado!`
-      );
-
-      /* Feedback visual en la página */
-      const mensajeAgregado = document.getElementById('mensaje-agregado-carrito');
-      mensajeAgregado.classList.remove('hidden');
-      setTimeout(() => mensajeAgregado.classList.add('hidden'), 2500);
-    });
-
-    // ── 6. Navegación desde barra lateral ──
-    document.querySelectorAll('.barra-lateral-categorias__enlace').forEach(boton => {
-      boton.addEventListener('click', () => {
-        const parametros = new URLSearchParams({
-          categoria:    boton.dataset.categoria,
-          subcategoria: boton.dataset.subcategoria
-        });
-        window.location.href = `categorias.html?${parametros.toString()}`;
-      });
-    });
-
-    window.Vanguard = window.Vanguard || {
-      carrito: { articulos: [] },
-      config:  { urlApi: '/api/v1' }
-    };
-  </script>
+  <script src="../app/main.js" type="module" defer></script>
+  <script src="../app/pages/producto.js" defer></script>
 
 </body>
 </html>

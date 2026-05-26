@@ -1,0 +1,14 @@
+.contenedor-pagina-categorias {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: calc(100vh - 4.5rem);
+}
+
+@media (min-width: 1024px) {
+  .contenedor-pagina-categorias { grid-template-columns: 1fr 280px; }
+}
+
+.area-productos-principal {
+  background: #2a2a2a;
+  padding: 2rem 1.5rem;
+}

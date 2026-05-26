@@ -1,22 +1,22 @@
 # VANGUARD — Sistema Visual Completo (Design Tokens)
-**Versión:** 2.0 | Archivo fuente: `assets/css/sistema-diseno.css`
+**Versión:** 3.0 | Archivo fuente: `css/base/variables.css`
 
 ---
 
 ## Paleta de colores
-| Token CSS                      | Valor HEX  | Tailwind config  | Uso principal                    |
-|-------------------------------|-----------|-----------------|----------------------------------|
-| `--color-negro-principal`      | `#1a1a1a` | `vng-negro`      | Navbar, textos, fondo héroe      |
-| `--color-negro-secundario`     | `#2d2d2d` | `vng-negro-2`    | Menú móvil, íconos redes         |
-| `--color-negro-hero`           | `#2a2a2a` | —               | Fondo área productos             |
-| `--color-gris-claro`           | `#e8e8e8` | —               | Bordes suaves                    |
-| `--color-gris-medio`           | `#d0d0d0` | —               | Inputs checkout                  |
-| `--color-gris-fondo`           | `#ececec` | `vng-gris-fondo` | Fondo carrito y checkout         |
-| `--color-gris-sidebar`         | `#c8c8c8` | `vng-gris-barra` | Fondo barra lateral categorías   |
-| `--color-rojo-principal`       | `#e31e1e` | `vng-rojo`       | CTAs, bordes activos, footer     |
-| `--color-rojo-oscuro`          | `#c41818` | `vng-rojo-oscuro`| Hover del rojo principal         |
-| `--color-blanco`               | `#ffffff` | —               | Fondos de tarjetas               |
-| `--color-blanco-tarjeta`       | `#f8f8f8` | —               | Fondo tarjetas producto          |
+| Token CSS                      | Valor HEX  | Tailwind config    | Uso principal                    |
+|-------------------------------|-----------|-------------------|----------------------------------|
+| `--color-negro-principal`      | `#1a1a1a` | `vng-negro`       | Navbar, textos, fondo héroe      |
+| `--color-negro-secundario`     | `#2d2d2d` | `vng-negro-2`     | Menú móvil, íconos redes         |
+| `--color-negro-hero`           | `#2a2a2a` | —                 | Fondo área productos             |
+| `--color-gris-claro`           | `#e8e8e8` | `vng-gris`        | Bordes suaves                    |
+| `--color-gris-medio`           | `#d0d0d0` | —                 | Inputs checkout                  |
+| `--color-gris-fondo`           | `#ececec` | `vng-gris-fondo`  | Fondo carrito y checkout         |
+| `--color-gris-sidebar`         | `#c8c8c8` | `vng-gris-barra`  | Fondo barra lateral categorías   |
+| `--color-rojo-principal`       | `#e31e1e` | `vng-rojo`        | CTAs, bordes activos, footer     |
+| `--color-rojo-oscuro`          | `#c41818` | `vng-rojo-oscuro` | Hover del rojo principal         |
+| `--color-blanco`               | `#ffffff` | —                 | Fondos de tarjetas               |
+| `--color-blanco-tarjeta`       | `#f8f8f8` | —                 | Fondo tarjetas producto          |
 
 ---
 
@@ -93,4 +93,33 @@ Usa `clamp(min, preferido, max)` para fluidez sin breakpoints artificiales:
 --transicion-rapida: 150ms ease   /* hover states inmediatos */
 --transicion-normal: 250ms ease   /* transiciones estándar   */
 --transicion-suave:  400ms ease   /* cambios de layout/posición */
+```
+
+---
+
+## Config Tailwind v3 centralizada
+
+Archivo: `app/tailwind-config.js`
+
+```javascript
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        'vng-negro':       '#1a1a1a',
+        'vng-negro-2':     '#2d2d2d',
+        'vng-rojo':        '#e31e1e',
+        'vng-rojo-oscuro': '#c41818',
+        'vng-gris-fondo':  '#ececec',
+        'vng-gris':        '#e8e8e8',
+        'vng-gris-barra':  '#c8c8c8',
+      },
+      fontFamily: {
+        'display':    ['Bebas Neue',       'Arial Black',  'sans-serif'],
+        'condensada': ['Barlow Condensed', 'Arial Narrow', 'sans-serif'],
+        'cuerpo':     ['Barlow',           'Arial',        'sans-serif'],
+      },
+    }
+  }
+};
 ```

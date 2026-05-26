@@ -7,69 +7,13 @@
   <meta name="description" content="Accede a tu cuenta VANGUARD y disfruta de todos los beneficios." />
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../app/tailwind-config.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/sistema-diseno.css" />
+  <link rel="stylesheet" href="../css/main.css" />
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'vng-negro':       '#1a1a1a',
-            'vng-negro-2':     '#2d2d2d',
-            'vng-rojo':        '#e31e1e',
-            'vng-rojo-oscuro': '#c41818',
-            'vng-gris-fondo':  '#ececec',
-          },
-          fontFamily: {
-            'display':    ['Bebas Neue',       'Arial Black',  'sans-serif'],
-            'condensada': ['Barlow Condensed', 'Arial Narrow', 'sans-serif'],
-            'cuerpo':     ['Barlow',           'Arial',        'sans-serif'],
-          },
-        }
-      }
-    }
-  </script>
 
-  <style>
-    /*
-     * IMAGEN MOTO DECORATIVA
-     * ──────────────────────
-     * Decisión de diseño: fiel al PDF página 3.
-     * La moto se posiciona absolute en la esquina inferior derecha,
-     * sobresaliendo del blob oscuro hacia el gris claro.
-     * Se oculta en mobile para preservar legibilidad del formulario.
-     */
-    .imagen-moto-decorativa {
-      position: absolute;
-      bottom: 24%;
-      right: -3%;
-      width: 58%;
-      max-width: 580px;
-      z-index: 5;
-      pointer-events: none;
-    }
-    @media (max-width: 1024px) {
-      .imagen-moto-decorativa { width: 50%; right: -2%; }
-    }
-    @media (max-width: 768px) {
-      .imagen-moto-decorativa { display: none; }
-    }
-
-    /* Estado cargando en el botón */
-    .boton-primario[data-estado="cargando"] {
-      opacity: 0.7;
-      cursor: wait;
-      pointer-events: none;
-    }
-    .boton-primario[data-estado="cargando"]::after {
-      content: '...';
-      animation: parpadeo 1s infinite;
-    }
-    @keyframes parpadeo { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  </style>
 </head>
 
 <body class="font-cuerpo fondo-formulario" id="pagina-inicio-sesion">
@@ -87,8 +31,8 @@
 
       <!-- Logotipo -->
       <div id="columna-logotipo-pie" class="col-span-2 md:col-span-1 flex items-center">
-        <a href="index.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
-          <img src="recursos/imagenes/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
+        <a href="inicio.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
+          <img src="../assets/images/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
         </a>
       </div>
 
@@ -98,7 +42,7 @@
           role="list"
           aria-label="Secciones principales">
         <li>
-          <a href="index.html"
+          <a href="inicio.html"
              class="barra-navegacion__enlace"
              data-enlace-nav="inicio">inicio</a>
         </li>
@@ -155,7 +99,7 @@
          role="navigation"
          aria-label="Menú navegación móvil">
       <ul class="menu-movil__lista" role="list">
-        <li><a href="index.html"      class="menu-movil__enlace">Inicio</a></li>
+        <li><a href="inicio.html"      class="menu-movil__enlace">Inicio</a></li>
         <li><a href="categorias.html" class="menu-movil__enlace">Categorías</a></li>
         <li>
           <a href="login.html"
@@ -324,15 +268,15 @@
 
       <!-- Columna 1: Logotipo -->
       <div id="columna-logotipo-pie" class="col-span-2 md:col-span-1 flex items-center">
-        <a href="index.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
-          <img src="recursos/imagenes/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
+        <a href="inicio.html" class="pie-pagina__logotipo" aria-label="VANGUARD — Inicio">
+          <img src="../assets/images/logoBlanco.png" alt="Vanguard" class="h-10 w-auto object-contain" />
         </a>
       </div>
 
       <!-- Columna 2: Navegación principal -->
       <nav id="navegacion-pie-principal" aria-label="Pie: enlaces principales">
         <ul class="pie-pagina__lista-enlaces" role="list">
-          <li><a href="index.html"      class="pie-pagina__enlace">inicio</a></li>
+          <li><a href="inicio.html"      class="pie-pagina__enlace">inicio</a></li>
           <li><a href="categorias.html" class="pie-pagina__enlace">categorías</a></li>
         </ul>
       </nav>
@@ -389,125 +333,10 @@
 
   <!-- ═══════════════════════════════════════════════════
        SCRIPTS
-       vanguard-principal.js: cargado con defer para no bloquear render
-       Script inline: lógica específica de este formulario
+       Script base + lógica específica del formulario
   ═══════════════════════════════════════════════════ -->
-  <script src="assets/js/vanguard-principal.js" defer></script>
-
-  <script>
-    /**
-     * VANGUARD — Lógica del formulario de Inicio de Sesión
-     * ======================================================
-     * Patrón: validación sincrónica → envío asíncrono a API
-     * Endpoint futuro: POST /api/v1/autenticacion/ingresar
-     *
-     * Payload esperado: { correoElectronico: string, contrasena: string }
-     * Respuesta exitosa: { exito: true, token: string, usuario: {...} }
-     */
-
-    const formularioInicioSesion = document.getElementById('formulario-inicio-sesion');
-    const botonIngresar          = document.getElementById('boton-ingresar');
-
-    if (formularioInicioSesion) {
-      formularioInicioSesion.addEventListener('submit', async (evento) => {
-        evento.preventDefault();
-
-        /* Leer valores de los campos */
-        const valorCorreo     = document.getElementById('campo-correo-sesion').value.trim();
-        const valorContrasena = document.getElementById('campo-contrasena-sesion').value;
-
-        /* ── Validación sincrónica ── */
-        let formularioEsValido = true;
-
-        const expresionRegularCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!valorCorreo || !expresionRegularCorreo.test(valorCorreo)) {
-          mostrarErrorCampo('error-correo-sesion', 'Ingresa un correo electrónico válido');
-          formularioEsValido = false;
-        } else {
-          ocultarErrorCampo('error-correo-sesion');
-        }
-
-        if (!valorContrasena || valorContrasena.length < 1) {
-          mostrarErrorCampo('error-contrasena-sesion', 'La contraseña es requerida');
-          formularioEsValido = false;
-        } else {
-          ocultarErrorCampo('error-contrasena-sesion');
-        }
-
-        if (!formularioEsValido) return;
-
-        /* ── Estado: cargando ── */
-        botonIngresar.dataset.estado = 'cargando';
-        botonIngresar.textContent    = 'ENTRANDO';
-
-        try {
-          /*
-           * HOOK API — Integración futura con backend
-           * ==========================================
-           * const respuesta = await fetch(
-           *   `${window.Vanguard.config.urlApi}/autenticacion/ingresar`,
-           *   {
-           *     method:  'POST',
-           *     headers: { 'Content-Type': 'application/json' },
-           *     body: JSON.stringify({
-           *       correoElectronico: valorCorreo,
-           *       contrasena:        valorContrasena
-           *     })
-           *   }
-           * );
-           * const datos = await respuesta.json();
-           *
-           * if (datos.exito) {
-           *   // Persistir token y datos del usuario
-           *   localStorage.setItem('vng_token',   datos.token);
-           *   localStorage.setItem('vng_usuario', JSON.stringify(datos.usuario));
-           *   window.Vanguard.usuario.autenticado  = true;
-           *   window.Vanguard.usuario.datosUsuario = datos.usuario;
-           *   // Redirigir a categorías
-           *   window.location.href = 'categorias.html';
-           * } else {
-           *   mostrarErrorCampo('mensaje-estado-sesion', datos.mensaje || 'Credenciales incorrectas');
-           * }
-           */
-
-          /* Simulación temporal hasta conectar API */
-          console.log('[VANGUARD] Inicio de sesión — datos listos para enviar:', {
-            correoElectronico: valorCorreo
-          });
-
-          /* Demo visual — eliminar al integrar API real */
-          setTimeout(() => {
-            botonIngresar.textContent    = 'ENTRAR';
-            delete botonIngresar.dataset.estado;
-          }, 1200);
-
-        } catch (errorDeRed) {
-          console.error('[VANGUARD] Error de red:', errorDeRed);
-          mostrarErrorCampo(
-            'mensaje-estado-sesion',
-            'Error de conexión. Intenta nuevamente.'
-          );
-          botonIngresar.textContent    = 'ENTRAR';
-          delete botonIngresar.dataset.estado;
-        }
-      });
-    }
-
-    /* Utilidades de validación (locales como respaldo) */
-    function mostrarErrorCampo(idElemento, mensaje) {
-      const elemento = document.getElementById(idElemento);
-      if (!elemento) return;
-      elemento.textContent = mensaje;
-      elemento.classList.add('mensaje-error-campo--visible');
-    }
-
-    function ocultarErrorCampo(idElemento) {
-      const elemento = document.getElementById(idElemento);
-      if (!elemento) return;
-      elemento.textContent = '';
-      elemento.classList.remove('mensaje-error-campo--visible');
-    }
-  </script>
+  <script src="../app/main.js" type="module" defer></script>
+  <script src="../app/pages/login.js" defer></script>
 
 </body>
 </html>

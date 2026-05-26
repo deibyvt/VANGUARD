@@ -1,17 +1,17 @@
 # VANGUARD — Hoja de Ruta de Desarrollo
-**Actualización:** Sesión 4 | Estado: Fase 6 completada
+**Actualización:** Sesión 5 | Estado: Refactor de arquitectura completado
 
 ---
 
 ## FASE 1 — Arquitectura ✅ COMPLETADA
 - [x] Estructura de carpetas enterprise
 - [x] Naming 100% español (variables, IDs, clases, archivos)
-- [x] Namespace global `window.Vanguard` con IIFE
+- [x] Namespace global `window.Vanguard` con ES Modules
 - [x] Preparación para dark mode (`data-tema="oscuro"`)
 - [x] Sistema de capas Z documentado
 
 ## FASE 2 — Sistema Visual ✅ COMPLETADA
-- [x] Variables CSS (design tokens) en `sistema-diseno.css`
+- [x] Variables CSS (design tokens) en `css/base/variables.css`
 - [x] Tipografía: Bebas Neue + Barlow Condensed + Barlow
 - [x] Paleta extraída exactamente del PDF
 - [x] Sistema de espaciado base 8px con `clamp()`
@@ -30,31 +30,36 @@
 - [x] Sistema de notificaciones toast
 
 ## FASE 4 — Páginas ✅ COMPLETADA
-- [x] `index.html` / `home.html` — Hero + categorías
-- [x] `login.html` — Moto decorativa + formulario
-- [x] `registro.html` — Modelo decorativa + formulario
-- [x] `categorias.html` — Grid + sidebar + modal de producto
-- [x] `producto.html` — Página completa: galería + variantes
-- [x] `carrito.html` — Lista con eliminación animada + total
-- [x] `checkout.html` — 3 secciones: productos/dirección/pago
+- [x] `pages/inicio.html` — Hero + categorías
+- [x] `pages/login.html` — Moto decorativa + formulario
+- [x] `pages/registro.html` — Modelo decorativa + formulario
+- [x] `pages/categorias.html` — Grid + sidebar + modal de producto
+- [x] `pages/producto.html` — Página completa: galería + variantes
+- [x] `pages/carrito.html` — Lista con eliminación animada + total
+- [x] `pages/checkout.html` — 3 secciones: productos/dirección/pago
 
 ## FASE 5 — JavaScript Base ✅ COMPLETADA
-- [x] `vanguard-principal.js` v3.0 con IIFE y módulos aislados
-- [x] Carrito con localStorage REAL y funcional
+- [x] `app/main.js` como entry point con ES Modules
+- [x] `app/modulos/carrito.js` con localStorage REAL
+- [x] `app/modulos/autenticacion.js` (estructura lista para API)
+- [x] Módulo de notificaciones toast en `app/utils/`
 - [x] Sincronización multi-pestaña via `storage` events
-- [x] Módulo de notificaciones toast
-- [x] Módulo de autenticación (estructura lista para API)
 - [x] IntersectionObserver para animaciones escalonadas
 - [x] `marcarEnlaceNavActivo()` automático
 - [x] Debounce para buscador
 - [x] `formatearPrecio()`, `esCorreoValido()` compartidos
 
-## FASE 6 — Integración entre páginas ✅ COMPLETADA
-- [x] `categorias.html` → `producto.html` (enlace directo)
-- [x] `categorias.html` → `carrito.html` (agregar desde modal)
-- [x] `producto.html` → carrito con localStorage real
-- [x] `carrito.html` → renderizado dinámico desde localStorage
-- [x] Toast de confirmación al agregar al carrito
+## FASE 6 — Refactor de arquitectura ✅ COMPLETADA
+- [x] HTML movidos a `pages/` (sin CSS/JS inline)
+- [x] CSS monolithic (`assets/css/sistema-diseno.css`) separado en 18 archivos modulares en `css/`
+- [x] JS monolithic (`assets/js/vanguard-principal.js`) separado en 15 archivos modulares en `app/`
+- [x] `css/main.css` como entry point con @imports
+- [x] `app/main.js` como entry point ES Module
+- [x] `app/tailwind-config.js` centralizado (eliminados 7 bloques inline duplicados)
+- [x] Imágenes migradas a `assets/images/`, iconos a `assets/icons/`
+- [x] Carpeta `recursos/` eliminada
+- [x] 6 HTML duplicados en raíz eliminados
+- [x] `index.html` raíz redirige a `pages/inicio.html`
 
 ## FASE 7 — Backend / API ⏳ PENDIENTE
 Cuando el equipo de backend esté listo, descomentar hooks en:
@@ -83,7 +88,7 @@ Opciones recomendadas:
 - **Vercel**: `vercel deploy` desde terminal
 - **GitHub Pages**: push a rama `gh-pages`
 
-Para producción, cambiar en `vanguard-principal.js`:
+Para producción, cambiar en `app/modulos/configuracion.js`:
 ```javascript
 entorno: 'produccion',
 depurar: false,

@@ -1,0 +1,65 @@
+:root {
+
+  --color-negro-principal:   #1a1a1a;
+  --color-negro-secundario:  #2d2d2d;
+  --color-negro-hero:        #2a2a2a;
+  --color-gris-claro:        #e8e8e8;
+  --color-gris-medio:        #d0d0d0;
+  --color-gris-fondo:        #ececec;
+  --color-gris-sidebar:      #c8c8c8;
+  --color-rojo-principal:    #e31e1e;
+  --color-rojo-oscuro:       #c41818;
+  --color-blanco:            #ffffff;
+  --color-blanco-tarjeta:    #f8f8f8;
+
+  --fuente-display:    'Bebas Neue',          'Arial Black', sans-serif;
+  --fuente-condensada: 'Barlow Condensed',    'Arial Narrow', sans-serif;
+  --fuente-cuerpo:     'Barlow',              Arial, sans-serif;
+
+  --texto-gigante:    clamp(4rem,   15vw, 12rem);
+  --texto-heroe:      clamp(3rem,   10vw,  8rem);
+  --texto-seccion:    clamp(2rem,    6vw,  4rem);
+  --texto-titulo:     clamp(1.2rem,  3vw,  1.8rem);
+  --texto-subtitulo:  clamp(1rem,    2vw,  1.2rem);
+  --texto-cuerpo:     0.9rem;
+  --texto-pequeno:    0.75rem;
+
+  --espacio-minimo:   0.25rem;
+  --espacio-xs:       0.5rem;
+  --espacio-sm:       1rem;
+  --espacio-md:       1.5rem;
+  --espacio-lg:       2rem;
+  --espacio-xl:       3rem;
+  --espacio-2xl:      4rem;
+  --espacio-3xl:      6rem;
+
+  --radio-sm:   8px;
+  --radio-md:   16px;
+  --radio-lg:   24px;
+  --radio-xl:   32px;
+  --radio-total: 9999px;
+
+  --sombra-tarjeta:       0 4px 20px rgba(0, 0, 0, 0.08);
+  --sombra-tarjeta-hover: 0 8px 32px rgba(0, 0, 0, 0.15);
+  --sombra-modal:         0 20px 60px rgba(0, 0, 0, 0.30);
+  --sombra-boton-rojo:    0 4px 16px rgba(227, 30, 30, 0.40);
+  --sombra-tarjeta-roja:  0 6px 24px rgba(227, 30, 30, 0.12);
+
+  --transicion-rapida:  150ms ease;
+  --transicion-normal:  250ms ease;
+  --transicion-suave:   400ms ease;
+
+  --capa-fondo:      0;
+  --capa-contenido:  10;
+  --capa-flotante:   50;
+  --capa-superpuesto: 100;
+  --capa-modal:      200;
+  --capa-navegacion: 300;
+  --capa-tooltip:    400;
+}
+
+[data-tema="oscuro"] {
+  --color-fondo-pagina:   var(--color-negro-principal);
+  --color-texto-principal: var(--color-blanco);
+  --color-tarjeta-fondo:  var(--color-negro-secundario);
+}
