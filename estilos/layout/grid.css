@@ -1,6 +1,6 @@
 .contenedor-pagina-categorias {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 130px;
   min-height: calc(100vh - 4.5rem);
 }
 

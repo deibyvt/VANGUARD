@@ -71,6 +71,10 @@ export const Autenticacion = {
 
     var navAcceso = document.querySelector('#pie-pagina nav[aria-label*="acceso"]');
     if (navAcceso) navAcceso.style.display = 'none';
+
+    document.querySelectorAll('[data-menu-movil-auth]').forEach(function (el) {
+      el.style.display = 'none';
+    });
   },
 
   _actualizarNavbarDesautenticado() {
