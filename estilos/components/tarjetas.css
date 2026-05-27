@@ -74,19 +74,6 @@
   object-fit: contain;
 }
 
-.tarjeta-categoria__linea-diagonal {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    135deg,
-    transparent 48%,
-    rgba(227, 30, 30, 0.6) 49%,
-    rgba(227, 30, 30, 0.6) 51%,
-    transparent 52%
-  );
-}
-
 .tarjeta-categoria__nombre {
   font-family: var(--fuente-condensada);
   font-weight: 700;

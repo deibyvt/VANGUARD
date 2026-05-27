@@ -43,6 +43,11 @@
         </button>
       </div>
 
+      <div id="acciones-autenticacion" class="barra-navegacion__acciones" role="group" aria-label="Acciones de usuario">
+        <a href="login.html" class="barra-navegacion__enlace">Iniciar Sesión</a>
+        <a href="registro.html" class="barra-navegacion__enlace">Registrarme</a>
+      </div>
+
       <div id="grupo-acciones-barra" class="flex items-center gap-3 flex-shrink-0">
         <a href="categorias.html" class="barra-navegacion__enlace hidden md:block">CATEGORÍAS</a>
         <!-- Carrito activo en esta página — solo ícono sin enlace -->
@@ -95,115 +100,7 @@
              aria-label="Artículos en tu carrito"
              data-seccion="carrito">
 
-      <!-- ─── Artículo 1 ─── -->
-      <article class="articulo-carrito js-animacion-entrada"
-               role="listitem"
-               data-id-articulo-carrito="prod-001"
-               aria-label="Gigabyte Aorus Men Tshirt — $24.99">
-
-        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200&h=200&fit=crop"
-             alt="Camiseta Gigabyte Aorus" class="articulo-carrito__imagen" loading="lazy" />
-
-        <div class="articulo-carrito__informacion">
-          <h2 class="articulo-carrito__nombre">GIGABYTE AORUS MEN TSHIRT</h2>
-          <p class="articulo-carrito__meta">Marca: Gigabyte</p>
-          <p class="articulo-carrito__meta">Sku: MEN-GIG-GIG-084</p>
-        </div>
-
-        <div class="articulo-carrito__precio-contenedor">
-          <p class="articulo-carrito__etiqueta-disponibles">STOCK 90</p>
-          <p class="articulo-carrito__precio">$ 24.99</p>
-        </div>
-
-        <button class="articulo-carrito__boton-eliminar"
-                aria-label="Eliminar Gigabyte Aorus Men Tshirt del carrito"
-                data-accion-boton="eliminar-articulo"
-                data-id-articulo="prod-001">
-          <!-- Ícono papelera -->
-          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"
-               viewBox="0 0 24 24" aria-hidden="true">
-            <polyline points="3 6 5 6 21 6"/>
-            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
-            <path d="M10 11v6"/><path d="M14 11v6"/>
-            <path d="M9 6V4h6v2"/>
-          </svg>
-        </button>
-      </article>
-
-      <!-- ─── Artículo 2 ─── -->
-      <article class="articulo-carrito js-animacion-entrada"
-               role="listitem" data-id-articulo-carrito="prod-002"
-               aria-label="Gigabyte Aorus Men Tshirt — $24.99">
-        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200&h=200&fit=crop"
-             alt="Camiseta Gigabyte Aorus" class="articulo-carrito__imagen" loading="lazy" />
-        <div class="articulo-carrito__informacion">
-          <h2 class="articulo-carrito__nombre">GIGABYTE AORUS MEN TSHIRT</h2>
-          <p class="articulo-carrito__meta">Marca: Gigabyte</p>
-          <p class="articulo-carrito__meta">Sku: MEN-GIG-GIG-084</p>
-        </div>
-        <div class="articulo-carrito__precio-contenedor">
-          <p class="articulo-carrito__etiqueta-disponibles">STOCK 90</p>
-          <p class="articulo-carrito__precio">$ 24.99</p>
-        </div>
-        <button class="articulo-carrito__boton-eliminar"
-                aria-label="Eliminar artículo del carrito"
-                data-accion-boton="eliminar-articulo" data-id-articulo="prod-002">
-          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"
-               viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/>
-            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
-            <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-        </button>
-      </article>
-
-      <!-- ─── Artículo 3 ─── -->
-      <article class="articulo-carrito js-animacion-entrada"
-               role="listitem" data-id-articulo-carrito="prod-003"
-               aria-label="Gigabyte Aorus Men Tshirt — $24.99">
-        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200&h=200&fit=crop"
-             alt="Camiseta Gigabyte Aorus" class="articulo-carrito__imagen" loading="lazy" />
-        <div class="articulo-carrito__informacion">
-          <h2 class="articulo-carrito__nombre">GIGABYTE AORUS MEN TSHIRT</h2>
-          <p class="articulo-carrito__meta">Marca: Gigabyte</p>
-          <p class="articulo-carrito__meta">Sku: MEN-GIG-GIG-084</p>
-        </div>
-        <div class="articulo-carrito__precio-contenedor">
-          <p class="articulo-carrito__etiqueta-disponibles">STOCK 90</p>
-          <p class="articulo-carrito__precio">$ 24.99</p>
-        </div>
-        <button class="articulo-carrito__boton-eliminar"
-                aria-label="Eliminar artículo del carrito"
-                data-accion-boton="eliminar-articulo" data-id-articulo="prod-003">
-          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"
-               viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/>
-            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
-            <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-        </button>
-      </article>
-
-      <!-- ─── Artículo 4 ─── -->
-      <article class="articulo-carrito js-animacion-entrada"
-               role="listitem" data-id-articulo-carrito="prod-004"
-               aria-label="Gigabyte Aorus Men Tshirt — $24.99">
-        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200&h=200&fit=crop"
-             alt="Camiseta Gigabyte Aorus" class="articulo-carrito__imagen" loading="lazy" />
-        <div class="articulo-carrito__informacion">
-          <h2 class="articulo-carrito__nombre">GIGABYTE AORUS MEN TSHIRT</h2>
-          <p class="articulo-carrito__meta">Marca: Gigabyte</p>
-          <p class="articulo-carrito__meta">Sku: MEN-GIG-GIG-084</p>
-        </div>
-        <div class="articulo-carrito__precio-contenedor">
-          <p class="articulo-carrito__etiqueta-disponibles">STOCK 90</p>
-          <p class="articulo-carrito__precio">$ 24.99</p>
-        </div>
-        <button class="articulo-carrito__boton-eliminar"
-                aria-label="Eliminar artículo del carrito"
-                data-accion-boton="eliminar-articulo" data-id-articulo="prod-004">
-          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"
-               viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/>
-            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
-            <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-        </button>
-      </article>
+      </section>
 
     </section>
 

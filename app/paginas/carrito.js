@@ -141,26 +141,8 @@ function renderizarCarritoDesdeAlmacenamiento() {
   return true;
 }
 
-function inicializarArticulosDemo() {
-  const articulos = document.querySelectorAll('[data-id-articulo-carrito]');
-  articulos.forEach(articulo => {
-    asignarListenerEliminar(articulo);
-  });
-
-  requestAnimationFrame(() => {
-    articulos.forEach(el => {
-      el.classList.add('js-animacion-entrada--visible');
-    });
-  });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-  const seRenderizaronArticulosReales = renderizarCarritoDesdeAlmacenamiento();
-
-  if (!seRenderizaronArticulosReales) {
-    inicializarArticulosDemo();
-  }
-
+  renderizarCarritoDesdeAlmacenamiento();
   verificarCarritoVacio();
 
   window.addEventListener('vng:carrito-actualizado', () => {

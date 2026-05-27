@@ -61,6 +61,12 @@
         </button>
       </div>
 
+      <!-- Acciones de autenticación -->
+      <div id="acciones-autenticacion" class="barra-navegacion__acciones" role="group" aria-label="Acciones de usuario">
+        <a href="login.html" class="barra-navegacion__enlace" data-enlace-nav="iniciar-sesion">Iniciar Sesión</a>
+        <a href="registro.html" class="barra-navegacion__enlace" data-enlace-nav="registrarme">Registrarme</a>
+      </div>
+
       <!-- Categorías + hamburguesa -->
       <div id="grupo-acciones-barra" class="flex items-center gap-3 flex-shrink-0">
         <span class="barra-navegacion__enlace hidden md:block"
@@ -124,141 +130,19 @@
         <h1 id="titulo-categoria-activa"
             class="font-display text-white leading-none"
             style="font-size:clamp(2.5rem,7vw,4.5rem);">
-          MODA HOMBRE
+          <span id="nombre-categoria-activa"></span>
           <span id="etiqueta-subcategoria-activa"
                 class="font-condensada italic font-bold"
-                style="font-size:clamp(1rem,3vw,1.8rem);color:rgba(255,255,255,0.45);margin-left:1rem;">
-            ZAPATOS DE HOMBRE
-          </span>
+                style="font-size:clamp(1rem,3vw,1.8rem);color:rgba(255,255,255,0.45);margin-left:1rem;"></span>
         </h1>
       </header>
 
-      <!-- Grilla de tarjetas de producto — 3 columnas -->
-      <!-- Decisión: 2 col en mobile, 3 col desde md.
-           Preparado para JS: cada tarjeta tiene data-id-producto
-           para que el script cargue datos reales desde API -->
+      <!-- Grilla de tarjetas de producto — renderizada por JS -->
       <section id="grilla-tarjetas-producto"
                class="grid grid-cols-2 md:grid-cols-3 gap-4"
                role="list"
-               aria-label="Productos de la categoría seleccionada"
-               data-categoria-activa="moda-hombre">
-
-        <!-- Tarjeta de producto — patrón reutilizable -->
-        <!-- JS futuro: renderizar dinámicamente desde: GET /api/v1/productos?categoria=moda-hombre -->
-        <article class="tarjeta-producto js-animacion-entrada"
-                 role="listitem"
-                 data-id-producto="prod-001"
-                 data-abrir-modal-producto="true"
-                 tabindex="0"
-                 aria-label="Ver Gigabyte Aorus Men Tshirt — $24.99">
-          <div class="tarjeta-producto__imagen-contenedor">
-            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300&h=300&fit=crop"
-                 alt="Camiseta Gigabyte Aorus" class="tarjeta-producto__imagen" loading="lazy" />
-          </div>
-          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
-        </article>
-
-        <article class="tarjeta-producto js-animacion-entrada"
-                 role="listitem" data-id-producto="prod-002"
-                 data-abrir-modal-producto="true" tabindex="0"
-                 aria-label="Ver producto de moda hombre">
-          <div class="tarjeta-producto__imagen-contenedor">
-            <img src="https://images.unsplash.com/photo-1562157873-818bc0726f68?w=300&h=300&fit=crop"
-                 alt="Camiseta hombre 2" class="tarjeta-producto__imagen" loading="lazy" />
-          </div>
-          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
-        </article>
-
-        <article class="tarjeta-producto js-animacion-entrada"
-                 role="listitem" data-id-producto="prod-003"
-                 data-abrir-modal-producto="true" tabindex="0"
-                 aria-label="Ver producto de moda hombre">
-          <div class="tarjeta-producto__imagen-contenedor">
-            <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=300&h=300&fit=crop"
-                 alt="Camiseta hombre 3" class="tarjeta-producto__imagen" loading="lazy" />
-          </div>
-          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
-        </article>
-
-        <article class="tarjeta-producto js-animacion-entrada"
-                 role="listitem" data-id-producto="prod-004"
-                 data-abrir-modal-producto="true" tabindex="0"
-                 aria-label="Ver producto de moda hombre">
-          <div class="tarjeta-producto__imagen-contenedor">
-            <img src="https://images.unsplash.com/photo-1554568218-0f1715e72254?w=300&h=300&fit=crop"
-                 alt="Camiseta hombre 4" class="tarjeta-producto__imagen" loading="lazy" />
-          </div>
-          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
-        </article>
-
-        <article class="tarjeta-producto js-animacion-entrada"
-                 role="listitem" data-id-producto="prod-005"
-                 data-abrir-modal-producto="true" tabindex="0"
-                 aria-label="Ver producto de moda hombre">
-          <div class="tarjeta-producto__imagen-contenedor">
-            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300&h=300&fit=crop&flip=h"
-                 alt="Camiseta hombre 5" class="tarjeta-producto__imagen" loading="lazy" />
-          </div>
-          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
-        </article>
-
-        <article class="tarjeta-producto js-animacion-entrada"
-                 role="listitem" data-id-producto="prod-006"
-                 data-abrir-modal-producto="true" tabindex="0"
-                 aria-label="Ver producto de moda hombre">
-          <div class="tarjeta-producto__imagen-contenedor">
-            <img src="https://images.unsplash.com/photo-1622445275576-721325763afe?w=300&h=300&fit=crop"
-                 alt="Camiseta hombre 6" class="tarjeta-producto__imagen" loading="lazy" />
-          </div>
-          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
-        </article>
-
-        <article class="tarjeta-producto js-animacion-entrada"
-                 role="listitem" data-id-producto="prod-007"
-                 data-abrir-modal-producto="true" tabindex="0"
-                 aria-label="Ver producto de moda hombre">
-          <div class="tarjeta-producto__imagen-contenedor">
-            <img src="https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=300&h=300&fit=crop"
-                 alt="Camiseta hombre 7" class="tarjeta-producto__imagen" loading="lazy" />
-          </div>
-          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
-        </article>
-
-        <article class="tarjeta-producto js-animacion-entrada"
-                 role="listitem" data-id-producto="prod-008"
-                 data-abrir-modal-producto="true" tabindex="0"
-                 aria-label="Ver producto de moda hombre">
-          <div class="tarjeta-producto__imagen-contenedor">
-            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300&h=300&fit=crop&sat=-30"
-                 alt="Camiseta hombre 8" class="tarjeta-producto__imagen" loading="lazy" />
-          </div>
-          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
-        </article>
-
-        <article class="tarjeta-producto js-animacion-entrada"
-                 role="listitem" data-id-producto="prod-009"
-                 data-abrir-modal-producto="true" tabindex="0"
-                 aria-label="Ver producto de moda hombre">
-          <div class="tarjeta-producto__imagen-contenedor">
-            <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=300&h=300&fit=crop&flip=h"
-                 alt="Camiseta hombre 9" class="tarjeta-producto__imagen" loading="lazy" />
-          </div>
-          <p class="tarjeta-producto__etiqueta">MODA HOMBRE</p>
-        </article>
-
+               aria-label="Productos de la categoría seleccionada">
       </section>
-
-      <!-- Paginación — Hook JS para carga dinámica futura -->
-      <nav id="paginacion-productos"
-           class="flex items-center justify-center gap-3 mt-12 pb-4"
-           aria-label="Paginación de productos">
-        <button class="w-8 h-3 rounded-full bg-white/70 hover:bg-white transition-colors"
-                aria-label="Página 1 — activa" data-numero-pagina="1"
-                style="cursor:pointer;border:none;"></button>
-        <button class="w-8 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-colors"
-                aria-label="Página 2" data-numero-pagina="2"
-                style="cursor:pointer;border:none;"></button>
-      </nav>
 
     </main>
 
@@ -478,8 +362,8 @@
     </div>
   </footer>
 
+  <script src="../app/paginas/categorias.js"></script>
   <script src="../app/main.js" type="module" defer></script>
-  <script src="../app/paginas/categorias.js" defer></script>
 
 </body>
 </html>
