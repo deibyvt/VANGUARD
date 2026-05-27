@@ -69,10 +69,8 @@ export const Autenticacion = {
     document.getElementById('boton-cerrar-sesion')
             ?.addEventListener('click', () => this.cerrarSesion());
 
-    const navs = document.querySelectorAll('#pie-pagina nav');
-    if (navs.length >= 2) {
-      navs[1].style.display = 'none';
-    }
+    var navAcceso = document.querySelector('#pie-pagina nav[aria-label*="acceso"]');
+    if (navAcceso) navAcceso.style.display = 'none';
   },
 
   _actualizarNavbarDesautenticado() {

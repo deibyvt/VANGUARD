@@ -7,9 +7,9 @@
   font-family: var(--fuente-condensada);
   font-size: 0.8rem;
   letter-spacing: 0.1em;
-  width: 280px;
+  width: 100%;
   outline: none;
-  transition: border-color var(--transicion-normal), width var(--transicion-suave);
+  transition: border-color var(--transicion-normal);
 }
 
 .buscador-navegacion::placeholder {
@@ -19,11 +19,6 @@
 
 .buscador-navegacion:focus {
   border-color: rgba(255, 255, 255, 0.7);
-  width: 340px;
-}
-
-@media (max-width: 640px) {
-  .buscador-navegacion, .buscador-navegacion:focus { width: 100%; }
 }
 
 [role="search"] {

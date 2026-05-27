@@ -14,7 +14,7 @@
 }
 
 @media (min-width: 768px) {
-  .pie-pagina__contenedor { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .pie-pagina__contenedor { grid-template-columns: 1fr 1fr 1fr; }
 }
 
 .pie-pagina__logotipo {
@@ -35,6 +35,7 @@
   letter-spacing: 0.15em;
   text-transform: lowercase;
   margin-bottom: 0.75rem;
+  text-align: right;
 }
 
 .pie-pagina__lista-enlaces {
@@ -57,6 +58,7 @@
 .pie-pagina__redes {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.5rem;
   margin-bottom: 0.75rem;
   list-style: none;
@@ -80,6 +82,8 @@
   color: rgba(255,255,255,0.75);
   font-size: 0.75rem;
   transition: color var(--transicion-rapida);
+  display: block;
+  text-align: right;
 }
 
 .pie-pagina__correo:hover { color: var(--color-blanco); }
