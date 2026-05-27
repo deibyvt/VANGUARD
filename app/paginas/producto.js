@@ -12,6 +12,9 @@ var CATEGORIAS_CON_TALLA = {
 };
 
 document.addEventListener('DOMContentLoaded', async function () {
+  var ficha = document.getElementById('ficha-producto-principal');
+  var estadoCarga = document.getElementById('estado-carga-producto');
+
   var params = new URLSearchParams(window.location.search);
   var productId = params.get('id');
 
@@ -21,12 +24,19 @@ document.addEventListener('DOMContentLoaded', async function () {
       if (resp.ok) {
         productoActual = await resp.json();
         poblarPaginaProducto(productoActual);
+        if (estadoCarga) estadoCarga.style.display = 'none';
+        if (ficha) {
+          ficha.classList.remove('invisible', 'opacity-0');
+        }
       } else {
-        console.warn('[VANGUARD] Producto no encontrado, usando demo');
+        if (estadoCarga) estadoCarga.innerHTML = '<p class="font-condensada text-red-400 tracking-widest text-sm">ERROR: PRODUCTO NO ENCONTRADO</p>';
       }
     } catch (e) {
       console.warn('[VANGUARD] Error al cargar producto:', e);
+      if (estadoCarga) estadoCarga.innerHTML = '<p class="font-condensada text-red-400 tracking-widest text-sm">ERROR AL CARGAR PRODUCTO</p>';
     }
+  } else {
+    if (estadoCarga) estadoCarga.innerHTML = '<p class="font-condensada text-red-400 tracking-widest text-sm">NO SE ESPECIFICÓ PRODUCTO</p>';
   }
 
   configurarGaleria();

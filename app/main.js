@@ -8,8 +8,6 @@ import { inicializarMenuMovil } from './modulos/menu-movil.js';
 import { inicializarAnimacionesEntrada } from './modulos/animaciones.js';
 import { marcarEnlaceNavActivo } from './modulos/navegacion.js';
 
-const CLAVE_ALMACENAMIENTO_CARRITO = 'vng_carrito_v3';
-
 window.Vanguard = {
   carrito:        Carrito,
   autenticacion:  Autenticacion,
@@ -33,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   marcarEnlaceNavActivo();
 
   window.addEventListener('storage', (evento) => {
-    if (evento.key === CLAVE_ALMACENAMIENTO_CARRITO) {
+    if (evento.key && evento.key.startsWith('vng_carrito_v3')) {
       Carrito.cargarDesdeAlmacenamiento();
     }
   });

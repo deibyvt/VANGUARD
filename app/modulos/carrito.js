@@ -1,18 +1,29 @@
 'use strict';
 
-const CLAVE_ALMACENAMIENTO_CARRITO = 'vng_carrito_v3';
+var CLAVE_BASE_CARRITO = 'vng_carrito_v3';
 
 export const Carrito = {
   _articulos: [],
 
+  _obtenerClaveAlmacenamiento() {
+    const usuario = window.Vanguard?.autenticacion?.obtenerDatosUsuario();
+    const sufijo = usuario?.correo
+      ? '_' + btoa(usuario.correo).replace(/[=/+]/g, function (c) { return { '=': '', '+': '-', '/': '_' }[c]; })
+      : '_anonimo';
+    return CLAVE_BASE_CARRITO + sufijo;
+  },
+
   cargarDesdeAlmacenamiento() {
     try {
-      const datosGuardados = localStorage.getItem(CLAVE_ALMACENAMIENTO_CARRITO);
+      const clave = this._obtenerClaveAlmacenamiento();
+      const datosGuardados = localStorage.getItem(clave);
       if (datosGuardados) {
         const articulosParseados = JSON.parse(datosGuardados);
         if (Array.isArray(articulosParseados)) {
           this._articulos = articulosParseados;
         }
+      } else {
+        this._articulos = [];
       }
     } catch (errorAlmacenamiento) {
       console.warn('[VANGUARD] Carrito: datos corruptos en localStorage, reseteando.', errorAlmacenamiento);
@@ -24,8 +35,9 @@ export const Carrito = {
 
   persistirEnAlmacenamiento() {
     try {
+      const clave = this._obtenerClaveAlmacenamiento();
       localStorage.setItem(
-        CLAVE_ALMACENAMIENTO_CARRITO,
+        clave,
         JSON.stringify(this._articulos)
       );
       window.dispatchEvent(new CustomEvent('vng:carrito-actualizado', {

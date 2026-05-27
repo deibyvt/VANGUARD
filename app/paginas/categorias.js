@@ -330,9 +330,37 @@
   }
 
 
+  // ─── Manejar parámetros de URL ──────────────────
+
+  function manejarParametrosUrl() {
+    var params = new URLSearchParams(window.location.search);
+    var idCategoria = params.get('categoria');
+    var idSubcategoria = params.get('subcategoria');
+    if (!idCategoria || !idSubcategoria) return false;
+
+    for (var g = 0; g < GRUPOS_CATEGORIAS.length; g++) {
+      var grupo = GRUPOS_CATEGORIAS[g];
+      if (grupo.id === idCategoria) {
+        for (var s = 0; s < grupo.subcategorias.length; s++) {
+          var sub = grupo.subcategorias[s];
+          if (sub.id === idSubcategoria) {
+            grupoActivo = grupo;
+            var nc = document.getElementById('nombre-categoria-activa');
+            if (nc) nc.textContent = grupo.nombre;
+            seleccionarSubcategoria(sub);
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   // ─── Iniciar ────────────────────────────────────
 
-  renderizarGruposCategorias();
+  if (!manejarParametrosUrl()) {
+    renderizarGruposCategorias();
+  }
 
   configurarModal(
     document.getElementById('capa-modal-producto'),

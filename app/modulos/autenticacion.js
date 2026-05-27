@@ -41,6 +41,9 @@ export const Autenticacion = {
   },
 
   cerrarSesion() {
+    if (window.Vanguard && window.Vanguard.carrito) {
+      window.Vanguard.carrito.vaciar();
+    }
     this._autenticado  = false;
     this._datosUsuario = null;
     this._tokenSesion  = null;
@@ -78,6 +81,6 @@ export const Autenticacion = {
   },
 
   _actualizarNavbarDesautenticado() {
-    window.location.reload();
+    window.location.href = 'login.html';
   }
 };
