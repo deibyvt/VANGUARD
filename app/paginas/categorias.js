@@ -53,6 +53,42 @@
   var productosCargados = [];
   var grupoActivo = null;
 
+  function cargarDatosAdminLocal() {
+    try {
+      var datos = localStorage.getItem('vng_admin_productos');
+      if (datos) return JSON.parse(datos);
+    } catch (_e) {}
+    return { editados: {}, eliminados: [], creados: [] };
+  }
+
+  function aplicarModificacionesAdmin(productos, datosAdmin, slugApi) {
+    var filtrados = [];
+    for (var i = 0; i < productos.length; i++) {
+      if (datosAdmin.eliminados.indexOf(String(productos[i].id)) === -1) {
+        filtrados.push(productos[i]);
+      }
+    }
+    var resultado = [];
+    for (var j = 0; j < filtrados.length; j++) {
+      var p = filtrados[j];
+      var editado = datosAdmin.editados[String(p.id)];
+      if (editado) {
+        var copia = {};
+        for (var key in p) copia[key] = p[key];
+        for (var ekey in editado) copia[ekey] = editado[ekey];
+        resultado.push(copia);
+      } else {
+        resultado.push(p);
+      }
+    }
+    for (var k = 0; k < datosAdmin.creados.length; k++) {
+      if (!slugApi || datosAdmin.creados[k].category === slugApi) {
+        resultado.push(datosAdmin.creados[k]);
+      }
+    }
+    return resultado;
+  }
+
 
   function renderizarGruposCategorias() {
     var grilla = document.getElementById('grilla-tarjetas-producto');
@@ -151,15 +187,19 @@
       if (!respuesta.ok) throw new Error('HTTP ' + respuesta.status);
       var datos = await respuesta.json();
       productosCargados = datos.products;
-      renderizarProductos(datos.products,
-        grupoActivo ? grupoActivo.nombre : subcategoria.nombre
+      var datosAdmin = cargarDatosAdminLocal();
+      var productosAdmin = aplicarModificacionesAdmin(datos.products, datosAdmin, subcategoria.slugApi);
+      var esAdmin = window.Vanguard && window.Vanguard.autenticacion && window.Vanguard.autenticacion.esAdmin();
+      renderizarProductos(productosAdmin,
+        grupoActivo ? grupoActivo.nombre : subcategoria.nombre,
+        esAdmin
       );
     } catch (error) {
       grilla.innerHTML = '<p class="text-red-400 col-span-full text-center py-12">ERROR: ' + error.message + '</p>';
     }
   }
 
-  function renderizarProductos(productos, nombreGrupo) {
+  function renderizarProductos(productos, nombreGrupo, esAdmin) {
     var grilla = document.getElementById('grilla-tarjetas-producto');
     grilla.innerHTML = '';
 
@@ -204,12 +244,30 @@
       etiqueta.textContent = nombreGrupo;
       tarjeta.appendChild(etiqueta);
 
+      if (esAdmin) {
+        var acciones = document.createElement('div');
+        acciones.className = 'flex gap-2 px-3 pb-3 pt-1';
+        var btnEditar = document.createElement('button');
+        btnEditar.className = 'flex-1 text-xs font-condensada tracking-widest py-1.5 rounded-lg border border-vng-rojo text-vng-rojo hover:bg-vng-rojo hover:text-white transition-all';
+        btnEditar.textContent = 'EDITAR';
+        var btnEliminar = document.createElement('button');
+        btnEliminar.className = 'flex-1 text-xs font-condensada tracking-widest py-1.5 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-all';
+        btnEliminar.textContent = 'ELIMINAR';
+        (function (p) {
+          btnEditar.addEventListener('click', function (e) { e.stopPropagation(); abrirModalEditarProducto(p); });
+          btnEliminar.addEventListener('click', function (e) { e.stopPropagation(); eliminarProductoAdmin(p); });
+        })(producto);
+        acciones.appendChild(btnEditar);
+        acciones.appendChild(btnEliminar);
+        tarjeta.appendChild(acciones);
+      }
+
       (function (p) {
-        tarjeta.addEventListener('click', function () { abrirModalProducto(p); });
+        tarjeta.addEventListener('click', function () { abrirModalProducto(p, esAdmin); });
         tarjeta.addEventListener('keydown', function (e) {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            abrirModalProducto(p);
+            abrirModalProducto(p, esAdmin);
           }
         });
       })(producto);
@@ -218,7 +276,8 @@
     }
   }
 
-  function abrirModalProducto(producto) {
+  function abrirModalProducto(producto, esAdmin) {
+    esAdmin = esAdmin || (window.Vanguard && window.Vanguard.autenticacion && window.Vanguard.autenticacion.esAdmin());
     document.getElementById('modal-imagen-producto').src = producto.images && producto.images.length > 0 ? producto.images[0] : producto.thumbnail;
     document.getElementById('modal-imagen-producto').alt = producto.title;
     document.getElementById('modal-nombre-producto').textContent = producto.title;
@@ -230,6 +289,13 @@
     document.getElementById('boton-agregar-al-carrito').dataset.idProductoModal = producto.id;
     var detalleLink = document.getElementById('enlace-ver-detalle-producto');
     if (detalleLink) detalleLink.href = 'producto.html?id=' + producto.id;
+    if (esAdmin) {
+      document.getElementById('boton-agregar-al-carrito').style.display = 'none';
+      if (detalleLink) detalleLink.style.display = 'none';
+    } else {
+      document.getElementById('boton-agregar-al-carrito').style.display = '';
+      if (detalleLink) detalleLink.style.display = '';
+    }
     document.getElementById('capa-modal-producto').classList.add('capa-modal-producto--activo');
     document.body.style.overflow = 'hidden';
     document.getElementById('boton-cerrar-modal-producto').focus();
@@ -238,6 +304,109 @@
   function cerrarModalProducto() {
     document.getElementById('capa-modal-producto').classList.remove('capa-modal-producto--activo');
     document.body.style.overflow = '';
+  }
+
+  // ─── Admin CRUD ──────────────────────────────────
+
+  function eliminarProductoAdmin(producto) {
+    if (!confirm('¿Eliminar "' + producto.title + '"?')) return;
+    if (window.Vanguard && window.Vanguard.adminProductos) {
+      window.Vanguard.adminProductos.eliminarProducto(producto.id);
+    } else {
+      var datosAd = cargarDatosAdminLocal();
+      if (datosAd.eliminados.indexOf(String(producto.id)) === -1) {
+        datosAd.eliminados.push(String(producto.id));
+        localStorage.setItem('vng_admin_productos', JSON.stringify(datosAd));
+      }
+    }
+    window.Vanguard.notificaciones.exito('Producto eliminado con éxito');
+    recargarProductos();
+  }
+
+  function abrirModalEditarProducto(producto) {
+    document.getElementById('admin-modal-titulo').textContent = 'EDITAR PRODUCTO';
+    document.getElementById('admin-producto-id').value = producto.id;
+    document.getElementById('admin-campo-titulo').value = producto.title || '';
+    document.getElementById('admin-campo-descripcion').value = producto.description || '';
+    document.getElementById('admin-campo-precio').value = producto.price || 0;
+    document.getElementById('admin-campo-stock').value = producto.stock || 0;
+    document.getElementById('admin-campo-marca').value = producto.brand || '';
+    document.getElementById('admin-campo-sku').value = producto.sku || '';
+    document.getElementById('admin-campo-thumbnail').value = producto.thumbnail || '';
+    document.getElementById('admin-campo-categoria').value = producto.category || '';
+    document.getElementById('capa-modal-admin-producto').classList.add('capa-modal-producto--activo');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function abrirModalAgregarProducto() {
+    document.getElementById('admin-modal-titulo').textContent = 'AGREGAR PRODUCTO';
+    document.getElementById('admin-producto-id').value = '';
+    document.getElementById('admin-campo-titulo').value = '';
+    document.getElementById('admin-campo-descripcion').value = '';
+    document.getElementById('admin-campo-precio').value = '';
+    document.getElementById('admin-campo-stock').value = '';
+    document.getElementById('admin-campo-marca').value = '';
+    document.getElementById('admin-campo-sku').value = '';
+    document.getElementById('admin-campo-thumbnail').value = '';
+    document.getElementById('admin-campo-categoria').value = '';
+    document.getElementById('capa-modal-admin-producto').classList.add('capa-modal-producto--activo');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function guardarProductoAdmin(evento) {
+    evento.preventDefault();
+    var idProducto = document.getElementById('admin-producto-id').value;
+    var datosForm = {
+      title: document.getElementById('admin-campo-titulo').value.trim(),
+      description: document.getElementById('admin-campo-descripcion').value.trim(),
+      price: parseFloat(document.getElementById('admin-campo-precio').value) || 0,
+      stock: parseInt(document.getElementById('admin-campo-stock').value) || 0,
+      brand: document.getElementById('admin-campo-marca').value.trim(),
+      sku: document.getElementById('admin-campo-sku').value.trim(),
+      thumbnail: document.getElementById('admin-campo-thumbnail').value.trim() || 'https://via.placeholder.com/300',
+      category: document.getElementById('admin-campo-categoria').value.trim()
+    };
+
+    if (idProducto) {
+      if (window.Vanguard && window.Vanguard.adminProductos) {
+        window.Vanguard.adminProductos.editarProducto(idProducto, datosForm);
+      } else {
+        var datosAd = cargarDatosAdminLocal();
+        datosAd.editados[String(idProducto)] = datosForm;
+        localStorage.setItem('vng_admin_productos', JSON.stringify(datosAd));
+      }
+      window.Vanguard.notificaciones.exito('Producto modificado con éxito');
+    } else {
+      if (window.Vanguard && window.Vanguard.adminProductos) {
+        window.Vanguard.adminProductos.crearProducto(datosForm);
+      } else {
+        var datosAd2 = cargarDatosAdminLocal();
+        var nuevoId = 'admin_' + Date.now();
+        datosForm.id = nuevoId;
+        datosForm.images = [datosForm.thumbnail];
+        datosAd2.creados.push(datosForm);
+        localStorage.setItem('vng_admin_productos', JSON.stringify(datosAd2));
+      }
+      window.Vanguard.notificaciones.exito('Producto creado con éxito');
+    }
+
+    cerrarModalAdminProducto();
+    recargarProductos();
+  }
+
+  function cerrarModalAdminProducto() {
+    document.getElementById('capa-modal-admin-producto').classList.remove('capa-modal-producto--activo');
+    document.body.style.overflow = '';
+  }
+
+  function recargarProductos() {
+    var esAdmin = window.Vanguard && window.Vanguard.autenticacion && window.Vanguard.autenticacion.esAdmin();
+    if (grupoActivo && grupoActivo.subcategorias.length > 0) {
+      seleccionarSubcategoria(grupoActivo.subcategorias[0]);
+    } else {
+      var grilla = document.getElementById('grilla-tarjetas-producto');
+      if (grilla) grilla.innerHTML = '<p class="text-white/60 col-span-full text-center py-12">Selecciona una categoría</p>';
+    }
   }
 
   function configurarModal(capaModal, botonCerrar) {
@@ -292,10 +461,13 @@
           if (!respuesta.ok) throw new Error('HTTP ' + respuesta.status);
           var datos = await respuesta.json();
           productosCargados = datos.products;
+          var datosAdmin = cargarDatosAdminLocal();
+          var productosAdmin = aplicarModificacionesAdmin(datos.products, datosAdmin);
           var nc = document.getElementById('nombre-categoria-activa');
           if (nc) nc.textContent = 'B\u00daSQUEDA: "' + texto + '"';
-          document.getElementById('etiqueta-subcategoria-activa').textContent = datos.products.length + ' resultados';
-          renderizarProductos(datos.products, 'RESULTADOS');
+          document.getElementById('etiqueta-subcategoria-activa').textContent = productosAdmin.length + ' resultados';
+          var esAdmin = window.Vanguard && window.Vanguard.autenticacion && window.Vanguard.autenticacion.esAdmin();
+          renderizarProductos(productosAdmin, 'RESULTADOS', esAdmin);
         } catch (error) {
           grillaError('Error en b\u00fasqueda: ' + error.message);
         }
@@ -356,6 +528,45 @@
     return false;
   }
 
+  // ─── Admin inicialización ───────────────────────
+
+  function inicializarAdmin() {
+    var esAdmin = window.Vanguard && window.Vanguard.autenticacion && window.Vanguard.autenticacion.esAdmin();
+    var btnAgregar = document.getElementById('boton-agregar-producto-admin');
+    if (btnAgregar) {
+      btnAgregar.style.display = esAdmin ? '' : 'none';
+      if (esAdmin) btnAgregar.addEventListener('click', abrirModalAgregarProducto);
+    }
+    // Poblar el select de categorías
+    var selectCat = document.getElementById('admin-campo-categoria');
+    if (selectCat) {
+      selectCat.innerHTML = '<option value="">Seleccionar categoría</option>';
+      for (var g = 0; g < GRUPOS_CATEGORIAS.length; g++) {
+        var grupo = GRUPOS_CATEGORIAS[g];
+        for (var s = 0; s < grupo.subcategorias.length; s++) {
+          var sub = grupo.subcategorias[s];
+          var opt = document.createElement('option');
+          opt.value = sub.slugApi;
+          opt.textContent = grupo.nombre + ' — ' + sub.nombre;
+          selectCat.appendChild(opt);
+        }
+      }
+    }
+    if (esAdmin) {
+      var adminModal = document.getElementById('capa-modal-admin-producto');
+      var adminCerrar = document.getElementById('boton-cerrar-modal-admin');
+      var cancelarBtn = document.getElementById('boton-cancelar-admin-modal');
+      var formulario = document.getElementById('formulario-admin-producto');
+
+      if (adminCerrar) adminCerrar.addEventListener('click', cerrarModalAdminProducto);
+      if (cancelarBtn) cancelarBtn.addEventListener('click', cerrarModalAdminProducto);
+      if (adminModal) adminModal.addEventListener('click', function (ev) {
+        if (ev.target === adminModal) cerrarModalAdminProducto();
+      });
+      if (formulario) formulario.addEventListener('submit', guardarProductoAdmin);
+    }
+  }
+
   // ─── Iniciar ────────────────────────────────────
 
   if (!manejarParametrosUrl()) {
@@ -371,5 +582,12 @@
 
   var btnCarrito = document.getElementById('boton-agregar-al-carrito');
   if (btnCarrito) btnCarrito.addEventListener('click', agregarProductoAlCarrito);
+
+  // Inicializar admin después de un tick para asegurar que window.Vanguard esté listo
+  if (document.readyState === 'complete') {
+    inicializarAdmin();
+  } else {
+    window.addEventListener('load', inicializarAdmin);
+  }
 
 })();

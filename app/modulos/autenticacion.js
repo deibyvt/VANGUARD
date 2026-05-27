@@ -54,6 +54,7 @@ export const Autenticacion = {
   estaAutenticado()       { return this._autenticado; },
   obtenerToken()          { return this._tokenSesion; },
   obtenerDatosUsuario()   { return this._datosUsuario; },
+  esAdmin()               { return this._datosUsuario && this._datosUsuario.esAdmin === true; },
 
   _actualizarNavbarAutenticado() {
     const accionesAuth = document.getElementById('acciones-autenticacion');
@@ -71,6 +72,13 @@ export const Autenticacion = {
     `;
     document.getElementById('boton-cerrar-sesion')
             ?.addEventListener('click', () => this.cerrarSesion());
+
+    if (this.esAdmin()) {
+      var enlaceCarrito = document.getElementById('enlace-carrito-navbar');
+      if (enlaceCarrito) enlaceCarrito.style.display = 'none';
+      var txtCategorias = document.querySelector('#grupo-acciones-barra .barra-navegacion__enlace');
+      if (txtCategorias && txtCategorias.tagName === 'SPAN') txtCategorias.style.display = 'none';
+    }
 
     var navAcceso = document.querySelector('#pie-pagina nav[aria-label*="acceso"]');
     if (navAcceso) navAcceso.style.display = 'none';

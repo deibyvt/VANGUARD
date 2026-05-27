@@ -29,6 +29,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!valido) return;
 
+    // Admin hardcodeado
+    if (correo === 'admin@gmail.com' && contrasena === '12345678') {
+      boton.dataset.estado = 'cargando';
+      boton.textContent    = 'ENTRANDO';
+      window.Vanguard.autenticacion.guardarSesion(
+        'tok_' + Date.now(),
+        { nombre: 'Administrador', correo: 'admin@gmail.com', esAdmin: true }
+      );
+      window.Vanguard.notificaciones.exito('Bienvenido Administrador');
+      setTimeout(function () { window.location.href = 'categorias.html'; }, 1500);
+      return;
+    }
+
     const usuarios = obtenerUsuarios();
     const usuario  = usuarios.find(u => u.correo === correo && u.contrasena === contrasena);
 

@@ -2,6 +2,7 @@
 
 import { Carrito } from './modulos/carrito.js';
 import { Autenticacion } from './modulos/autenticacion.js';
+import { AdminProductos } from './modulos/admin-productos.js';
 import { Notificaciones } from './utilidades/notificaciones.js';
 import { Utilidades } from './utilidades/helpers.js';
 import { inicializarMenuMovil } from './modulos/menu-movil.js';
@@ -9,10 +10,11 @@ import { inicializarAnimacionesEntrada } from './modulos/animaciones.js';
 import { marcarEnlaceNavActivo } from './modulos/navegacion.js';
 
 window.Vanguard = {
-  carrito:        Carrito,
-  autenticacion:  Autenticacion,
-  notificaciones: Notificaciones,
-  utilidades:     Utilidades,
+  carrito:         Carrito,
+  autenticacion:   Autenticacion,
+  adminProductos:  AdminProductos,
+  notificaciones:  Notificaciones,
+  utilidades:      Utilidades,
   config: {
     urlApi:        '/api/v1',
     versionApp:    '3.0.0',
@@ -24,8 +26,8 @@ window.Vanguard = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  Carrito.cargarDesdeAlmacenamiento();
   Autenticacion.cargarSesion();
+  Carrito.cargarDesdeAlmacenamiento();
   inicializarMenuMovil();
   inicializarAnimacionesEntrada();
   marcarEnlaceNavActivo();
